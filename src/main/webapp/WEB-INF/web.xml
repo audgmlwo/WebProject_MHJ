@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd" id="WebApp_ID" version="5.0">
+  <!-- 프로젝트 명 -->
+  <display-name>JSPServlet</display-name>
+  <!-- 컨텍스트 초기화 매개변수(예제 2-10) -->
+  <!-- 웹 애플리케이션 전체에서 접근해서 사용할 수 있는 일종의
+  	   상수값 혹은 설정값으로 사용할 수 있다. -->
+<context-param>
+	<param-name>INIT_PARAM</param-name>
+	<param-value>web.xml에 저장한 초기화 매개변수</param-value>
+</context-param>  
+<!-- 웹애플리케이션 실행시 제일 먼저 시행할 파일 지정 
+     그리고 이렇게 실행될 경우 주소표시줄에 파일 경로가 표시되지않음.
+     포털사이트나 여러 사이트에서 파일 경로가 안보이는 이유
+-->
+<!-- 데이터베이스 연결을 위한 접속정보를 컨텍스트 초기화 파라미터로 설정  -->
+<context-param>
+	<param-name>OracleDriver</param-name>
+	<param-value>oracle.jdbc.OracleDriver</param-value>
+</context-param>
+<context-param>
+	<param-name>OracleURL</param-name>
+	<param-value>jdbc:oracle:thin:@localhost:1521:xe</param-value>
+</context-param>
+<context-param>
+	<param-name>OracleId</param-name>
+	<param-value>webproject_db</param-value>
+</context-param>
+<context-param>
+	<param-name>OraclePwd</param-name>
+	<param-value>1234</param-value>
+</context-param>
+
+<!-- 세선 유지시간 설정 : 분 단위 -->
+
+<session-config>
+	<session-timeout>30</session-timeout>
+</session-config>
+
+	
+	<!-- MVC패턴으로 회원인증을 위한 서블릿 매핑 -->
+	<servlet>
+	
+	<servlet-name>MemberAuth</servlet-name>
+	<servlet-class>servlet.MemberAuth</servlet-class>
+		<init-param>
+			<param-name>admin_id</param-name>
+			<param-value>mhj</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MemberAuth</servlet-name>
+		<url-pattern>/12Servlet/MemberAuth.mvc</url-pattern>
+	</servlet-mapping>
+
+	<!-- ######################################################### -->
+	<!-- 모델2 방식의 서블릿 게시판 목록 맵핑 -->
+	<!-- <servlet>
+		<servlet-name>MVCBoardList</servlet-name>
+		<servlet-class>model2.mvcboard.ListController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MVCBoardList</servlet-name>
+		<url-pattern>/mvcboard/list.do</url-pattern>
+	</servlet-mapping> -->
+	
+	<!-- 모델2 방식의 게시판 목록 매핑 - 페이징 기능 추가 -->
+<!-- 	<servlet>
+		<servlet-name>MVCBoardListPage</servlet-name>
+		<servlet-class>model2.mvcboard.ListPageController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MVCBoardListPage</servlet-name>
+		<url-pattern>/mvcboard/listPage.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>MVCBoardWrite</servlet-name>
+		<servlet-class>model2.mvcboard.WriteController</servlet-class>
+		<multipart-config>
+			<max-file-size>52428800</max-file-size>
+			<max-request-size>104857600</max-request-size>
+		</multipart-config>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MVCBoardWrite</servlet-name>
+		<url-pattern>/mvcboard/write.do</url-pattern>
+	</servlet-mapping> -->
+
+	<!-- <servlet>
+		<servlet-name>MVCBoardDownload</servlet-name>
+		<servlet-class>model2.mvcboard.DownloadController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MVCBoardDownload</servlet-name>
+		<url-pattern>/mvcboard/download.do</url-pattern>
+	</servlet-mapping> -->
+	
+	<!-- 페이징 -->
+	<!-- 한페이지 당 출력할 게시물의 갯수 -->
+	<context-param>
+		<param-name>POSTS_PER_PAGE</param-name>
+		<param-value>10</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>PAGES_PER_BLOCK</param-name>
+		<param-value>5</param-value>
+	</context-param>
+
+
+</web-app>
+
+
+	

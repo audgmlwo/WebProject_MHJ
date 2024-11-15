@@ -1,0 +1,402 @@
+
+/*
+    Citrusy by TEMPLATED
+    templated.co @templatedco
+    Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+
+
+
+html, body {
+}
+
+body {
+    margin: 0em;
+    padding: 0em;
+    background: #E0E0E0 url(images/img01.png) repeat;
+    font-family: 'Raleway', sans-serif;
+    font-size: 10pt;
+    color: #525252;
+}
+
+h1, h2, h3 {
+    margin: 0em;
+    padding: 0em;
+    font-family: 'Raleway', sans-serif;
+    letter-spacing: -0.025em;
+}
+
+p {
+    line-height: 170%;
+}
+
+a {
+    color: #FF3002;
+}
+
+strong {
+    font-weight: 700;
+    color: #2A2A2A;
+}
+
+/* Wrapper */
+
+#wrapper {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    overflow: hidden;
+    padding-bottom: 3em;
+    background: #FFFFFF;
+}
+
+/* Copyright */
+
+#copyright {
+    padding: 1em 0em;
+    overflow: hidden;
+    padding: 1.875em 0em 6em 0;
+    border-top: 1px solid #CCCCCC;
+    text-shadow: 1px 1px 0px #FFFFFF;
+    text-align: center;
+}
+
+#copyright p {
+    font-size: 1em;
+    color: #333333;
+}
+
+#copyright a {
+    color: #232323;
+}
+
+#copyright a:hover {
+    text-decoration: none;
+}
+
+/* Button Style */
+
+.button-style a {
+    display: block;
+    width: 11.250em;
+    height: 3.125em;
+    margin-top: 1.875em;
+    background: url(images/img01.png) repeat;
+    line-height: 3.125em;
+    text-align: center;
+    text-decoration: none;
+    text-transform: none;
+    font-size: 1.125em;
+    font-weight: 200;
+    color: #FFFFFF;
+}
+
+/* Button Style 2 */
+
+.button-style2 a {
+    display: inline-block;
+    height: 3em;
+    margin-top: 1.25em;
+    padding: 0em 1.25em;
+    border-radius: 0px 5px 0px 5px;
+    line-height: 3em;
+    text-decoration: none;
+    font-size: 1em;
+    color: #FFFFFF;
+}
+
+/* Button Style 3 */
+
+.button-style3 a {
+    display: inline-block;
+    height: 3em;
+    margin-top: 1.25em;
+    padding: 0em 1.25em;
+    background: #499D4A;
+    border-radius: 5px;
+    line-height: 3em;
+    text-shadow: 1px 0px 0px #185E18;
+    text-decoration: none;
+    font-size: 1em;
+    color: #FFFFFF;
+}
+
+/** LIST STYLE 1 */
+
+ul.style1 {
+    margin: 0em;
+    list-style: none;
+}
+
+ul.style1 li {
+    padding: 0.94em 0em;
+    border-top: 1px solid #E6E6E6;
+}
+
+ul.style1 a {
+    display: block;
+    padding: 0em 0em 0em 1.87em;
+    background: url(images/img10.png) no-repeat left top;
+    text-decoration: none;
+    color: #525252;
+}
+
+ul.style1 a:hover {
+    text-decoration: underline;
+}
+
+ul.style1 .first {
+    border-top: 0;
+}
+
+/** LIST STYLE 2 */
+
+ul.style2 {
+    margin: 0em;
+    padding: 0em;
+    list-style: none;
+    font-style: italic;
+}
+
+ul.style2 li {
+    padding: 1.25em 0em 1.25em 0em;
+    border-top: 1px solid #E6E6E6;
+}
+
+ul.style2 a {
+    text-decoration: none;
+    color: #8F8F8F;
+}
+
+ul.style2 a:hover {
+    text-decoration: underline;
+}
+
+ul.style2 .date {
+    display: inline-block;
+    margin: 0em 0em 0em 0em;
+    padding: 0.35em 0em;
+    border-radius: 5px;
+    line-height: none;
+    font-weight: bold;
+    font-style: normal;
+    color: #2A2A2A;
+}
+
+ul.style2 .date a {
+    color: #2A2A2A;
+}
+
+ul.style2 .first {
+    padding-top: 0;
+    border-top: 0;
+}
+
+/** LIST STYLE 3 */
+
+ul.style3 {
+    margin: 0em;
+    padding: 0em;
+    list-style: none;
+}
+
+ul.style3 li {
+    padding: 1.25em 0em 1.56em 0em;
+}
+
+ul.style3 a {
+    display: block;
+    text-decoration: none;
+    color: #C18062;
+}
+
+ul.style3 a:hover {
+    text-decoration: underline;
+}
+
+ul.style3 .date {
+}
+
+ul.style3 .date b {
+}
+
+ul.style3 .date a {
+    color: #FFFFFF;
+}
+
+ul.style3 .date a:hover {
+    text-decoration: none;
+}
+
+ul.style3 .first {
+    padding-top: 0em;
+    background: none;
+}
+
+/** LIST STYLE 4 */
+
+ul.style4 {
+    margin: 0em;
+    padding: 0em;
+    list-style: none;
+}
+
+ul.style4 li {
+    padding: 0.94em 0em 0.94em 0em;
+    border-top: 1px solid #742F0E;
+}
+
+ul.style4 a {
+    display: block;
+    padding: 0em 0em 0em 1.87em;
+    background: url(images/img10.png) no-repeat left top;
+    text-decoration: none;
+    color: #C18062;
+}
+
+ul.style4 a:hover {
+    text-decoration: underline;
+}
+
+ul.style4 li {
+    border-top: 0;
+}
+
+/** LIST STYLE 5 */
+
+ul.style5 {
+    overflow: hidden;
+    margin: 0em 0em 1em 0em;
+    padding: 0em;
+    list-style: none;
+}
+
+ul.style5 li {
+    float: left;
+    padding: 0.25em 0.25em;
+    line-height: 0;
+}
+
+ul.style5 a {
+}
+
+/** LIST STYLE 6 */
+
+ul.style6 {
+    margin: 0em;
+    padding: 0em;
+    list-style: none;
+}
+
+ul.style6 h3 {
+    margin: 0em;
+    padding: 0em 0em 0.63em 0em;
+    font-weight: bold;
+    font-size: 1em;
+    color: #2A2A2A;
+}
+
+ul.style6 p {
+    font-style: italic;
+    font-size: 0.87em;
+}
+
+ul.style6 li {
+    padding: 0.5em 0em;
+    padding: 1.25em 0em 1.25em 0em;
+    border-top: 1px solid #C9C8C8;
+    line-height: 170%;
+}
+
+ul.style6 a {
+    display: block;
+    padding: 0em;
+    text-decoration: none;
+    color: #737373;
+}
+
+ul.style6 a:hover {
+    text-decoration: underline;
+}
+
+ul.style6 .first {
+    padding-top: 0em;
+    border-top: 0;
+}
+
+/* Table Styles */
+
+table {
+    border-collapse: collapse; /* 테두리 겹침 방지 */
+    width: 100%; /* 테이블 전체 너비 설정 */
+    background-color: #f9f9f9; /* 테이블 배경색 설정 */
+    font-family: 'Raleway', sans-serif; /* 폰트 설정 */
+    color: #333333; /* 텍스트 색상 */
+}
+
+table, th, td {
+    border: 1px solid #e0e0e0; /* 테두리 색상 설정 */
+}
+
+th, td {
+    padding: 12px; /* 셀 간격 설정 */
+    text-align: center; /* 텍스트 정렬 */
+}
+
+th {
+    background-color: #4CAF50; /* 헤더 배경색 설정 */
+    color: white; /* 헤더 텍스트 색상 */
+    font-weight: bold; /* 헤더 텍스트 두께 */
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* 홀수 행 배경색 */
+}
+
+tr:hover {
+    background-color: #e9f7ef; /* 마우스 오버 시 행 배경색 */
+}
+
+/* 글쓰기 버튼 스타일 */
+.button-write {
+    background-color: #4CAF50; /* 버튼 배경색 */
+    color: white; /* 텍스트 색상 */
+    padding: 8px 16px; /* 검색하기 버튼과 같은 크기로 조정 */
+    border: none; /* 테두리 제거 */
+    border-radius: 4px; /* 모서리 둥글게 */
+    font-size: 14px; /* 검색하기 버튼 폰트 크기에 맞춤 */
+    cursor: pointer; /* 마우스 커서 포인터로 변경 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    display: inline-block; /* 버튼처럼 보이게 */
+    margin: 0; /* 불필요한 여백 제거 */
+}
+
+.button-write:hover {
+    background-color: #45a049; /* 호버 시 어두운 배경색 */
+    text-decoration: none; /* 텍스트 밑줄 제거 */
+}
+
+/* 오른쪽 정렬을 위한 컨테이너 */
+.button-container {
+    display: flex;
+    justify-content: flex-end; /* 오른쪽 끝으로 정렬 */
+    align-items: center; /* 버튼 세로 정렬 */
+    padding: 0; /* 빈 여백 제거 */
+    margin: 0; /* 불필요한 여백 제거 */
+    border: none; /* 혹시 있을지 모를 테두리 제거 */
+}
+/* 게시판 목록 제목 스타일 */
+
+.custom-heading {
+    color: #4CAF50 !important; /* 녹색 계열로 템플릿과 일관성 유지 */
+    font-size: 30px !important; /* 제목 크기 설정 */
+    font-weight: 700 !important; /* 제목 텍스트 두껍게 */
+    text-align: left !important; /* 텍스트 정렬 */
+    margin-bottom: 16px !important; /* 제목 하단 여백 추가 */
+    letter-spacing: normal !important; /* 자간을 기본으로 설정 */
+}
+
+ 
+   
