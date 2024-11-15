@@ -29,13 +29,13 @@
 			
             <form action="LoginProcess.jsp" method="post" name="loginFrm" onsubmit="return validateForm(this);">
 		        <div>
-		            <input type="text" name="id" id="id" placeholder="아이디" required 
+		            <input type="text" name="user_id" id="id" placeholder="아이디" required 
 		                   oninvalid="this.setCustomValidity('아이디를 입력해 주세요.')" 
 		                   oninput="this.setCustomValidity('')"> <!-- input 시 오류 메시지 초기화 -->
 		            <div id="id-error" class="error-message"></div>
 		        </div>
 		        <div>
-		            <input type="password" name="password" id="password" placeholder="비밀번호" required 
+		            <input type="password" name="user_pw" id="password" placeholder="비밀번호" required 
 		                   oninvalid="this.setCustomValidity('비밀번호를 입력해 주세요.')" 
 		                   oninput="this.setCustomValidity('')"> <!-- input 시 오류 메시지 초기화 -->
 		            <div id="password-error" class="error-message"></div>
@@ -49,7 +49,7 @@
 		            return true; // 모든 검사가 완료되면 true 반환
 		        }
 		    </script>
-            <p class="signup-text">계정이 필요하신가요? <a href="signup.html">가입하기</a></p>
+            <p class="signup-text">계정이 필요하신가요? <a href="Sign_up.jsp">가입하기</a></p>
         </div>
     </div>
 		    <%
