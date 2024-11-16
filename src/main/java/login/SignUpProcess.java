@@ -12,16 +12,18 @@ import java.util.Map;
 @WebServlet("/Login/SignUpProcess")
 
 public class SignUpProcess extends HttpServlet {
-    protected void doPost(HttpServletRequest request,
-    		HttpServletResponse response) 
+	private static final long serialVersionUID = 1L;
+
+	protected void doPost(HttpServletRequest req,
+    		HttpServletResponse resp) 
     				throws ServletException, IOException {
     	
         // 입력 데이터 수집
-        String userId = request.getParameter("user_id");
-        String password = request.getParameter("password");
-        String confirmPassword = request.getParameter("confirm_password");
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
+        String userId = req.getParameter("user_id");
+        String password = req.getParameter("password");
+        String confirmPassword = req.getParameter("confirm_password");
+        String name = req.getParameter("name");
+        String email = req.getParameter("email");
 
         MemberDAO dao = new MemberDAO();
 
@@ -61,8 +63,8 @@ public class SignUpProcess extends HttpServlet {
 
         // 에러가 있는 경우 다시 폼으로 전달
         if (!errors.isEmpty()) {
-            request.setAttribute("errors", errors);
-            request.getRequestDispatcher("SignUp.jsp").forward(request, response);
+            req.setAttribute("errors", errors);
+            req.getRequestDispatcher("SignUp.jsp").forward(req, resp);
             return;
         }
         
@@ -76,6 +78,6 @@ public class SignUpProcess extends HttpServlet {
         dao.insertMember(newMember);
 
         // 성공 페이지로 리다이렉트
-        response.sendRedirect("LoginForm.jsp");
+        resp.sendRedirect("LoginForm.jsp");
     }
 }
