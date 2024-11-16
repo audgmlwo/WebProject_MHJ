@@ -39,7 +39,7 @@
 						<li class="current_page_item"><a href="threecolumn.jsp">Three Column</a></li>
 						<li><a href="twocolumn1.jsp">Two Column #1</a></li>
 						<li><a href="twocolumn2.jsp">Two Column #2</a></li>
-						<li><a href="onecolumn.jsp">자유게시판</a></li>
+						<li><a href="board.jsp">자유게시판</a></li>
 					</ul>
 				</nav>
 			</div>

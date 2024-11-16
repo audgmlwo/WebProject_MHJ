@@ -3,6 +3,7 @@ package login;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.naming.Context;
@@ -19,6 +20,7 @@ public class MemberDAO  {
 	public PreparedStatement psmt;
 	public ResultSet rs;
 	
+	// 커넥션 풀
 	public MemberDAO() {
 		try {
 		
@@ -50,6 +52,7 @@ public class MemberDAO  {
 	   }
 	
 	
+	// 회원정보 받음
 	public int insertMember(MemberDTO dto) {
 		
 		String sql = "INSERT INTO member (user_id, pass, name, email,regi_date) VALUES (?, ?, ?, ?,sysdate)";
@@ -75,9 +78,61 @@ public class MemberDAO  {
        }
        
 	return 0;
-      
     }
 	
+	//중복 확인
+	public int UserCheck(String userId) {
+	    String query = "SELECT COUNT(*) FROM member WHERE user_id = ?";
+	    try  {
+	    	psmt = conn.prepareStatement(query);
+	    	
+	        psmt.setString(1, userId);
+	        rs = psmt.executeQuery();
+	        
+	        if (rs.next()) {
+	            return rs.getInt(1); // 중복된 경우 true 반환
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return -1;
+	}
+	
+	public boolean NameCheck(String name) {
+	    String query = "SELECT COUNT(*) FROM member WHERE name = ?";
+	    try  {
+	    	psmt = conn.prepareStatement(query);
+	    	
+	        psmt.setString(1, name);
+	        rs = psmt.executeQuery();
+	        
+	        if (rs.next()) {
+	            return rs.getInt(1) > 0; // 중복된 경우 true 반환
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
+
+	public boolean EmailCheck(String email) {
+	    String query = "SELECT COUNT(*) FROM member WHERE email = ?";
+	    try  {
+	    	psmt = conn.prepareStatement(query);
+	    	
+	        psmt.setString(1, email);
+	        rs = psmt.executeQuery();
+	        
+	        if (rs.next()) {
+	            return rs.getInt(1) > 0; // 중복된 경우 true 반환
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
+	
+	// 회원정보 확인
 	public MemberDTO getMemberDTO(String user_id, String passward) {
 		
 		MemberDTO dto = new MemberDTO();
@@ -110,5 +165,8 @@ public class MemberDAO  {
 		//회원정보를 저장한 DTO객체를 반환한다.
 		return dto;
 	}
+	
+	
+	
 }
 	

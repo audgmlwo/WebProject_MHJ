@@ -15,7 +15,7 @@
     <div class="login-wrapper">
         <div class="login-container">
         
-            <h2>Login to Citrusy</h2>
+            <h2>Login</h2>
             
             <span style="color: red; font-size: 1.2em;">
 			
@@ -49,7 +49,7 @@
 		            return true; // 모든 검사가 완료되면 true 반환
 		        }
 		    </script>
-            <p class="signup-text">계정이 필요하신가요? <a href="Sign_up.jsp">가입하기</a></p>
+            <p class="signUp-text">계정이 필요하신가요? <a href="SignUp.jsp">가입하기</a></p>
         </div>
     </div>
 		    <%
