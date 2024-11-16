@@ -37,7 +37,7 @@
 
     if (result > 0) {
         // 회원가입 성공
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("LoginForm.jsp");
     } else {
         // 회원가입 실패
         request.setAttribute("errorMessage", "회원가입에 실패했습니다. 다시 시도해 주세요.");

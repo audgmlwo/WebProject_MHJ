@@ -52,7 +52,7 @@ public class MemberDAO  {
 	
 	public int insertMember(MemberDTO dto) {
 		
-		String sql = "INSERT INTO member (user_id, pass, name, \"EMAIL\") VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO member (user_id, pass, name, email,regi_date) VALUES (?, ?, ?, ?,sysdate)";
 
 
 
@@ -82,7 +82,7 @@ public class MemberDAO  {
 		
 		MemberDTO dto = new MemberDTO();
 		
-		String query = "SELECT * FROM member WHERE id=? AND pass=?";
+		String query = "SELECT * FROM member WHERE user_id=? AND pass=?";
 
 		try {
 			
