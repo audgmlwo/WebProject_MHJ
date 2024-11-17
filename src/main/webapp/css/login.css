@@ -6,7 +6,17 @@ body, html {
     background: url('/WebProject_MHJ/images/pics01.jpg') no-repeat center center fixed;
     background-size: cover;
 }
+.error-message {
+    color: red;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
 
+.success-message {
+    color: green;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
 .login-wrapper {
     display: flex;
     align-items: center;
@@ -56,19 +66,3 @@ body, html {
     background-color: #45a049;
 }
 
-/* 가입하기 텍스트 */
-.signup-text {
-    margin-top: 1em;
-    text-align: center;
-    font-size: 0.9em;
-    color: #333;
-}
-
-.signup-text a {
-    color: #FF3002;
-    text-decoration: none;
-}
-
-.signup-text a:hover {
-    text-decoration: underline;
-}

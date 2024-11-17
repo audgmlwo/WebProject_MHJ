@@ -10,7 +10,7 @@
 </head>
 
 <body>
-	<jsp:include page="../Common/Link.jsp" />
+	
 	
     <div class="login-wrapper">
         <div class="login-container">
@@ -57,8 +57,26 @@
 			%>
 				<%= session.getAttribute("UserName") %> 회원님, 로그인성공.<br />
 				<a href="Logout.jsp">[로그아웃]</a>
+				<a href="UpdateAccount.jsp">[정보수정]</a>
 			<%
 			}
 			%>
+			
+			<%
+			    String successMessage = request.getParameter("successMessage");
+			    if (successMessage != null) {
+			%>
+			        <div class="success-message"><%= successMessage %></div>
+			<%
+			    }
+			%>
+
+<style>
+    .success-message {
+        color: green;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+</style>
 </body>
 </html>

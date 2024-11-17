@@ -133,7 +133,7 @@ public class MemberDAO  {
 	}
 	
 	// 회원정보 확인
-	public MemberDTO getMemberDTO(String user_id, String passward) {
+	public MemberDTO getMemberDTO(String user_id, String password) {
 		
 		MemberDTO dto = new MemberDTO();
 		
@@ -144,7 +144,7 @@ public class MemberDAO  {
 			psmt = conn.prepareStatement(query);
 		
 			psmt.setString(1, user_id);
-			psmt.setString(2, passward);
+			psmt.setString(2, password);
 			
 			rs = psmt.executeQuery();
 			
@@ -166,7 +166,55 @@ public class MemberDAO  {
 		return dto;
 	}
 	
+	public MemberDTO getMember(String userId) {
+	    MemberDTO member = null;
+	    String query = "SELECT user_id, name, email FROM member WHERE user_id = ?";
+
+	    try {
+	        psmt = conn.prepareStatement(query);
+	        psmt.setString(1, userId);
+
+	        rs = psmt.executeQuery();
+
+	        if (rs.next()) {
+	            member = new MemberDTO();
+	            member.setUser_id(rs.getString("user_id"));
+	            member.setName(rs.getString("name"));
+	            member.setEmail(rs.getString("email"));
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) rs.close();
+	            if (psmt != null) psmt.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return member;
+	}
 	
+	public void updateMember(MemberDTO dto) throws SQLException {
+		
+	    String query = "UPDATE member SET name = ?, email = ?, pass = NVL(?, pass) WHERE user_id = ?";
+	    
+	    try  {
+	    	
+	    	psmt = conn.prepareStatement(query);
+	    	
+	        psmt.setString(1, dto.getName());
+	        psmt.setString(2, dto.getEmail());
+	        psmt.setString(3, dto.getPass()); 
+	        psmt.setString(4, dto.getUser_id());
+	        
+	        psmt.executeUpdate();
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw e;
+	    }
+	}
 	
 }
 	

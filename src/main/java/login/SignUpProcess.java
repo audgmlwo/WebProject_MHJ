@@ -26,6 +26,9 @@ public class SignUpProcess extends HttpServlet {
         String email = req.getParameter("email");
 
         MemberDAO dao = new MemberDAO();
+        
+   
+        
 
         // 데이터베이스 중복 확인
         int checkUserResult = dao.UserCheck(userId);

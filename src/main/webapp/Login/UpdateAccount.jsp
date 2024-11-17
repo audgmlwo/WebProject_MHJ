@@ -1,5 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@page import="login.MemberDTO"%>
+<%@page import="login.MemberDAO"%>
+
+
+<% 
+// 세션에서 로그인된 사용자 ID 가져오기
+String userId = (String) session.getAttribute("UserId");
+if (userId == null) {
+    // 로그인이 되어 있지 않은 경우
+    response.sendRedirect("LoginForm.jsp");
+    return;
+}
+
+//데이터베이스에서 사용자 정보 가져오기
+MemberDAO dao = new MemberDAO();
+MemberDTO memberDTO = dao.getMember(userId);
+dao.close();
+
+//JSP에 사용자 정보 전달
+request.setAttribute("currentUser", memberDTO);
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +37,8 @@
         }
     </script>
 </head>
+
+
 <body>
     <!-- 어두운 배경 -->
     <div class="overlay"></div>
@@ -29,7 +52,7 @@
             </tr>
             <tr>
                 <td>아이디</td>
-                <td>${currentUser.userId}</td>
+                <td>${currentUser.user_id}</td>
             </tr>
             <tr>
                 <td>닉네임</td>
@@ -49,8 +72,10 @@
         <!-- 회원 정보 수정 폼 -->
         <div class="update-form-container">
             <h3>회원 정보 수정</h3>
-            <form action="/WebProject_MHJ/Login/UpdateAccountProcess.jsp" method="post">
-                <input type="hidden" name="user_id" value="${currentUser.userId}">
+            
+            <form action="/WebProject_MHJ/Login/UpdateAccountProcess" method="post">
+            
+                <input type="hidden" name="user_id" value="${currentUser.user_id}">
 
                 <!-- 이름 -->
                 <label for="name">닉네임</label>
@@ -70,6 +95,15 @@
 
                 <!-- 제출 -->
                 <input type="submit" value="정보 수정">
+                
+                <c:if test="${not empty errors}">
+  				  <div class="error-messages">
+       				 <c:forEach var="error" items="${errors}">
+           				  <p>${error.value}</p>
+     		  		 </c:forEach>
+   				  </div>
+				</c:if>
+				
             </form>
         </div>
     </div>
