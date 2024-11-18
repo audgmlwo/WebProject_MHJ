@@ -13,12 +13,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/Login/UpdateAccountProcess")
+@WebServlet("/login/UpdateAccountProcess")
 public class UpdateAccountProcess extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req,
+    		HttpServletResponse resp) 
+    				throws ServletException, IOException {
+    	
         // 입력 데이터 수집
         String userId = req.getParameter("user_id");
         String password = req.getParameter("password");

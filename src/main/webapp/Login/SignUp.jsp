@@ -11,14 +11,16 @@
 	<link
 		href="https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900"
 		rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="/WebProject_MHJ/css/signup.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/login/signup.css" />
 </head>	
 <!-- 별도 CSS 파일 -->
 <body>
 	<div class="SignUp-wrapper">
 		<div class="SignUp-container">
 			<h2>회원가입</h2>
-			 <form action="SignUpProcess" method="post">
+
+			 <form action="${pageContext.request.contextPath}/login/SignUpProcess" method="post">
+			 
 				<!-- 아이디 -->
 				<div>
 					<input type="text" name="user_id" id="user_id" placeholder="아이디"

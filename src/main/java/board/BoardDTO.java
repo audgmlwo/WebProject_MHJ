@@ -6,16 +6,18 @@ public class BoardDTO {
 		
 	
 	private int board_id;  
-	private String board_typ;
+	private String board_type;
 	private String user_id;
 	private String title;
 	private String content; 
 	private Date created_date;
-	private Date upeated_date;
+	private Date updated_date;
 	private String o_file;
 	private String s_file;
 	private int down_count;
 	private int visit_count;
+	private String name;
+	
 	
 	public int getBoard_id() {
 		return board_id;
@@ -23,11 +25,11 @@ public class BoardDTO {
 	public void setBoard_id(int board_id) {
 		this.board_id = board_id;
 	}
-	public String getBoard_typ() {
-		return board_typ;
+	public String getBoard_type() {
+		return board_type;
 	}
-	public void setBoard_typ(String board_typ) {
-		this.board_typ = board_typ;
+	public void setBoard_type(String board_type) {
+		this.board_type = board_type;
 	}
 	public String getUser_id() {
 		return user_id;
@@ -53,11 +55,11 @@ public class BoardDTO {
 	public void setCreated_date(Date created_date) {
 		this.created_date = created_date;
 	}
-	public Date getUpeated_date() {
-		return upeated_date;
+	public Date getUpdated_date() {
+		return updated_date;
 	}
-	public void setUpeated_date(Date upeated_date) {
-		this.upeated_date = upeated_date;
+	public void setUpdated_date(Date upeated_date) {
+		this.updated_date = upeated_date;
 	}
 	public String getO_file() {
 		return o_file;
@@ -82,6 +84,13 @@ public class BoardDTO {
 	}
 	public void setVisit_count(int visit_count) {
 		this.visit_count = visit_count;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 }
 

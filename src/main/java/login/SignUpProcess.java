@@ -9,11 +9,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet("/Login/SignUpProcess")
+@WebServlet("/login/SignUpProcess")
+
+
 
 public class SignUpProcess extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
+	@Override
 	protected void doPost(HttpServletRequest req,
     		HttpServletResponse resp) 
     				throws ServletException, IOException {
@@ -40,7 +43,7 @@ public class SignUpProcess extends HttpServlet {
 
         // 유효성 검사 로직
         if (userId == null || userId.length() < 4 || userId.length() > 12 || !userId.matches("^[a-zA-Z0-9]+$")) {
-            errors.put("user_id", "아이디는 4~12자의 영문 소문자와 숫자만 가능합니다.");
+            errors.put("user_id", "아이디는 4~12자의 영문 대소문자와 숫자만 가능합니다.");
         } else if (checkUserResult == 1) {
             errors.put("user_id", "이미 사용 중인 아이디입니다.");
         }
@@ -67,8 +70,9 @@ public class SignUpProcess extends HttpServlet {
         // 에러가 있는 경우 다시 폼으로 전달
         if (!errors.isEmpty()) {
             req.setAttribute("errors", errors);
-            req.getRequestDispatcher("SignUp.jsp").forward(req, resp);
+            req.getRequestDispatcher("/Login/SignUp.jsp").forward(req, resp);
             return;
+           
         }
         
         // 성공 처리 로직
@@ -81,6 +85,7 @@ public class SignUpProcess extends HttpServlet {
         dao.insertMember(newMember);
 
         // 성공 페이지로 리다이렉트
-        resp.sendRedirect("LoginForm.jsp");
+        resp.sendRedirect(req.getContextPath() + "/Login/LoginForm.jsp");
+        
     }
 }

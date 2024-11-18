@@ -29,7 +29,7 @@ request.setAttribute("currentUser", memberDTO);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>내 정보 관리</title>
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900" rel="stylesheet" type="text/css">
-   	<link rel="stylesheet" href="/WebProject_MHJ/css/updateaccount.css">
+   	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/login/updateaccount.css" />
     <script>
         function toggleEditForm() {
             const formContainer = document.querySelector('.update-form-container');
@@ -73,7 +73,7 @@ request.setAttribute("currentUser", memberDTO);
         <div class="update-form-container">
             <h3>회원 정보 수정</h3>
             
-            <form action="/WebProject_MHJ/Login/UpdateAccountProcess" method="post">
+            <form action="${pageContext.request.contextPath}/login/UpdateAccountProcess" method="post">
             
                 <input type="hidden" name="user_id" value="${currentUser.user_id}">
 

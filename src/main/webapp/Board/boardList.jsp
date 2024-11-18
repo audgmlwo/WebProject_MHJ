@@ -25,11 +25,11 @@
         <div class="container">
             <nav id="nav">
                 <ul>
-                    <li><a href="index.jsp">Homepage</a></li>
-                    <li><a href="threecolumn.jsp">Three Column</a></li>
-                    <li><a href="twocolumn1.jsp">Two Column #1</a></li>
-                    <li><a href="twocolumn2.jsp">Two Column #2</a></li>
-                    <li class="current_page_item"><a href="board.jsp">자유게시판</a></li>
+                    <li><a href="index.jsp">메인화면</a></li>
+                    <li><a href="threecolumn.jsp">공지사항</a></li>
+                    <li><a href="twocolumn1.jsp">Q&A 게시판</a></li>
+                    <li><a href="twocolumn2.jsp">자료실</a></li>
+                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/board/BoardListCtrl">자유게시판</a></li>
                 </ul>
             </nav>
         </div>
@@ -46,13 +46,29 @@
                             <div class="post">
                                 <h2 class="custom-heading">자유게시판 목록</h2>
                                 
+                                 <form method="get">  
+							     <table border="1" width="90%">
+							     <tr>
+							        <td align="center">
+							            <select name="searchField">
+							                <option value="title">제목</option>
+							                <option value="content">내용</option>
+							                <option value="name">작성자</option>
+							            </select>
+							            <input type="text" name="searchWord" />
+							            <input type="submit" value="검색하기" />
+							        </td>
+							     </tr>
+							     </table>
+							     </form>
+                                
 							    <table border="1" width="90%">
 							        <tr>
 							            <th width="10%">번호</th>
 							            <th width="*">제목</th>
 							            <th width="15%">작성자</th>
 							            <th width="10%">조회수</th>
-							            <th width="15%">작성일</th>
+							            <th width="15%">작성일</th>							           
 							            <th width="8%">첨부</th>
 							        </tr>
                                    
@@ -63,42 +79,43 @@
                                                 </tr>
                                             </c:when>
                                             <c:otherwise>
-                                                <c:forEach items="${boardLists}" var="row" varStatus="loop">
-                                                    <tr>
-                                                        <td>${map.totalCount - (((map.pageNum-1) * map.pageSize) + loop.index)}</td>
-                                                        <td><a href="../mvcboard/view.do?idx=${row.idx}">${row.title}</a></td>
-                                                        <td>${row.id}</td>
-                                                        <td>${row.visitcount}</td>
-                                                        <td>${row.postdate}</td>
-                                                        <td>
-                                                            <c:if test="${not empty row.ofile}">
-                                                                <a href="../mvcboard/download.do?ofile=${row.ofile}&sfile=${row.sfile}&idx=${row.idx}">[Down]</a>
-                                                            </c:if>
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
+                                                <c:forEach items="${boardLists }" var="row"
+													varStatus="loop">
+										        <tr align="center">
+										        
+										        	<!-- 게시물의 갯수를 저장한 map.totalCount 에서 인출되는 인스턴스의 인덱스를 차감해서 순차적인 번호를 출력 -->
+										        	<!-- (map.totalCount : 5) -  (loop.index : 0,1,2,3,4) ==> 5,4,3,2,1  -->
+										        	<!-- pageNum 현재 진입해있는 페이지 번호
+										        	     pageSize 한 페이지에 출력할 게시물의 수 -->
+										            <td>
+										            	${ map.totalCount - (((map.pageNum-1) * map.pageSize)
+										            	+ loop.index)}	
+										            </td> 
+										            <td align="left">
+										            	<!-- 제목 클릭시 '열람'페이지로 이동해야 하므로
+										            		 게시물의 일련번호를 파라미터로 전달한다. -->
+														<a href="../board/view.do?idx=${row.idx }">
+															${row.title }</a>        
+										            </td> 
+										            <!-- 현재 루프에서 row는 BoardDTO를 의미하므로, 각 멤버변수의
+										            	 getter()를 통해 저장된 값을 출력한다. -->
+										            <td>${ row.id}</td>
+										            <td>${ row.visitcount}</td>
+										            <td>${ row.postdate}</td>
+										            <td>
+										            
+										            <!-- 첨부파일이 있는 경우에만 다운로드 링크를 출력한다. -->
+										            <c:if test="${not empty row.ofile }">
+										          	  <a href="../board/download.do?ofile=${row.ofile }&sfile=${row.sfile}&idx=${row.idx}">[Down]</a>
+										            </c:if>    
+										            </td>
+										        </tr>
+										        </c:forEach>	
                                             </c:otherwise>
                                         </c:choose>
                                     </tbody>
                                 </table>
-                                
-								<!-- 검색 바와 자유게시판 목록 테이블 시작 -->
-								
-                                <form method="get">  
-							    <table border="1" width="90%">
-							    <tr>
-							        <td align="center">
-							            <select name="searchField">
-							                <option value="title">제목</option>
-							                <option value="content">내용</option>
-							                <option value="name">작성자</option>
-							            </select>
-							            <input type="text" name="searchWord" />
-							            <input type="submit" value="검색하기" />
-							        </td>
-							    </tr>
-							    </table>
-							    </form>
+                                		 
 							    
   								<!-- 페이징 이미지 표시 -->
 								    <table border="1" width="90%">
@@ -106,10 +123,11 @@
 								            <td>
 								            	${ map.pagingImg }
 											</td>
+											
 								        </tr>
 								   </table>
 								   <div class="button-container">
-									 <button class="button-write">글쓰기</button>
+									 <button type="button"onclick="location.href='../Board/boardWrite.jsp';">글쓰기</button>
 								   </div>
                                 <!-- 자유게시판 목록 코드 끝 -->
                             </div>

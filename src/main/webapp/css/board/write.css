@@ -1,0 +1,96 @@
+@charset "UTF-8";
+
+        /* 전체 배경 스타일 */
+        body {
+            background: url('/WebProject_MHJ/images/pics01.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 어두운 배경 처리 */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* 어두운 투명 처리 */
+            z-index: -1;
+        }
+
+        /* 글쓰기 폼 컨테이너 */
+        .form-container {
+            position: relative;
+            max-width: 800px; /* 폼 전체 크기 설정 */
+            margin: 80px auto;
+            padding: 40px;
+            background: #ffffff;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        /* 라벨 스타일 */
+        .form-group label {
+            font-size: 18px; /* 글씨 크기 확대 */
+            font-weight: bold; /* 볼드 처리 */
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* 입력 필드와 드롭다운, 첨부파일 스타일 */
+        .form-group select,
+        .form-group input,
+        .form-group textarea,
+        .form-group input[type="file"] {
+            width: 100%; /* 모든 입력 필드 너비 통일 */
+            max-width: 700px; /* 일정한 너비로 제한 */
+            padding: 10px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .form-group textarea {
+            height: 300px; /* 내용 입력 칸 높이 설정 */
+        }
+
+        /* 버튼 컨테이너 */
+        .button-container {
+            display: flex;
+            justify-content: space-between; /* 버튼 양쪽 정렬 */
+            margin-top: 20px;
+        }
+
+        /* 취소 버튼 (왼쪽) */
+        .button-container .btn-cancel {
+            padding: 10px 28px; /* 크기 축소 */
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .button-container .btn-cancel:hover {
+            background-color: #c82333;
+        }
+
+        /* 작성 완료 버튼 (오른쪽) */
+        .button-container .btn-submit {
+            padding: 10px 28px; /* 크기 축소 */
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .button-container .btn-submit:hover {
+            background-color: #218838;
+        }
+   
