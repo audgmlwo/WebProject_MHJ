@@ -55,14 +55,14 @@
 
 	<!-- ######################################################### -->
 	<!-- 모델2 방식의 서블릿 게시판 목록 맵핑 -->
-	<!-- <servlet>
-		<servlet-name>MVCBoardList</servlet-name>
-		<servlet-class>model2.mvcboard.ListController</servlet-class>
+	<servlet>
+		<servlet-name>BoardList</servlet-name>
+		<servlet-class>board.ListController</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>MVCBoardList</servlet-name>
-		<url-pattern>/mvcboard/list.do</url-pattern>
-	</servlet-mapping> -->
+		<servlet-name>BoardList</servlet-name>
+		<url-pattern>/board/list.do</url-pattern>
+	</servlet-mapping> 
 	
 	<!-- 모델2 방식의 게시판 목록 매핑 - 페이징 기능 추가 -->
 <!-- 	<servlet>

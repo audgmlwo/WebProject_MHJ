@@ -3,6 +3,8 @@ package board;
 import java.sql.*;
 import java.util.*;
 import common.DBConnPool;
+import board.BoardDTO;
+
 
 public class BoardDAO extends DBConnPool {
 
@@ -31,69 +33,94 @@ public class BoardDAO extends DBConnPool {
         }
         return totalCount;
     }
-
-    // 게시물 목록 조회
-    public List<BoardDTO> selectList(Map<String, Object> map) {
-        List<BoardDTO> boardList = new ArrayList<>();
-        String query =
-            "SELECT * FROM (" +
-            "  SELECT Tb.*, ROWNUM AS rNum" +
-            "  FROM (" +
-            "    SELECT * FROM board" +
-            "    WHERE board_type = ?";
-
-        // board_id 조건 추가
-        if (map.get("board_id") != null) {
-            query += " AND board_id = ?";
+    
+    public List<BoardDTO> selectList(Map<String,Object> map) {
+        List<BoardDTO> board = new Vector<BoardDTO>();
+        String query = "SELECT * FROM board ";
+        
+        if (map.get("searchWord") != null) {
+            query += " WHERE " + map.get("searchField")
+                   + " LIKE '%" + map.get("searchWord") + "%' ";
         }
+        query += " ORDER BY board_id DESC ";
 
-        // 검색어 조건 추가
-        if (map.get("searchWord") != null && !map.get("searchWord").toString().isEmpty()) {
-            query += " AND " + map.get("searchField") + " LIKE ?";
+        try {
+            psmt = conn.prepareStatement(query);
+            rs = psmt.executeQuery();
+            while (rs.next()) {
+            	
+                BoardDTO dto = new BoardDTO();
+
+                dto.setBoard_id(rs.getInt("board_id"));
+                dto.setBoard_type(rs.getString("board_type"));
+                dto.setUser_id(rs.getString("user_id"));
+                dto.setTitle(rs.getString("title"));
+                dto.setContent(rs.getString("content"));
+                dto.setCreated_date(rs.getDate("created_date"));
+                dto.setUpdated_date(rs.getDate("updated_date"));
+                dto.setO_file(rs.getString("o_file"));
+                dto.setS_file(rs.getString("s_file"));
+                dto.setDown_count(rs.getInt("down_count"));
+                dto.setVisit_count(rs.getInt("visit_count"));
+                
+                board.add(dto);
+            }
         }
-
-        query += " ORDER BY board_id DESC" +
-                 "  ) Tb" +
-                 "  WHERE ROWNUM <= ?" +
-                 ") WHERE rNum >= ?";
-
-        try (PreparedStatement psmt = conn.prepareStatement(query)) {
-            int paramIndex = 1;
-            psmt.setString(paramIndex++, map.get("boardType").toString()); // 게시판 타입
-
-            if (map.get("board_id") != null) {
-                psmt.setInt(paramIndex++, Integer.parseInt(map.get("board_id").toString())); // board_id
-            }
-
-            if (map.get("searchWord") != null && !map.get("searchWord").toString().isEmpty()) {
-                psmt.setString(paramIndex++, "%" + map.get("searchWord") + "%"); // 검색어
-            }
-
-            psmt.setInt(paramIndex++, Integer.parseInt(map.get("end").toString())); // 끝 번호
-            psmt.setInt(paramIndex, Integer.parseInt(map.get("start").toString())); // 시작 번호
-
-            try (ResultSet rs = psmt.executeQuery()) {
-                while (rs.next()) {
-                    BoardDTO dto = new BoardDTO();
-                    dto.setBoard_id(rs.getInt("board_id"));
-                    dto.setBoard_type(rs.getString("board_type"));
-                    dto.setUser_id(rs.getString("user_id"));
-                    dto.setTitle(rs.getString("title"));
-                    dto.setContent(rs.getString("content"));
-                    dto.setCreated_date(rs.getDate("created_date"));
-                    dto.setUpdated_date(rs.getDate("updated_date"));
-                    dto.setO_file(rs.getString("o_file"));
-                    dto.setS_file(rs.getString("s_file"));
-                    dto.setDown_count(rs.getInt("down_count"));
-                    dto.setVisit_count(rs.getInt("visit_count"));
-                    boardList.add(dto);
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("페이징 조회 중 예외 발생");
+        catch (Exception e) {
+            System.out.println("게시물 조회 중 예외 발생");
             e.printStackTrace();
         }
-        return boardList;
+        return board;
+    }
+
+    // 게시물 목록 조회
+    public List<BoardDTO> selectListPage(
+    		Map<String,Object> map) {
+    	
+        List<BoardDTO> board = new Vector<BoardDTO>();
+        
+        String query = 
+                 " SELECT * FROM ( "
+               + "  SELECT Tb.*, ROWNUM rNum FROM ( "
+               + "    SELECT * FROM mvcboard ";
+        if (map.get("searchWord") != null) {
+            query +=" WHERE " + map.get("searchField")
+                  + " LIKE '%" + map.get("searchWord") + "%'";
+        }
+        query += "     ORDER BY idx DESC "
+               + "   ) Tb "
+               + " ) "
+               + " WHERE rNum BETWEEN ? AND ?";
+
+        try {
+            psmt = conn.prepareStatement(query);
+            psmt.setString(1, map.get("start").toString());
+            psmt.setString(2, map.get("end").toString());
+            rs = psmt.executeQuery();
+
+            while (rs.next()) {
+                BoardDTO dto = new BoardDTO();
+
+                dto.setBoard_id(rs.getInt("board_id"));
+                dto.setBoard_type(rs.getString("board_type"));
+                dto.setUser_id(rs.getString("user_id"));
+                dto.setTitle(rs.getString("title"));
+                dto.setContent(rs.getString("content"));
+                dto.setCreated_date(rs.getDate("created_date"));
+                dto.setUpdated_date(rs.getDate("updated_date"));
+                dto.setO_file(rs.getString("o_file"));
+                dto.setS_file(rs.getString("s_file"));
+                dto.setDown_count(rs.getInt("down_count"));
+                dto.setVisit_count(rs.getInt("visit_count"));
+             
+                board.add(dto);
+            }
+        }
+        catch (Exception e) {
+            System.out.println("게시물 조회 중 예외 발생");
+            e.printStackTrace();
+        }
+        return board;
     }
 
 
