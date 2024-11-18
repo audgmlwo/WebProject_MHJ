@@ -10,18 +10,26 @@
 <body>
     <div class="overlay"></div>
     <div class="form-container">
-        <form action="${pageContext.request.contextPath}/board/BoardWriteCtrl" method="post" enctype="multipart/form-data">
-            <!-- 게시판 선택 -->
-            <div class="form-group">
-                <label for="board_type">게시판을 선택해주세요:</label>
-                <select id="board_type" name="board_type" required>
-                    <option value="" disabled selected>게시판 선택</option>
-                    <option value="fre">자유 게시판</option>
-                    <option value="files">자료실</option>
-                    <option value="qna">Q&A 게시판</option>
-                    <option value="ntc">공지사항</option>
-                </select>
-            </div>
+        <form method="post" action="BoardWriteCtrl">
+		    <div class="form-group">
+		        <label for="board_type">게시판을 선택해주세요:</label>
+		        <select id="board_type" name="board_type" required>
+		            <option value="" disabled selected>게시판 선택</option>
+		            <option value="fre">자유 게시판</option>
+		            <option value="files">자료실</option>
+		            <option value="qna">Q&A 게시판</option>
+		            <option value="ntc">공지사항</option>
+		        </select>
+		    </div>
+			<script>
+			    document.querySelector('form').addEventListener('submit', function(e) {
+			        const boardType = document.getElementById('board_type').value;
+			        if (!boardType) {
+			            alert('게시판을 선택해주세요!');
+			            e.preventDefault(); // 제출 중단
+			        }
+			    });
+			</script>
 
             <!-- 제목 -->
             <div class="form-group">
@@ -43,7 +51,7 @@
 
             <!-- 버튼 -->
             <div class="button-container">
-                <button type="button" class="btn-cancel" onclick="location.href='board.jsp'">취소</button>
+                <button type="button" class="btn-cancel" onclick="location.href='../Board/boardList.jsp'">취소</button>
                 <button type="submit" class="btn-submit">작성 완료</button>
             </div>
         </form>

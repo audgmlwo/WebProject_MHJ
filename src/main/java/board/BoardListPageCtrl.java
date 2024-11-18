@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import utils.BoardPage;
 
-@WebServlet("/board/BoardListCtrl")
+@WebServlet("/board/BLPC")
 public class BoardListPageCtrl extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
@@ -69,13 +69,14 @@ public class BoardListPageCtrl extends HttpServlet{
 		/* 페이지 처리 end */
 		
 		//DAO의 메서드를 호출하여 목록에 출력할 게시물을 얻어온다.
-		List<BoardDTO> boardLists = dao.selectListPage(map);
+		List<BoardDTO> boardLists = dao.selectList(map);
 		dao.close();
 		
 		//뷰에 전달한 매개변수 추가
 		//목록 하단에 출력할 페이지 바로가기 링크를 얻어온 후 Map에 추가
 		String pagingImg = BoardPage.pagingStr(totalCount, 
-				pageSize, blockPage, pageNum, "../board/BoardListCtrl");
+				pageSize, blockPage, pageNum, "../board/BLPC");
+		
 		map.put("pagingImg", pagingImg);
 		map.put("totalCount", totalCount);
 		map.put("pageSize", pageSize);
@@ -86,11 +87,6 @@ public class BoardListPageCtrl extends HttpServlet{
 		req.setAttribute("map", map);
 		req.getRequestDispatcher("/Board/boardList.jsp")
 		.forward(req, resp);
-		
-		
-		
-		
-		
 		
 	}
 }

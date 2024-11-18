@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <html>
 <head>
     <title>Citrusy by TEMPLATED</title>
@@ -29,7 +29,7 @@
                     <li><a href="threecolumn.jsp">공지사항</a></li>
                     <li><a href="twocolumn1.jsp">Q&A 게시판</a></li>
                     <li><a href="twocolumn2.jsp">자료실</a></li>
-                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/board/BoardListCtrl">자유게시판</a></li>
+                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/Board/boardList.jsp">자유게시판</a></li>
                 </ul>
             </nav>
         </div>
@@ -62,61 +62,45 @@
 							     </table>
 							     </form>
                                 
-							    <table border="1" width="90%">
-							        <tr>
-							            <th width="10%">번호</th>
-							            <th width="*">제목</th>
-							            <th width="15%">작성자</th>
-							            <th width="10%">조회수</th>
-							            <th width="15%">작성일</th>							           
-							            <th width="8%">첨부</th>
-							        </tr>
-                                   
-                                        <c:choose>
-                                            <c:when test="${empty boardLists}">
-                                                <tr>
-                                                    <td colspan="6" align="center">등록된 게시물이 없습니다</td>
-                                                </tr>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <c:forEach items="${boardLists }" var="row"
-													varStatus="loop">
-										        <tr align="center">
-										        
-										        	<!-- 게시물의 갯수를 저장한 map.totalCount 에서 인출되는 인스턴스의 인덱스를 차감해서 순차적인 번호를 출력 -->
-										        	<!-- (map.totalCount : 5) -  (loop.index : 0,1,2,3,4) ==> 5,4,3,2,1  -->
-										        	<!-- pageNum 현재 진입해있는 페이지 번호
-										        	     pageSize 한 페이지에 출력할 게시물의 수 -->
-										            <td>
-										            	${ map.totalCount - (((map.pageNum-1) * map.pageSize)
-										            	+ loop.index)}	
-										            </td> 
-										            <td align="left">
-										            	<!-- 제목 클릭시 '열람'페이지로 이동해야 하므로
-										            		 게시물의 일련번호를 파라미터로 전달한다. -->
-														<a href="../board/view.do?idx=${row.idx }">
-															${row.title }</a>        
-										            </td> 
-										            <!-- 현재 루프에서 row는 BoardDTO를 의미하므로, 각 멤버변수의
-										            	 getter()를 통해 저장된 값을 출력한다. -->
-										            <td>${ row.id}</td>
-										            <td>${ row.visitcount}</td>
-										            <td>${ row.postdate}</td>
-										            <td>
-										            
-										            <!-- 첨부파일이 있는 경우에만 다운로드 링크를 출력한다. -->
-										            <c:if test="${not empty row.ofile }">
-										          	  <a href="../board/download.do?ofile=${row.ofile }&sfile=${row.sfile}&idx=${row.idx}">[Down]</a>
-										            </c:if>    
-										            </td>
-										        </tr>
-										        </c:forEach>	
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </tbody>
-                                </table>
-                                		 
+							   <table border="1" width="90%">
+							    <tr>
+							        <th width="10%">번호</th>
+							        <th width="*">제목</th>
+							        <th width="15%">작성자</th>
+							        <th width="10%">조회수</th>
+							        <th width="15%">작성일</th>
+							        <th width="8%">첨부</th>
+							    </tr>
 							    
+							    <c:choose>
+							    <c:when test="${boardLists == null || boardLists.isEmpty()}">
+							        <tr>
+							            <td colspan="6" align="center">등록된 게시물이 없습니다</td>
+							        </tr>
+							    </c:when>
+							    <c:otherwise>
+							        <c:forEach items="${boardLists}" var="row">
+							            <tr align="center">
+							                <td>${row.board_id}</td>
+							                <td align="left">
+							                    <a href="../board/view.do?board_id=${row.board_id}&board_type=${row.board_type}">
+							                        ${row.title}
+							                    </a>
+							                </td>
+							                <td>${row.user_id}</td>
+							                <td>${row.visit_count}</td>
+							                <td>${row.created_date}</td>
+							                <td>
+							                    <c:if test="${not empty row.o_file}">
+							                        <a href="../board/download.do?o_file=${row.o_file}&s_file=${row.s_file}">[Down]</a>
+							                    </c:if>
+							                </td>
+							            </tr>
+							        </c:forEach>
+							    </c:otherwise>
+							</c:choose>
+							</table>
+                                		 
   								<!-- 페이징 이미지 표시 -->
 								    <table border="1" width="90%">
 								        <tr align="center">
@@ -127,7 +111,7 @@
 								        </tr>
 								   </table>
 								   <div class="button-container">
-									 <button type="button"onclick="location.href='../Board/boardWrite.jsp';">글쓰기</button>
+									  <button type="button" onclick="location.href='../board/BoardWriteCtrl';">글쓰기</button>
 								   </div>
                                 <!-- 자유게시판 목록 코드 끝 -->
                             </div>

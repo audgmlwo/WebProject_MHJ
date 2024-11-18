@@ -27,7 +27,7 @@
 			if (session.getAttribute("UserId") == null){// 로그인 상태 확인)	
 			%>
 			
-            <form action="LoginProcess.jsp" method="post" name="loginFrm" onsubmit="return validateForm(this);">
+            <form action="${pageContext.request.contextPath}/login/loginprocess" method="post" name="loginFrm" onsubmit="return validateForm(this);">
 		        <div>
 		            <input type="text" name="user_id" id="id" placeholder="아이디" required 
 		                   oninvalid="this.setCustomValidity('아이디를 입력해 주세요.')" 
