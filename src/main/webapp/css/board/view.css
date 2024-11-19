@@ -1,0 +1,85 @@
+@charset "UTF-8";
+   
+        /* 전체 텍스트 크기 */
+        
+           /* 배경 어둡게 처리 및 낙엽 이미지 추가 */
+        body {
+            background: url('/WebProject_MHJ/images/pics01.jpg') no-repeat center center fixed;
+   			background-size: cover;
+            color: #fff; /* 텍스트 색상 변경 */
+            font-size: 1.2em;
+        }
+
+        h2 {
+            color: #f5b041; /* 제목에 따뜻한 오렌지색 추가 */
+            text-align: center;
+        }
+
+        /* 상세보기 테이블 스타일 */
+        .board-detail {
+            background: rgba(255, 255, 255, 0.9); /* 테이블 배경 반투명 */
+            color: #333; /* 테이블 내부 텍스트 색상 */
+            font-size: 1em;
+            margin: 20px auto;
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .board-detail td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .board-detail td.label {
+            font-weight: bold;
+        }
+
+        /* 버튼 스타일 */
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            font-size: 0.7em;
+            padding: 8px 15px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .button.green {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .button:hover {
+            opacity: 0.9;
+        }
+
+        /* 푸터 */
+        #footer-wrapper {
+            background: rgba(0, 0, 0, 0.8);
+            color: #aaa;
+            padding: 10px 0;
+            text-align: center;
+        }
+        
+        #logo {
+    text-align: center; /* 중앙 정렬 */
+    margin: 10px 0; /* 위아래 여백 */
+		}
+		#logo h1 {
+		    font-size: 16px; /* 원하는 글자 크기 */
+		    font-weight: bold;
+		    color: #333; /* 글자 색상 */
+		}
+		#logo h1 a {
+		    text-decoration: none; /* 링크 밑줄 제거 */
+		    color: inherit; /* 부모 요소 색상 따르기 */
+		}
+        

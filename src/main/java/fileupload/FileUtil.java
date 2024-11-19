@@ -13,7 +13,9 @@ import jakarta.servlet.http.Part;
 public class FileUtil {
 
     // 파일 업로드 기능
-    public static String uploadFile(HttpServletRequest req, String sDirectory) throws ServletException, IOException {
+    public static String uploadFile(HttpServletRequest req,
+    		String sDirectory) 
+    				throws ServletException, IOException {
         Part part = req.getPart("o_file");
         
         // 파일 유효성 검사
@@ -67,7 +69,10 @@ public class FileUtil {
     }
 
     // 다중 파일 업로드 처리
-    public static ArrayList<String> multipleFile(HttpServletRequest req, String sDirectory) throws ServletException, IOException {
+    public static ArrayList<String> multipleFile(HttpServletRequest req,
+    		String sDirectory) 
+    				throws ServletException, IOException {
+    	
         ArrayList<String> listFileName = new ArrayList<>();
         Collection<Part> parts = req.getParts();
 
@@ -96,7 +101,7 @@ public class FileUtil {
 
     // 파일 다운로드 기능
     public static void download(HttpServletRequest req, HttpServletResponse resp,
-                                 String directory, String sfileName, String ofileName) {
+                                 String directory, String sfileName, String ofileName, String board_id, String board_type) {
         String sDirectory = req.getServletContext().getRealPath(directory);
         File file = new File(sDirectory, sfileName);
 

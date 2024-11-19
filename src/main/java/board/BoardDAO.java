@@ -73,6 +73,7 @@ public class BoardDAO extends DBConnPool {
         return board;
     }
 
+    
     // 게시물 목록 조회
     public List<BoardDTO> selectListPage(
     		Map<String,Object> map) {
@@ -82,23 +83,30 @@ public class BoardDAO extends DBConnPool {
         String query = 
                  " SELECT * FROM ( "
                + "  SELECT Tb.*, ROWNUM rNum FROM ( "
-               + "    SELECT * FROM mvcboard ";
+               + "    SELECT * FROM board ";
+        
         if (map.get("searchWord") != null) {
             query +=" WHERE " + map.get("searchField")
                   + " LIKE '%" + map.get("searchWord") + "%'";
         }
-        query += "     ORDER BY idx DESC "
+        query += "     ORDER BY BOARD_ID DESC "
                + "   ) Tb "
                + " ) "
                + " WHERE rNum BETWEEN ? AND ?";
 
         try {
             psmt = conn.prepareStatement(query);
+            
+            int paramIndex = 1;
+            if (map.get("searchWord") != null && !map.get("searchWord").toString().isEmpty()) {
+                psmt.setString(paramIndex++, "%" + map.get("searchWord") + "%");
+            }
             psmt.setString(1, map.get("start").toString());
             psmt.setString(2, map.get("end").toString());
             rs = psmt.executeQuery();
 
             while (rs.next()) {
+            	
                 BoardDTO dto = new BoardDTO();
 
                 dto.setBoard_id(rs.getInt("board_id"));
@@ -115,13 +123,22 @@ public class BoardDAO extends DBConnPool {
              
                 board.add(dto);
             }
-        }
-        catch (Exception e) {
-            System.out.println("게시물 조회 중 예외 발생");
+        
+    } catch (Exception e) {
+        System.out.println("게시물 조회 중 예외 발생");
+        e.printStackTrace();
+    } finally {
+        // 리소스 정리: ResultSet -> PreparedStatement -> Connection 순으로 닫음
+        try {
+            if (rs != null) rs.close();
+            if (psmt != null) psmt.close();
+            // conn은 DAO 전체에서 관리되고 있다면 여기서 닫지 않음
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return board;
     }
+    return board;
+}
 
 
     // 게시물 작성
@@ -130,7 +147,10 @@ public class BoardDAO extends DBConnPool {
         String query = "INSERT INTO board (board_id, board_type, user_id, title, content, created_date, updated_date, o_file, s_file) "
                      + "VALUES (seq_board_num.NEXTVAL, ?, ?, ?, ?, SYSDATE, SYSDATE, ?, ?)";
 
-        try (PreparedStatement psmt = conn.prepareStatement(query)) {
+        try {
+        	
+        	psmt = conn.prepareStatement(query);
+        	
             psmt.setString(1, dto.getBoard_type());
             psmt.setString(2, dto.getUser_id());
             psmt.setString(3, dto.getTitle());
@@ -150,14 +170,18 @@ public class BoardDAO extends DBConnPool {
     public BoardDTO selectView(String board_id, String board_type) {
         BoardDTO dto = null;
         String query = "SELECT Bo.*, Me.name FROM board Bo "
-                     + "INNER JOIN member Me ON Bo.user_id = Me.id "
+                     + "INNER JOIN member Me ON Bo.user_id = Me.user_id "
                      + "WHERE Bo.board_id = ? AND Bo.board_type = ?";
 
-        try (PreparedStatement psmt = conn.prepareStatement(query)) {
+        try {
+        	
+        	psmt = conn.prepareStatement(query);
+        	
             psmt.setInt(1, Integer.parseInt(board_id));
             psmt.setString(2, board_type);
 
             try (ResultSet rs = psmt.executeQuery()) {
+            	
                 if (rs.next()) {
                     dto = new BoardDTO();
                     dto.setBoard_id(rs.getInt("board_id"));
@@ -184,7 +208,11 @@ public class BoardDAO extends DBConnPool {
     // 조회수 증가
     public void updateVisitCount(String board_id, String board_type) {
         String query = "UPDATE board SET visit_count = visit_count + 1 WHERE board_id = ? AND board_type = ?";
-        try (PreparedStatement psmt = conn.prepareStatement(query)) {
+        
+        try {
+        	
+        	psmt = conn.prepareStatement(query);
+        	
             psmt.setInt(1, Integer.parseInt(board_id));
             psmt.setString(2, board_type);
             psmt.executeUpdate();
@@ -197,21 +225,33 @@ public class BoardDAO extends DBConnPool {
     // 다운로드 횟수 증가
     public void downCountPlus(String board_id, String board_type) {
         String query = "UPDATE board SET down_count = down_count + 1 WHERE board_id = ? AND board_type = ?";
-        try (PreparedStatement psmt = conn.prepareStatement(query)) {
+        try {
+            psmt = conn.prepareStatement(query);
             psmt.setInt(1, Integer.parseInt(board_id));
             psmt.setString(2, board_type);
-            psmt.executeUpdate();
+            int result = psmt.executeUpdate();
+
+            if (result > 0) {
+                System.out.println("다운로드 횟수 증가 성공: board_id=" + board_id + ", board_type=" + board_type);
+            } else {
+                System.out.println("다운로드 횟수 증가 실패: board_id=" + board_id + ", board_type=" + board_type);
+            }
         } catch (Exception e) {
-            System.out.println("게시물 다운로드 조회수 증가 중 예외 발생");
+            System.out.println("게시물 다운로드 횟수 증가 중 예외 발생");
             e.printStackTrace();
         }
     }
 
     // 게시물 삭제
     public int deletePost(String board_id, String board_type) {
+    	
         int result = 0;
         String query = "DELETE FROM board WHERE board_id = ? AND board_type = ?";
-        try (PreparedStatement psmt = conn.prepareStatement(query)) {
+        
+        try {
+        	
+        	psmt = conn.prepareStatement(query);
+        	
             psmt.setInt(1, Integer.parseInt(board_id));
             psmt.setString(2, board_type);
             result = psmt.executeUpdate();
@@ -226,7 +266,12 @@ public class BoardDAO extends DBConnPool {
     public int updatePost(BoardDTO dto) {
         int result = 0;
         String query = "UPDATE board SET title = ?, content = ?, o_file = ?, s_file = ? WHERE board_id = ? AND board_type = ? AND user_id = ?";
-        try (PreparedStatement psmt = conn.prepareStatement(query)) {
+        
+        
+        try {
+        	
+        	psmt = conn.prepareStatement(query);
+        	
             psmt.setString(1, dto.getTitle());
             psmt.setString(2, dto.getContent());
             psmt.setString(3, dto.getO_file());

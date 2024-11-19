@@ -22,9 +22,11 @@ public class BoardWriteCtrl extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, 
+    		HttpServletResponse resp) throws ServletException, 
+    IOException {
         HttpSession session = req.getSession();
-
+        
         // 로그인 확인
         if (session.getAttribute("UserId") == null) {
             // 이전 요청 URL을 세션에 저장
@@ -38,7 +40,9 @@ public class BoardWriteCtrl extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, 
+    		HttpServletResponse resp) 
+    				throws ServletException, IOException {
         HttpSession session = req.getSession();
 
         // 로그인 확인
@@ -94,7 +98,7 @@ public class BoardWriteCtrl extends HttpServlet {
             int result = dao.insertWrite(dto); // 글쓰기 실행
 
             if (result == 1) {
-                resp.sendRedirect("../Board/boardList.jsp"); // 성공 시 목록으로 이동
+                resp.sendRedirect("../board/BLPC"); // 성공 시 목록으로 이동
             } else {
                 JSFunction.alertLocation(resp, "글쓰기에 실패했습니다.", "../board/boardWrite.jsp");
             }

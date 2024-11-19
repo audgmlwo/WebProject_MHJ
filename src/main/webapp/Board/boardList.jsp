@@ -73,17 +73,20 @@
 							    </tr>
 							    
 							    <c:choose>
+							    
 							    <c:when test="${boardLists == null || boardLists.isEmpty()}">
 							        <tr>
 							            <td colspan="6" align="center">등록된 게시물이 없습니다</td>
 							        </tr>
 							    </c:when>
+							
+							    
 							    <c:otherwise>
 							        <c:forEach items="${boardLists}" var="row">
 							            <tr align="center">
 							                <td>${row.board_id}</td>
 							                <td align="left">
-							                    <a href="../board/view.do?board_id=${row.board_id}&board_type=${row.board_type}">
+							                    <a href="../board/BVC?board_id=${row.board_id}&board_type=${row.board_type}">
 							                        ${row.title}
 							                    </a>
 							                </td>
@@ -92,7 +95,7 @@
 							                <td>${row.created_date}</td>
 							                <td>
 							                    <c:if test="${not empty row.o_file}">
-							                        <a href="../board/download.do?o_file=${row.o_file}&s_file=${row.s_file}">[Down]</a>
+							                        <a href="../board/BDC?o_file=${row.o_file}&s_file=${row.s_file}">[Down]</a>
 							                    </c:if>
 							                </td>
 							            </tr>

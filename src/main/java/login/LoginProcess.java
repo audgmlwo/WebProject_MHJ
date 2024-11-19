@@ -15,6 +15,7 @@ public class LoginProcess extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	
         // 클라이언트로부터 전달받은 파라미터
         String userId = request.getParameter("user_id");
         String userPw = request.getParameter("user_pw");
@@ -28,6 +29,7 @@ public class LoginProcess extends HttpServlet {
         if (memberDTO != null && memberDTO.getUser_id() != null) {
             // 세션에 사용자 정보 저장
             HttpSession session = request.getSession();
+            
             session.setAttribute("UserId", memberDTO.getUser_id());
             session.setAttribute("UserName", memberDTO.getName());
 

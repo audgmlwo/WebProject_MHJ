@@ -52,17 +52,27 @@
 		<servlet-name>MemberAuth</servlet-name>
 		<url-pattern>/12Servlet/MemberAuth.mvc</url-pattern>
 	</servlet-mapping>
-
+	
+	<context-param>
+		<param-name>POSTS_PER_PAGE</param-name>
+		<param-value>10</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>PAGES_PER_BLOCK</param-name>
+		<param-value>5</param-value>
+	</context-param>
+	
 	<!-- ######################################################### -->
 	<!-- 모델2 방식의 서블릿 게시판 목록 맵핑 -->
-	<servlet>
+	<!-- <servlet>
 		<servlet-name>BoardList</servlet-name>
 		<servlet-class>board.ListController</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>BoardList</servlet-name>
 		<url-pattern>/board/list.do</url-pattern>
-	</servlet-mapping> 
+	</servlet-mapping>  -->
 	
 	<!-- 모델2 방식의 게시판 목록 매핑 - 페이징 기능 추가 -->
 <!-- 	<servlet>
@@ -98,15 +108,7 @@
 	
 	<!-- 페이징 -->
 	<!-- 한페이지 당 출력할 게시물의 갯수 -->
-	<context-param>
-		<param-name>POSTS_PER_PAGE</param-name>
-		<param-value>10</param-value>
-	</context-param>
 	
-	<context-param>
-		<param-name>PAGES_PER_BLOCK</param-name>
-		<param-value>5</param-value>
-	</context-param>
 
 
 </web-app>
