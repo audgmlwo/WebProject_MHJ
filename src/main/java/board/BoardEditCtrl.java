@@ -23,41 +23,53 @@ public class BoardEditCtrl extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
 	@Override
-	protected void doGet(HttpServletRequest req,
-			HttpServletResponse resp) 
-					throws ServletException, IOException {
-	//로그인 확인
-	HttpSession session = req.getSession();
-	
-	// 로그인 확인
-    if (session.getAttribute("UserId") == null) {
-        // 이전 요청 URL을 세션에 저장
-        session.setAttribute("redirectAfterLogin", req.getRequestURI());
-        JSFunction.alertLocation(resp, "로그인 후 이용해주세요.", "../Login/LoginForm.jsp");
-        return;
-    }
-	
-	//게시물 얻어오기 : '열람' 에서 사용했던 메서드를 그대로 호출
-    
-	String board_id = req.getParameter("board_id");
-	String board_type = req.getParameter("board_type");
-	
-	BoardDAO dao = new BoardDAO();
-	BoardDTO dto = dao.selectView(board_id, board_type);
-	
-	//작성자 본인 확인 : DTO에 저장된 id와 로그인 아이디를 비교
-	if(!dto.getUser_id().equals(session.getAttribute("UserId").toString())) {
-		
-		//작성자 본인이 아니라면 경고창을 띄운 후 뒤로 이동한다.
-		JSFunction.alertBack(resp, "작성자 본인만 수정할 수 있습니다.");
-		return;
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+	        throws ServletException, IOException {
+	    HttpSession session = req.getSession();
+
+	    // 로그인 확인
+	    if (session.getAttribute("UserId") == null) {
+	        session.setAttribute("redirectAfterLogin", req.getRequestURI());
+	        resp.sendRedirect(req.getContextPath() + "/Login/LoginForm.jsp");
+	        return;
+	    }
+
+	    // board_id와 board_type 얻기
+	    String board_id = req.getParameter("board_id");
+	    String board_type = req.getParameter("board_type");
+
+	    // board_id와 board_type 확인
+	    if (board_id == null || board_id.trim().isEmpty()) {
+	        resp.sendRedirect(req.getContextPath() + "/Board/boardList.jsp");
+	        return;
+	    }
+	    if (board_type == null || board_type.trim().isEmpty()) {
+	        resp.sendRedirect(req.getContextPath() + "/Board/boardList.jsp");
+	        return;
+	    }
+
+	    // DAO 호출
+	    BoardDAO dao = new BoardDAO();
+	    BoardDTO dto = dao.selectView(board_id, board_type);
+
+	    // 게시물이 존재하지 않을 경우 처리
+	    if (dto == null) {
+	        resp.sendRedirect(req.getContextPath() + "/board/boardList.jsp");
+	        return;
+	    }
+
+	    // 작성자 본인 확인
+	    if (!dto.getUser_id().equals(session.getAttribute("UserId").toString())) {
+	        JSFunction.alertBack(resp, "작성자 본인만 수정할 수 있습니다.");
+	        return;
+	    }
+
+	    // 데이터 전달
+	    req.setAttribute("dto", dto);
+	    req.getRequestDispatcher("/Board/boardEdit.jsp").forward(req, resp);
 	}
 	
-	//작성자 본인이라면 request 영역에 DTO를 저장한 후 포워드한다.
-	req.setAttribute("dto", dto);
-	req.getRequestDispatcher("/Board/boardEdit.jsp")
-	.forward(req, resp);
-  }
+	
 	//수정처리
 	@Override
 	protected void doPost(HttpServletRequest req,

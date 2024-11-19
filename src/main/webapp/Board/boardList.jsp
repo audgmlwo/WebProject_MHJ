@@ -12,8 +12,18 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/skel-noscript.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style-desktop.css" />
+<%
+    // 컨텍스트 경로 가져오기
+    String contextPath = request.getContextPath(); 
+    if (request.getAttribute("boardLists") == null) {
+        // 데이터가 없을 경우 Controller로 리다이렉트
+        response.sendRedirect(contextPath + "/board/BLPC");
+        return;
+    }
+%>  
 </head>
 <body>
+
 <div id="header-wrapper">
     <div id="header">
         <div class="container">

@@ -33,7 +33,7 @@
                 <div class="mobileUI-main-content" id="content">
                     <section>
                         <div class="post">
-                            <h2 class="custom-heading">게시물 상세 내용</h2>
+                            <h2 class="custom-heading">게시물 상세보기</h2>
 
                             <table class="board-detail" border="1">
                                 <colgroup>

@@ -11,8 +11,11 @@
         }
 
         h2 {
-            color: #f5b041; /* 제목에 따뜻한 오렌지색 추가 */
-            text-align: center;
+        	 text-align: center;
+		     font-size: 1.0em;
+		     margin-bottom: 20px;
+             color: #f5b041; /* 제목에 따뜻한 오렌지색 추가 */
+             text-align: center;
         }
 
         /* 상세보기 테이블 스타일 */
@@ -70,8 +73,8 @@
         }
         
         #logo {
-    text-align: center; /* 중앙 정렬 */
-    margin: 10px 0; /* 위아래 여백 */
+		    text-align: center; /* 중앙 정렬 */
+		    margin: 10px 0; /* 위아래 여백 */
 		}
 		#logo h1 {
 		    font-size: 16px; /* 원하는 글자 크기 */

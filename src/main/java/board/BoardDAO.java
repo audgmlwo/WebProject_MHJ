@@ -178,12 +178,14 @@ public class BoardDAO extends DBConnPool {
         	psmt = conn.prepareStatement(query);
         	
             psmt.setInt(1, Integer.parseInt(board_id));
+            
             psmt.setString(2, board_type);
 
             try (ResultSet rs = psmt.executeQuery()) {
             	
                 if (rs.next()) {
                     dto = new BoardDTO();
+                    
                     dto.setBoard_id(rs.getInt("board_id"));
                     dto.setBoard_type(rs.getString("board_type"));
                     dto.setUser_id(rs.getString("user_id"));
