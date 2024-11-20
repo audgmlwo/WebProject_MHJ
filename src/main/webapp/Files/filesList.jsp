@@ -37,8 +37,8 @@
                 <ul>
                     <li><a href="index.jsp">메인화면</a></li>
                     <li><a href="threecolumn.jsp">공지사항</a></li>
-                    <li><a href="twocolumn1.jsp">Q&A 게시판</a></li>
-                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/Files/filesList.jsp">자료실</a></li>
+                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/Q_Board/q_boardList.jsp">QnA 게시판</a></li>
+                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/Files/filesList.jsp">자료실 게시판</a></li>
                     <li class="current_page_item"><a href="${pageContext.request.contextPath}/Board/boardList.jsp">자유게시판</a></li>                   
                 </ul>
             </nav>
@@ -54,7 +54,7 @@
                     <div class="mobileUI-main-content" id="content">
                         <section>
                             <div class="post">
-                                <h2 class="custom-heading">자료실 목록</h2>
+                                <h2 class="custom-heading">자료실 게시판</h2>
                                 
                                  <form method="get">  
 							     <table border="1" width="90%">

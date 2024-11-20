@@ -1,37 +1,32 @@
-package qna_board;
+package q_board;
 
 import java.sql.Date;
+import java.util.List;
 
-public class QnaDTO {
+import na_board.NA_BoardDTO;
 
-	private int qna_id;
-	private int parent_id;
-	private String post_type;
+public class Q_BoardDTO {
+		
+	
+	private int q_id;  
 	private String user_id;
 	private String title;
 	private String content; 
 	private Date created_date;
-	private Date upeated_date;
-	private int visit_count; 
+	private Date updated_date;
+	private int visit_count;
 	private int is_accepted;
+	private String name;
 	
-	public int getQna_id() {
-		return qna_id;
+
+	private List<NA_BoardDTO> answers;
+	
+	
+	public int getQ_id() {
+		return q_id;
 	}
-	public void setQna_id(int qna_id) {
-		this.qna_id = qna_id;
-	}
-	public int getParent_id() {
-		return parent_id;
-	}
-	public void setParent_id(int parent_id) {
-		this.parent_id = parent_id;
-	}
-	public String getPost_type() {
-		return post_type;
-	}
-	public void setPost_type(String post_type) {
-		this.post_type = post_type;
+	public void setQ_id(int q_id) {
+		this.q_id = q_id;
 	}
 	public String getUser_id() {
 		return user_id;
@@ -57,11 +52,11 @@ public class QnaDTO {
 	public void setCreated_date(Date created_date) {
 		this.created_date = created_date;
 	}
-	public Date getUpeated_date() {
-		return upeated_date;
+	public Date getUpdated_date() {
+		return updated_date;
 	}
-	public void setUpeated_date(Date upeated_date) {
-		this.upeated_date = upeated_date;
+	public void setUpdated_date(Date updated_date) {
+		this.updated_date = updated_date;
 	}
 	public int getVisit_count() {
 		return visit_count;
@@ -75,7 +70,26 @@ public class QnaDTO {
 	public void setIs_accepted(int is_accepted) {
 		this.is_accepted = is_accepted;
 	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public List<NA_BoardDTO> getAnswers() {
+		return answers;
+	}
+	public void setAnswers(List<NA_BoardDTO> answers) {
+		this.answers = answers;
+	}
+	
+	
 	
 	
 	
 }
+	
+	
+	
+	
+	
