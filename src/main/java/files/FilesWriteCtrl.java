@@ -109,7 +109,7 @@ public class FilesWriteCtrl extends HttpServlet {
             int result = dao.insertWrite(dto);
 
             if (result == 1) {
-                resp.sendRedirect("../files/BLPC?board_type=" + boardType); // 성공 시 해당 게시판 목록으로 이동
+                resp.sendRedirect("../files/BLPC"); // 성공 시 해당 게시판 목록으로 이동
             } else {
                 JSFunction.alertLocation(resp, "글쓰기에 실패했습니다.", "../Files/filesWrite.jsp");
             }
