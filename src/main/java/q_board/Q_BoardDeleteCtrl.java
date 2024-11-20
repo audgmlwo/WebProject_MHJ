@@ -53,8 +53,10 @@ public class Q_BoardDeleteCtrl extends HttpServlet {
 		int result = dao.deletePost(q_id);
 		
 		dao.close();
-			
+		
+		
 		//삭제가 완료되면 목록으로 이동한다.
+	
 		JSFunction.alertLocation(resp, "삭제되었습니다.", "../q_board/Q_BLPC");
 	}
 }

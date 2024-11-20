@@ -12,7 +12,6 @@ import na_board.NA_BoardDAO;
 import na_board.NA_BoardDTO;
 
 
-
 @WebServlet("/q_board/Q_BVC")
 public class Q_BoardViewCtrl extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -20,38 +19,25 @@ public class Q_BoardViewCtrl extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) 
             throws ServletException, IOException {
-
-        // 게시물 불러오기
-        Q_BoardDAO dao = new Q_BoardDAO();
-        NA_BoardDAO answerDao = new NA_BoardDAO(); // 답변 DAO 추가
-
-        // 파라미터로 전달될 일련번호를 받기
         String q_id = req.getParameter("q_id");
 
-        // 조회수 1 증가
-        dao.updateVisitCount(q_id);
+        Q_BoardDAO questionDao = new Q_BoardDAO();
+        NA_BoardDAO answerDao = new NA_BoardDAO();
 
-        // 일련번호에 해당하는 게시물을 인출
-        Q_BoardDTO dto = dao.selectView(q_id);
-
-        // 해당 질문의 답변 리스트를 조회
+        Q_BoardDTO question = questionDao.selectView(q_id);
         List<NA_BoardDTO> answers = answerDao.getAnswersByQuestionId(q_id);
 
-        // DAO 연결 종료
-        dao.close();
+        questionDao.close();
         answerDao.close();
 
-        // 줄바꿈 처리: 웹브라우저에서 출력할 때 <br> 태그로 변경
-        if (dto != null) {
-            dto.setContent(dto.getContent().replaceAll("\r\n", "<br/>"));
-            dto.setAnswers(answers); // 답변 리스트를 설정
+        System.out.println("Question: " + question);
+        System.out.println("Answers: " + answers);
+
+        if (question != null) {
+            question.setAnswers(answers);
         }
 
-        // 게시물(dto) 저장 후 뷰로 포워드
-        req.setAttribute("dto", dto);
+        req.setAttribute("dto", question);
         req.getRequestDispatcher("/Q_Board/q_boardView.jsp").forward(req, resp);
     }
 }
-
-
-

@@ -41,7 +41,7 @@ public class BoardDeleteCtrl extends HttpServlet {
 
 	    // 게시물이 존재하지 않을 경우 처리
 	    if (dto == null) {
-	        resp.sendRedirect(req.getContextPath() + "/board/boardView.jsp");
+	        resp.sendRedirect(req.getContextPath() + "/Board/boardView.jsp");
 	        return;
 	    }
 

@@ -10,23 +10,25 @@ public class Q_BoardDAO extends DBConnPool {
 
     // 게시물 총 갯수 조회 
     public int selectCountBoard(Map<String, Object> map) {
+    	
         int totalCount = 0;
         
-        String query = "SELECT COUNT(*) FROM q_board WHERE q_id =?";
+        String query = "SELECT COUNT(*) FROM q_board";
         
         if (map.get("searchWord") != null) {
             query += " WHERE " + map.get("searchField") + " LIKE ?";
         }
 
-        try (PreparedStatement psmt = conn.prepareStatement(query)) {
+        try {
+            psmt = conn.prepareStatement(query);
+            
             if (map.get("searchWord") != null) {
                 psmt.setString(1, "%" + map.get("searchWord") + "%");
             }
 
-            try (ResultSet rs = psmt.executeQuery()) {
-                if (rs.next()) {
-                    totalCount = rs.getInt(1);
-                }
+            rs = psmt.executeQuery();
+            if (rs.next()) {
+                totalCount = rs.getInt(1);
             }
         } catch (Exception e) {
             System.out.println("게시물 카운트 중 예외 발생");

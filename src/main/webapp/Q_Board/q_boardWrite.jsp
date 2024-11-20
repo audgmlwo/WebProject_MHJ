@@ -10,7 +10,7 @@
 <body>
     <div class="overlay"></div>
     <div class="form-container">
-        <form action="../q_board/Q_BWC" method="post" enctype="multipart/form-data">	 	
+        <form action="${pageContext.request.contextPath}/q_board/Q_BWC" method="post" enctype="multipart/form-data">	 	
 
             <!-- 제목 -->
             <div class="form-group">
