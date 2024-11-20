@@ -45,7 +45,7 @@ public class FilesListPageCtrl extends HttpServlet {
             map.put("searchField", searchField);
             map.put("searchWord", searchWord);
         }
-        int totalCount = dao.selectCount(map);
+        int totalCount = dao.selectCountFiles(map);
 
         /* 페이지 처리 start */
         ServletContext application = getServletContext();
@@ -64,7 +64,7 @@ public class FilesListPageCtrl extends HttpServlet {
         map.put("end", end);
         /* 페이지 처리 end */
 
-        List<BoardDTO> boardLists = dao.selectListPage(map);
+        List<BoardDTO> boardLists = dao.selectListPageFiles(map);
         dao.close();
 
         // 뷰에 전달할 매개변수 추가
