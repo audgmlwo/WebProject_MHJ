@@ -34,44 +34,32 @@ public class BoardDAO extends DBConnPool {
         return totalCount;
     }
     
-    public List<BoardDTO> selectList(Map<String,Object> map) {
-        List<BoardDTO> board = new Vector<BoardDTO>();
-        String query = "SELECT * FROM board ";
-        
-        if (map.get("searchWord") != null) {
-            query += " WHERE " + map.get("searchField")
-                   + " LIKE '%" + map.get("searchWord") + "%' ";
-        }
-        query += " ORDER BY board_id DESC ";
-
-        try {
-            psmt = conn.prepareStatement(query);
-            rs = psmt.executeQuery();
-            while (rs.next()) {
-            	
-                BoardDTO dto = new BoardDTO();
-
-                dto.setBoard_id(rs.getInt("board_id"));
-                dto.setBoard_type(rs.getString("board_type"));
-                dto.setUser_id(rs.getString("user_id"));
-                dto.setTitle(rs.getString("title"));
-                dto.setContent(rs.getString("content"));
-                dto.setCreated_date(rs.getDate("created_date"));
-                dto.setUpdated_date(rs.getDate("updated_date"));
-                dto.setO_file(rs.getString("o_file"));
-                dto.setS_file(rs.getString("s_file"));
-                dto.setDown_count(rs.getInt("down_count"));
-                dto.setVisit_count(rs.getInt("visit_count"));
-                
-                board.add(dto);
-            }
-        }
-        catch (Exception e) {
-            System.out.println("게시물 조회 중 예외 발생");
-            e.printStackTrace();
-        }
-        return board;
-    }
+	/*
+	 * public List<BoardDTO> selectList(Map<String,Object> map) { List<BoardDTO>
+	 * board = new Vector<BoardDTO>(); String query = "SELECT * FROM board ";
+	 * 
+	 * if (map.get("searchWord") != null) { query += " WHERE " +
+	 * map.get("searchField") + " LIKE '%" + map.get("searchWord") + "%' "; } query
+	 * += " ORDER BY board_id DESC ";
+	 * 
+	 * try { psmt = conn.prepareStatement(query); rs = psmt.executeQuery(); while
+	 * (rs.next()) {
+	 * 
+	 * BoardDTO dto = new BoardDTO();
+	 * 
+	 * dto.setBoard_id(rs.getInt("board_id"));
+	 * dto.setBoard_type(rs.getString("board_type"));
+	 * dto.setUser_id(rs.getString("user_id")); dto.setTitle(rs.getString("title"));
+	 * dto.setContent(rs.getString("content"));
+	 * dto.setCreated_date(rs.getDate("created_date"));
+	 * dto.setUpdated_date(rs.getDate("updated_date"));
+	 * dto.setO_file(rs.getString("o_file")); dto.setS_file(rs.getString("s_file"));
+	 * dto.setDown_count(rs.getInt("down_count"));
+	 * dto.setVisit_count(rs.getInt("visit_count"));
+	 * 
+	 * board.add(dto); } } catch (Exception e) {
+	 * System.out.println("게시물 조회 중 예외 발생"); e.printStackTrace(); } return board; }
+	 */
 
     
     // 게시물 목록 조회

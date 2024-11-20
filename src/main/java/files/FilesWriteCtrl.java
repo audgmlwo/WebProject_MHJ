@@ -1,9 +1,11 @@
-package board;
+package files;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import board.BoardDAO;
+import board.BoardDTO;
 import fileupload.FileUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -15,17 +17,19 @@ import jakarta.servlet.http.HttpSession;
 import utils.JSFunction;
 
 
-@WebServlet("/board/BoardWriteCtrl")
+@WebServlet("/files/FilesWriteCtrl")
 @MultipartConfig(
-    maxFileSize = 1024 * 1024 * 50,  // 최대 파일 크기: 50MB
-    maxRequestSize = 1024 * 1024 * 100  // 최대 요청 크기: 100MB
+		
+	maxFileSize = 5L * 1024 * 1024 * 1024,   // 최대 파일 크기: 5GB
+	maxRequestSize = 10L * 1024 * 1024 * 1024  // 최대 요청 크기: 10GB
 )
-public class BoardWriteCtrl extends HttpServlet {
+public class FilesWriteCtrl extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
     protected void doGet(HttpServletRequest req, 
     		HttpServletResponse resp) throws ServletException, 
+    
     IOException {
         HttpSession session = req.getSession();
         
@@ -38,7 +42,7 @@ public class BoardWriteCtrl extends HttpServlet {
         }
 
         // 쓰기 페이지로 이동
-        req.getRequestDispatcher("/Board/boardWrite.jsp").forward(req, resp);
+        req.getRequestDispatcher("/Files/filesWrite.jsp").forward(req, resp);
     }
 
     @Override
@@ -57,19 +61,20 @@ public class BoardWriteCtrl extends HttpServlet {
         // 파일 업로드 처리
         String saveDirectory = req.getServletContext().getRealPath("/Uploads");
         String originalFileName = "";
+        
         try {
             if (req.getContentType() != null && req.getContentType().startsWith("multipart/form-data")) {
                 originalFileName = FileUtil.uploadFile(req, saveDirectory);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            JSFunction.alertLocation(resp, "파일 업로드 중 오류가 발생했습니다.", "../board/BoardWriteCtrl");
+            JSFunction.alertLocation(resp, "파일 업로드 중 오류가 발생했습니다.", "../files/FilesWriteCtrl");
             return;
         }
 
         // board_type 처리 및 검증
         String boardType = req.getParameter("board_type");
-        List<String> validBoardTypes = Arrays.asList("fre");
+        List<String> validBoardTypes = Arrays.asList("files");
 
         // 잘못된 게시판 타입 처리
         if (boardType == null || !validBoardTypes.contains(boardType)) {
@@ -83,7 +88,6 @@ public class BoardWriteCtrl extends HttpServlet {
         dto.setTitle(req.getParameter("title")); // 제목
         dto.setContent(req.getParameter("content")); // 내용
         dto.setBoard_type(boardType); // 검증된 board_type 설정
-        
 
         // 파일명 처리
         if (!originalFileName.isEmpty()) {
@@ -93,7 +97,7 @@ public class BoardWriteCtrl extends HttpServlet {
                 dto.setS_file(savedFileName);    // 저장된 파일명
             } catch (Exception e) {
                 e.printStackTrace();
-                JSFunction.alertLocation(resp, "파일 저장 처리 중 오류가 발생했습니다.", "../board/boardWrite.jsp");
+                JSFunction.alertLocation(resp, "파일 저장 처리 중 오류가 발생했습니다.", "../Files/filesWrite.jsp");
                 return;
             }
         }
@@ -105,13 +109,13 @@ public class BoardWriteCtrl extends HttpServlet {
             int result = dao.insertWrite(dto);
 
             if (result == 1) {
-                resp.sendRedirect("../board/BLPC?board_type=" + boardType); // 성공 시 해당 게시판 목록으로 이동
+                resp.sendRedirect("../files/BLPC?board_type=" + boardType); // 성공 시 해당 게시판 목록으로 이동
             } else {
-                JSFunction.alertLocation(resp, "글쓰기에 실패했습니다.", "../board/boardWrite.jsp");
+                JSFunction.alertLocation(resp, "글쓰기에 실패했습니다.", "../Files/filesWrite.jsp");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            JSFunction.alertLocation(resp, "서버 오류로 글쓰기에 실패했습니다.", "../board/boardWrite.jsp");
+            JSFunction.alertLocation(resp, "서버 오류로 글쓰기에 실패했습니다.", "../Files/filesWrite.jsp");
         } finally {
             if (dao != null) {
                 try {

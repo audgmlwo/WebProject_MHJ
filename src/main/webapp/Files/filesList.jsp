@@ -17,7 +17,7 @@
     String contextPath = request.getContextPath(); 
     if (request.getAttribute("boardLists") == null) {
         // 데이터가 없을 경우 Controller로 리다이렉트
-        response.sendRedirect(contextPath + "/board/BLPC");
+        response.sendRedirect(contextPath + "/files/BLPC");
         return;
     }
 %>  
@@ -39,7 +39,7 @@
                     <li><a href="threecolumn.jsp">공지사항</a></li>
                     <li><a href="twocolumn1.jsp">Q&A 게시판</a></li>
                     <li class="current_page_item"><a href="${pageContext.request.contextPath}/Files/filesList.jsp">자료실</a></li>
-                    <li class="current_page_item">  <a href="/WebProject_MHJ/board/BLPC">자유게시판</a></li>
+                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/Board/boardList.jsp">자유게시판</a></li>                   
                 </ul>
             </nav>
         </div>
@@ -54,7 +54,7 @@
                     <div class="mobileUI-main-content" id="content">
                         <section>
                             <div class="post">
-                                <h2 class="custom-heading">자유게시판 목록</h2>
+                                <h2 class="custom-heading">자료실 목록</h2>
                                 
                                  <form method="get">  
 							     <table border="1" width="90%">
@@ -124,7 +124,7 @@
 								        </tr>
 								   </table>
 								   <div class="button-container">
-									  <button type="button" onclick="location.href='../board/BoardWriteCtrl';">글쓰기</button>
+									  <button type="button" onclick="location.href='../files/FilesWriteCtrl';">글쓰기</button>
 								   </div>
                                 <!-- 자유게시판 목록 코드 끝 -->
                             </div>

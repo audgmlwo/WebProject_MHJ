@@ -1,7 +1,9 @@
-package board;
+package files;
 
 import java.io.IOException;
 
+import board.BoardDAO;
+import board.BoardDTO;
 import fileupload.FileUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -12,14 +14,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import utils.JSFunction;
 
-@WebServlet("/board/BEC")
+@WebServlet("/files/BEC")
 
 @MultipartConfig(
 		maxFileSize = 1024*1024*50,
 		maxRequestSize = 1024*1024*100
 	)
 
-public class BoardEditCtrl extends HttpServlet{
+public class FilesEditCtrl extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
 	@Override
@@ -53,7 +55,7 @@ public class BoardEditCtrl extends HttpServlet{
 
 	    // 데이터 전달
 	    req.setAttribute("dto", dto);
-	    req.getRequestDispatcher("/Board/boardEdit.jsp").forward(req, resp);
+	    req.getRequestDispatcher("/Files/filesEdit.jsp").forward(req, resp);
 	}
 	
 	
@@ -169,18 +171,5 @@ public class BoardEditCtrl extends HttpServlet{
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

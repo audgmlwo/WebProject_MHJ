@@ -216,11 +216,6 @@ ul.style3 a:hover {
     text-decoration: underline;
 }
 
-ul.style3 .date {
-}
-
-ul.style3 .date b {
-}
 
 ul.style3 .date a {
     color: #FFFFFF;
@@ -279,8 +274,7 @@ ul.style5 li {
     line-height: 0;
 }
 
-ul.style5 a {
-}
+
 
 /** LIST STYLE 6 */
 

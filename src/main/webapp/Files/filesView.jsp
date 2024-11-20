@@ -93,7 +93,7 @@
                                     <td colspan="3">
                                         <c:if test="${not empty dto.o_file}">
                                         	<c:if test="${not empty UserId}">
-                                            <a href="../board/BDC?o_file=${dto.o_file}&s_file=${dto.s_file}
+                                            <a href="../files/BDC?o_file=${dto.o_file}&s_file=${dto.s_file}
                                             &board_id=${dto.board_id}&board_type=${dto.board_type}"onclick="this.style.pointerEvents='none';">[다운로드]</a>
                                             </c:if>                                      
                                         </c:if>
@@ -104,10 +104,10 @@
 
                             <div class="button-container">
                                 <c:if test="${not empty UserId}">
-                                    <button class="button" onclick="location.href='../board/BEC?board_id=${dto.board_id}&board_type=${dto.board_type}'">수정하기</button>
+                                    <button class="button" onclick="location.href='../files/BEC?board_id=${dto.board_id}&board_type=${dto.board_type}'">수정하기</button>
                                     <button class="button" onclick="confirmDelete('${dto.board_id}&${dto.board_type}')">삭제하기</button>
                                 </c:if>
-                                <button class="button green" onclick="location.href='../board/BLPC'">목록으로 돌아가기</button>
+                                <button class="button green" onclick="location.href='../files/BLPC'">목록으로 돌아가기</button>
                             </div>
                         </div>
                     </section>
@@ -120,7 +120,7 @@
 <script type="text/javascript">
 		function confirmDelete(board_id, board_type) {
 		    if (confirm('정말로 삭제하시겠습니까?')) {
-		        location.href = '../board/BDEC?board_id=${dto.board_id}&board_type=${dto.board_type}';
+		        location.href = '../files/BDEC?board_id=${dto.board_id}&board_type=${dto.board_type}';
 		    }
 		}
 </script>
