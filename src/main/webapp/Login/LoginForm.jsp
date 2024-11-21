@@ -1,3 +1,4 @@
+<%@page import="utils.CookieManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <html>
@@ -24,6 +25,7 @@
 			</span>
 			
 			<%
+			String savedUserId = CookieManager.readCookie(request, "UserId");
 			if (session.getAttribute("UserId") == null){// 로그인 상태 확인)	
 			%>
 			

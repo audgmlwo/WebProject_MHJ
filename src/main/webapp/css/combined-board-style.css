@@ -1,4 +1,3 @@
-
 /* 통합된 CSS 파일 */
 
 body {
@@ -99,8 +98,29 @@ h2 {
     line-height: 1.5;
 }
 
-.no-answer {
-    color: #888;
+.comment-section {
+    margin-top: 30px;
+}
+
+.comment-list {
+    margin-top: 15px;
+}
+
+.comment-item {
+    background: rgba(245, 245, 245, 0.9);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.comment-meta {
+    font-size: 0.8em;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.comment-content {
     font-size: 0.9em;
-    text-align: center;
+    color: #333;
 }

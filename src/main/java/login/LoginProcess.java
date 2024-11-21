@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import utils.CookieManager;
 
 @WebServlet("/login/loginprocess")
 public class LoginProcess extends HttpServlet {
@@ -26,13 +27,15 @@ public class LoginProcess extends HttpServlet {
         dao.close();
 
         // 로그인 결과 처리
-        if (memberDTO != null && memberDTO.getUser_id() != null) {
-            // 세션에 사용자 정보 저장
+        if (memberDTO != null && memberDTO.getUser_id() != null) { 
+        	
             HttpSession session = request.getSession();
             
             session.setAttribute("UserId", memberDTO.getUser_id());
             session.setAttribute("UserName", memberDTO.getName());
-
+            
+            CookieManager.makeCookie(response, "UserId", memberDTO.getUser_id(), 60 * 60 * 1); // 7일 동안 유지
+            
             // 이전 페이지로 리다이렉트
             String redirectURL = (String) session.getAttribute("redirectAfterLogin");
             if (redirectURL != null) {

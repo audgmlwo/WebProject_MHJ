@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import na_board.NA_BoardDAO;
 import na_board.NA_BoardDTO;
+import utils.CookieManager;
 
 
 @WebServlet("/q_board/Q_BVC")
@@ -19,11 +20,22 @@ public class Q_BoardViewCtrl extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) 
             throws ServletException, IOException {
+    	
         String q_id = req.getParameter("q_id");
 
         Q_BoardDAO questionDao = new Q_BoardDAO();
         NA_BoardDAO answerDao = new NA_BoardDAO();
+        
+        // 조회수 1 증가
+		// 조회수 증가 여부 확인
+        String cookieName = "viewed_" + q_id; // 쿠키 이름
+        String isViewed = CookieManager.readCookie(req, cookieName);
 
+        if (isViewed == null || isViewed.isEmpty()) { // 새로운 조회라면
+        	questionDao.updateVisitCount(q_id); // 조회수 증가
+            CookieManager.makeCookie(resp, cookieName, "true", 60 * 60 * 1); // 쿠키 생성 (1일 유지)
+        }
+        
         Q_BoardDTO question = questionDao.selectView(q_id);
         List<NA_BoardDTO> answers = answerDao.getAnswersByQuestionId(q_id);
 

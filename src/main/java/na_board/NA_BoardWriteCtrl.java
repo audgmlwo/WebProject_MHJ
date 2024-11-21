@@ -23,14 +23,15 @@ public class NA_BoardWriteCtrl extends HttpServlet {
         // 로그인 확인
         String userId = (String) session.getAttribute("UserId");
         if (userId == null || userId.isEmpty()) {
-            // 로그인 페이지로 리다이렉트하면서 q_id 값을 유지
+            // 로그인 페이지로 이동 전 q_id 값을 세션에 저장
             String q_id = req.getParameter("q_id");
-            resp.sendRedirect(req.getContextPath() + "/Login/LoginForm.jsp?redirect=/na_board/NA_BWC&q_id=" + q_id);
+            session.setAttribute("q_id", q_id);
+            JSFunction.alertLocation(resp, "로그인 후 이용해주세요.", "../Login/LoginForm.jsp");
             return;
         }
 
-        // q_id 확인
-        String q_id = req.getParameter("q_id");
+        // 로그인 성공 후 세션에서 q_id 값을 가져옴
+        String q_id = (String) session.getAttribute("q_id");
         if (q_id == null || q_id.isEmpty()) {
             JSFunction.alertBack(resp, "유효한 q_id가 필요합니다.");
             return;
@@ -40,8 +41,6 @@ public class NA_BoardWriteCtrl extends HttpServlet {
         req.setAttribute("q_id", q_id);
         req.getRequestDispatcher("/NA_Board/na_boardWrite.jsp").forward(req, resp);
     }
-
-
     // 답변 저장 처리 (POST 요청)
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) 

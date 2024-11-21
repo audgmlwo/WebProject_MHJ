@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import utils.CookieManager;
 import board.BoardDAO;
 import board.BoardDTO;
 
@@ -30,9 +31,15 @@ public class BoardViewCtrl extends HttpServlet{
 			String board_id = req.getParameter("board_id");
 			String board_type = req.getParameter("board_type");
 			
-			
 			// 조회수 1 증가
-			dao.updateVisitCount(board_id,board_type);
+			// 조회수 증가 여부 확인
+	        String cookieName = "viewed_" + board_id; // 쿠키 이름
+	        String isViewed = CookieManager.readCookie(req, cookieName);
+
+	        if (isViewed == null || isViewed.isEmpty()) { // 새로운 조회라면
+	            dao.updateVisitCount(board_id, board_type); // 조회수 증가
+	            CookieManager.makeCookie(resp, cookieName, "true", 60 * 60 * 1); // 쿠키 생성 (1일 유지)
+	        }
 			
 			//일련번호에 해당하는 게시물을 인출
 			BoardDTO dto = dao.selectView(board_id,board_type);
