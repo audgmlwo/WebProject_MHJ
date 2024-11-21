@@ -18,15 +18,26 @@ public class NA_BoardWriteCtrl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String q_id = req.getParameter("q_id");
+        HttpSession session = req.getSession();
 
-        // q_id 유효성 검사
+        // 로그인 확인
+        String userId = (String) session.getAttribute("UserId");
+        if (userId == null || userId.isEmpty()) {
+            // 로그인 페이지로 리다이렉트하면서 q_id 값을 유지
+            String q_id = req.getParameter("q_id");
+            resp.sendRedirect(req.getContextPath() + "/Login/LoginForm.jsp?redirect=/na_board/NA_BWC&q_id=" + q_id);
+            return;
+        }
+
+        // q_id 확인
+        String q_id = req.getParameter("q_id");
         if (q_id == null || q_id.isEmpty()) {
             JSFunction.alertBack(resp, "유효한 q_id가 필요합니다.");
             return;
         }
 
-        req.setAttribute("q_id", q_id); // JSP로 전달
+        // JSP로 전달
+        req.setAttribute("q_id", q_id);
         req.getRequestDispatcher("/NA_Board/na_boardWrite.jsp").forward(req, resp);
     }
 
@@ -35,7 +46,7 @@ public class NA_BoardWriteCtrl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
             throws ServletException, IOException {
-    	req.setCharacterEncoding("UTF-8");
+        req.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
 
         // 로그인 확인
@@ -45,23 +56,16 @@ public class NA_BoardWriteCtrl extends HttpServlet {
             return;
         }
 
-        // 클라이언트에서 데이터 가져오기
+        // 요청 데이터 가져오기
         String q_id = req.getParameter("q_id");
         String content = req.getParameter("content");
 
-        String errorMessage = null;
-
         if (q_id == null || q_id.isEmpty()) {
-            errorMessage = "ID 값이 유효하지 않습니다. (값이 비어 있거나 없습니다)";
-        } else if (content == null || content.isEmpty()) {
-            errorMessage = "내용(content)이 유효하지 않습니다. (값이 비어 있거나 없습니다)";
-        } else if (userId == null || userId.isEmpty()) {
-            errorMessage = "유저(userId)이 유효하지 않습니다. (값이 비어 있거나 없습니다)";
-        
+            JSFunction.alertBack(resp, "유효한 q_id가 필요합니다.");
+            return;
         }
-
-        if (errorMessage != null) {
-            JSFunction.alertBack(resp, errorMessage);
+        if (content == null || content.isEmpty()) {
+            JSFunction.alertBack(resp, "내용을 입력하세요.");
             return;
         }
 
@@ -71,14 +75,15 @@ public class NA_BoardWriteCtrl extends HttpServlet {
         dto.setUser_id(userId);
         dto.setContent(content);
 
-        // DAO를 통한 데이터 저장
+        // DAO를 통해 데이터 저장
         NA_BoardDAO dao = new NA_BoardDAO();
         int result = 0;
-
         try {
             result = dao.insertWrite(dto);
         } catch (Exception e) {
             e.printStackTrace();
+            JSFunction.alertBack(resp, "서버 처리 중 오류가 발생했습니다.");
+            return;
         } finally {
             dao.close();
         }
@@ -90,4 +95,5 @@ public class NA_BoardWriteCtrl extends HttpServlet {
             JSFunction.alertBack(resp, "답변 저장에 실패했습니다.");
         }
     }
+
 }

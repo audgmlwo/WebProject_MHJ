@@ -10,7 +10,7 @@
 <div class="container mt-5">
     <h1>답변 작성</h1>
     <form method="post" action="${pageContext.request.contextPath}/na_board/NA_BWC">
-        <!-- q_id를 숨겨진 필드로 전달 -->
+        <!-- q_id를 숨겨진 필드로 전달 -->        
         <input type="hidden" name="q_id" value="${q_id}" />
         <div class="mb-3">
             <label for="content" class="form-label">답변 내용</label>
