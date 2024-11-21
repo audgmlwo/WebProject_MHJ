@@ -88,6 +88,39 @@
                                         </c:if>
                                     </td>
                                 </tr>
+                                
+                                <tr>
+							    <td class="label">좋아요</td>
+							    <td colspan="3">
+							        <c:if test="${not empty sessionScope.UserId}">
+							            <c:set var="boardType" value="${dto.board_type}" />
+							            <c:set var="postId" value="${dto.board_id}" />
+							            <c:set var="userId" value="${sessionScope.UserId}" />
+							
+							            <c:choose>
+							                <c:when test="${LikeDAO.hasLiked(boardType, postId, userId)}">
+							                    <form action="${pageContext.request.contextPath}/likes/LIKE" method="post" style="display: inline;">
+							                        <input type="hidden" name="board_type" value="${boardType}" />
+							                        <input type="hidden" name="post_id" value="${postId}" />
+							                        <button type="submit">좋아요 취소</button>
+							                    </form>
+							                </c:when>
+							                <c:otherwise>
+							                    <form action="${pageContext.request.contextPath}/likes/LIKE" method="post" style="display: inline;">
+							                        <input type="hidden" name="board_type" value="${boardType}" />
+							                        <input type="hidden" name="post_id" value="${postId}" />
+							                        <button type="submit">좋아요</button>
+							                    </form>
+							                </c:otherwise>
+							            </c:choose>
+							
+							            <p>좋아요 수: <span id="likeCount">${likeDAO.getLikeCount(boardType, postId)}</span></p>
+							        </c:if>
+							        <c:if test="${empty sessionScope.UserId}">
+							            <p>로그인 후 좋아요를 사용할 수 있습니다.</p>
+							        </c:if>
+							    </td>
+							</tr>
                                 <tr>
                                     <td class="label">첨부파일</td>
                                     <td colspan="3">

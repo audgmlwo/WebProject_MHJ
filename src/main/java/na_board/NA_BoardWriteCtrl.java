@@ -20,27 +20,41 @@ public class NA_BoardWriteCtrl extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = req.getSession();
 
-        // 로그인 확인
-        String userId = (String) session.getAttribute("UserId");
-        if (userId == null || userId.isEmpty()) {
-            // 로그인 페이지로 이동 전 q_id 값을 세션에 저장
-            String q_id = req.getParameter("q_id");
-            session.setAttribute("q_id", q_id);
-            JSFunction.alertLocation(resp, "로그인 후 이용해주세요.", "../Login/LoginForm.jsp");
-            return;
-        }
+        // 요청에서 q_id 가져오기
+        String q_id = req.getParameter("q_id");
 
-        // 로그인 성공 후 세션에서 q_id 값을 가져옴
-        String q_id = (String) session.getAttribute("q_id");
+        // q_id 유효성 검증
         if (q_id == null || q_id.isEmpty()) {
             JSFunction.alertBack(resp, "유효한 q_id가 필요합니다.");
             return;
         }
+        
+        // q_id 세션에 저장
+        session.setAttribute("q_id", q_id);
 
-        // JSP로 전달
-        req.setAttribute("q_id", q_id);
+        // 로그인 확인
+        if (session.getAttribute("UserId") == null) {
+            // 로그인 후 리디렉션할 URL을 세션에 저장
+            String originalUrl = req.getRequestURI() + (req.getQueryString() != null ? "?" + req.getQueryString() : "");
+            session.setAttribute("redirectAfterLogin", originalUrl);
+
+            // 로그인 페이지로 이동
+            JSFunction.alertLocation(resp, "로그인 후 이용해주세요.", "../Login/LoginForm.jsp");
+            return;
+        }
+
+        // 세션에서 q_id 다시 확인 (로그인 후 작업에 필요)
+        String q_id_2 = (String) session.getAttribute("q_id");
+
+        if (q_id_2 == null || q_id_2.isEmpty()) {
+            JSFunction.alertBack(resp, "유효한 q_id가 필요합니다.");
+            return;
+        }
+
+        // 정상적인 요청 처리
         req.getRequestDispatcher("/NA_Board/na_boardWrite.jsp").forward(req, resp);
     }
+
     // 답변 저장 처리 (POST 요청)
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
