@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import utils.CookieManager;
+import jakarta.servlet.http.Cookie;
 
 @WebServlet("/login/loginprocess")
 public class LoginProcess extends HttpServlet {
@@ -16,6 +17,8 @@ public class LoginProcess extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	
+    	
     	
         // 클라이언트로부터 전달받은 파라미터
         String userId = request.getParameter("user_id");

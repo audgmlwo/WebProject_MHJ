@@ -179,5 +179,56 @@ public class MemberDAO extends DBConnPool {
 	    }
 	}
 	
+	// 이메일로 사용자 찾기
+	public MemberDTO findByEmail(String email) {
+	    String query = "SELECT * FROM member WHERE email = ?";
+	    MemberDTO member = null;
+
+	    try {
+	        psmt = conn.prepareStatement(query);
+	        psmt.setString(1, email);
+	        rs = psmt.executeQuery();
+
+	        if (rs.next()) {
+	            member = new MemberDTO();
+	            member.setUser_id(rs.getString("user_id"));
+	            member.setName(rs.getString("name"));
+	            member.setEmail(rs.getString("email"));
+	            member.setPass(rs.getString("pass")); // 비밀번호도 필요할 경우 추가
+	            member.setRegi_date(rs.getDate("regi_date"));
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) rs.close();
+	            if (psmt != null) psmt.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return member;
+	}
+
+	// 비밀번호 업데이트
+	public void updatePassword(String userId, String newPassword) {
+	    String query = "UPDATE member SET pass = ? WHERE user_id = ?";
+
+	    try {
+	        psmt = conn.prepareStatement(query);
+	        psmt.setString(1, newPassword);
+	        psmt.setString(2, userId);
+	        psmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (psmt != null) psmt.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+	
 }
 	
