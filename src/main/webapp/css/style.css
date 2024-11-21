@@ -14,13 +14,24 @@
 
 
 body {
-    margin: 0em;
-    padding: 0em;
-    background: #E0E0E0 url(images/img01.png) repeat;
-    font-family: 'Raleway', sans-serif;
-    font-size: 10pt;
-    color: #525252;
+    margin: 0;
+    padding: 0;
+    background: url('/WebProject_MHJ/images/pics01.jpg') no-repeat center center fixed; /* 배경 이미지 추가 */
+    background-size: cover; /* 배경 크기 조정 */
+    position: relative;
 }
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 배경 어둡게 처리 */
+    z-index: -1; /* 콘텐츠 뒤로 배치 */
+}
+
 
 h1, h2, h3 {
     margin: 0em;
@@ -391,6 +402,83 @@ tr:hover {
     margin-bottom: 16px !important; /* 제목 하단 여백 추가 */
     letter-spacing: normal !important; /* 자간을 기본으로 설정 */
 }
+.banner {
+    background: url('/WebProject_MHJ/images/pics01.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 200px; /* 배너 높이 조정 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
 
- 
-   
+.banner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* 배경 이미지 어둡게 처리 */
+    z-index: 1;
+}
+
+.banner h1 {
+    color: #ffffff; /* 배너 텍스트를 흰색으로 */
+    font-size: 2.5em;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* 텍스트 그림자 추가 */
+    position: relative;
+    z-index: 2;
+}
+
+/* 탭 컨테이너 스타일 */
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: rgba(255, 255, 255, 0.1); /* 약간의 투명 흰색 배경 */
+    border-radius: 8px; /* 둥근 모서리 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    padding: 10px;
+}
+
+/* 탭 버튼 스타일 */
+nav ul li {
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: #ffffff; /* 텍스트 흰색 */
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 20px;
+    background-color: rgba(0, 128, 0, 0.8); /* 초록 배경색 (투명도 포함) */
+    border: 2px solid rgba(255, 255, 255, 0.5); /* 반투명 흰색 테두리 */
+    border-radius: 5px; /* 둥근 모서리 */
+    transition: background-color 0.3s ease, color 0.3s ease; /* 호버 효과 */
+}
+
+/* 호버 효과 */
+nav ul li a:hover {
+    background-color: rgba(0, 255, 0, 0.9); /* 밝은 초록 배경 */
+    color: #000000; /* 텍스트를 검은색으로 변경 */
+    border-color: rgba(255, 255, 255, 0.8); /* 테두리 강조 */
+}
+
+/* 현재 페이지 활성 탭 */
+nav ul li a.active {
+    background-color: rgba(255, 165, 0, 0.9); /* 주황색 배경 */
+    color: #ffffff; /* 흰색 텍스트 */
+    border-color: rgba(255, 255, 255, 0.8); /* 강조된 흰색 테두리 */
+} 
+
+#nav .current_page_item {
+    color: #FFFFFF; /* 텍스트 흰색 */
+}
+
+#nav .current_page_item a {
+    color: #F0F0F0; /* 앵커 태그 텍스트를 밝게 */
+}   

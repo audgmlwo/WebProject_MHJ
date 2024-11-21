@@ -86,3 +86,41 @@
 		    color: inherit; /* 부모 요소 색상 따르기 */
 		}
         
+         .like-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0; /* 상하 여백 */
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        /* 좋아요 버튼 스타일 */
+        .like-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .like-button:hover {
+            background-color: #45a049;
+        }
+
+        /* 좋아요 수 스타일 */
+        .like-count {
+            margin-left: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }

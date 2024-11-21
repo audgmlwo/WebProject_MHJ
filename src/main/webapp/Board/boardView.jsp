@@ -15,13 +15,54 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style-desktop.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/board/view.css" />
-  
+
+    <style>
+        /* 좋아요 버튼 컨테이너 스타일 */
+        .like-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0; /* 상하 여백 */
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        /* 좋아요 버튼 스타일 */
+        .like-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .like-button:hover {
+            background-color: #45a049;
+        }
+
+        /* 좋아요 수 스타일 */
+        .like-count {
+            margin-left: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+    </style>
 </head>
 <body>
 <div id="header-wrapper">
     <div id="header">
         <div class="container">
-           
         </div>
     </div>
 </div>
@@ -62,7 +103,7 @@
                                 <tr>
                                     <td class="label">제목</td>
                                     <td colspan="3">${dto.title}</td>
-                                </tr>                              
+                                </tr>
                                 <tr>
                                     <td class="label">내용</td>
                                     <td colspan="3" class="content-box">
@@ -88,55 +129,31 @@
                                         </c:if>
                                     </td>
                                 </tr>
-                                
-                                <tr>
-							    <td class="label">좋아요</td>
-							    <td colspan="3">
-							        <c:if test="${not empty sessionScope.UserId}">
-							            <c:set var="boardType" value="${dto.board_type}" />
-							            <c:set var="postId" value="${dto.board_id}" />
-							            <c:set var="userId" value="${sessionScope.UserId}" />
-							
-							            <c:choose>
-							                <c:when test="${LikeDAO.hasLiked(boardType, postId, userId)}">
-							                    <form action="${pageContext.request.contextPath}/likes/LIKE" method="post" style="display: inline;">
-							                        <input type="hidden" name="board_type" value="${boardType}" />
-							                        <input type="hidden" name="post_id" value="${postId}" />
-							                        <button type="submit">좋아요 취소</button>
-							                    </form>
-							                </c:when>
-							                <c:otherwise>
-							                    <form action="${pageContext.request.contextPath}/likes/LIKE" method="post" style="display: inline;">
-							                        <input type="hidden" name="board_type" value="${boardType}" />
-							                        <input type="hidden" name="post_id" value="${postId}" />
-							                        <button type="submit">좋아요</button>
-							                    </form>
-							                </c:otherwise>
-							            </c:choose>
-							
-							            <p>좋아요 수: <span id="likeCount">${likeDAO.getLikeCount(boardType, postId)}</span></p>
-							        </c:if>
-							        <c:if test="${empty sessionScope.UserId}">
-							            <p>로그인 후 좋아요를 사용할 수 있습니다.</p>
-							        </c:if>
-							    </td>
-							</tr>
-                                <tr>
-                                    <td class="label">첨부파일</td>
-                                    <td colspan="3">
-                                        <c:if test="${not empty dto.o_file}">
-                                        	<c:if test="${not empty UserId}">
-                                            <a href="../board/BDC?o_file=${dto.o_file}&s_file=${dto.s_file}
-                                            &board_id=${dto.board_id}&board_type=${dto.board_type}"onclick="this.style.pointerEvents='none';">[다운로드]</a>
-                                            </c:if>                                      
-                                        </c:if>
-                                    </td>
-                                </tr>
                                 </tbody>
                             </table>
 
+                            <!-- 좋아요 버튼과 좋아요 수 -->
+                            <div class="like-container">
+                                <c:if test="${not empty sessionScope.UserId}">
+                                    <form action="${pageContext.request.contextPath}/likes/LIKE" method="post">
+                                        <input type="hidden" name="board_type" value="${dto.board_type}" />
+                                        <input type="hidden" name="post_id" value="${dto.board_id}" />
+                                        <button type="submit" class="like-button">
+                                            ${likeDAO.hasLiked(dto.board_type, dto.board_id, sessionScope.UserId) ? '좋아요 취소' : '좋아요'}
+                                        </button>
+                                    </form>
+                                    <span class="like-count">
+                                        좋아요 수: ${likeCount != null ? likeCount : 0}
+                                    </span>
+                                </c:if>
+                                <c:if test="${empty sessionScope.UserId}">
+                                    <p>로그인 후 좋아요를 사용할 수 있습니다.</p>
+                                </c:if>
+                            </div>
+
+                            <!-- 수정/삭제/목록 버튼 -->
                             <div class="button-container">
-                                <c:if test="${not empty UserId}">
+                                <c:if test="${not empty sessionScope.UserId}">
                                     <button class="button" onclick="location.href='../board/BEC?board_id=${dto.board_id}&board_type=${dto.board_type}'">수정하기</button>
                                     <button class="button" onclick="confirmDelete('${dto.board_id}&${dto.board_type}')">삭제하기</button>
                                 </c:if>
@@ -151,11 +168,11 @@
 </div>
 
 <script type="text/javascript">
-		function confirmDelete(board_id, board_type) {
-		    if (confirm('정말로 삭제하시겠습니까?')) {
-		        location.href = '../board/BDEC?board_id=${dto.board_id}&board_type=${dto.board_type}';
-		    }
-		}
+    function confirmDelete(board_id, board_type) {
+        if (confirm('정말로 삭제하시겠습니까?')) {
+            location.href = '../board/BDEC?board_id=' + board_id + '&board_type=' + board_type;
+        }
+    }
 </script>
 
 <div id="footer-wrapper">

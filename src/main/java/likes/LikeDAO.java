@@ -4,7 +4,10 @@ import java.sql.SQLException;
 import common.DBConnPool;
 
 public class LikeDAO extends DBConnPool {
-
+	 public LikeDAO() {
+	        super(); // 부모 클래스 DBConnPool의 생성자를 호출
+	    }
+	 
     // 특정 게시글에 좋아요가 있는지 확인
     public boolean hasLiked(String boardType, int postId, String userId) {
         String query = "SELECT COUNT(*) FROM likes WHERE board_type = ? AND post_id = ? AND user_id = ?";
@@ -19,6 +22,8 @@ public class LikeDAO extends DBConnPool {
 
             if (rs.next()) {
                 hasLiked = rs.getInt(1) > 0; // 좋아요가 존재하면 true 반환
+                
+                System.out.println("hasLiked result: " + hasLiked);
             }
         } catch (SQLException e) {
             System.out.println("좋아요 확인 중 오류 발생");
@@ -37,10 +42,14 @@ public class LikeDAO extends DBConnPool {
             psmt.setString(1, boardType);
             psmt.setInt(2, postId);
             psmt.setString(3, userId);
-            psmt.executeUpdate();
+            
+            int result = psmt.executeUpdate();
+            System.out.println("addLike executed, rows affected: " + result);
+            
         } catch (SQLException e) {
             System.out.println("좋아요 추가 중 오류 발생");
             e.printStackTrace();
+            
         } finally {
             close(); // 자원 반납
         }
@@ -77,7 +86,11 @@ public class LikeDAO extends DBConnPool {
             if (rs.next()) {
                 likeCount = rs.getInt(1); // 좋아요 수 반환
             }
-        } catch (SQLException e) {
+            System.out.println("Like count for boardType: " + boardType + ", postId: " + postId + " is " + likeCount); 
+        } 
+        
+        catch (SQLException e) {
+        	
             System.out.println("좋아요 수 조회 중 오류 발생");
             e.printStackTrace();
         } finally {

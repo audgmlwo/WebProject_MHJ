@@ -28,11 +28,12 @@ public class LoginProcess extends HttpServlet {
 
         // 로그인 결과 처리
         if (memberDTO != null && memberDTO.getUser_id() != null) { 
-        	
+        	System.out.println("Login successful. UserId: " + memberDTO.getUser_id());
             HttpSession session = request.getSession();
             
             session.setAttribute("UserId", memberDTO.getUser_id());
             session.setAttribute("UserName", memberDTO.getName());
+            
             
             CookieManager.makeCookie(response, "UserId", memberDTO.getUser_id(), 60 * 60 * 1); // 7일 동안 유지
             
@@ -46,6 +47,7 @@ public class LoginProcess extends HttpServlet {
             }
         } else {
             // 로그인 실패 처리
+        	System.out.println("Login failed. Invalid credentials.");
             request.setAttribute("LoginErrMsg", "로그인 오류입니다.");
             request.getRequestDispatcher("LoginForm.jsp").forward(request, response);
         }
