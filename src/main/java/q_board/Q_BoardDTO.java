@@ -8,6 +8,10 @@ import na_board.NA_BoardDTO;
 public class Q_BoardDTO {
 		
 	
+	public Q_BoardDTO() {
+        this.board_type = "question"; // 고정 값 설정(좋아요 용)
+    }
+	
 	private int q_id;  
 	private String user_id;
 	private String title;
@@ -17,8 +21,12 @@ public class Q_BoardDTO {
 	private int visit_count;
 	private int is_accepted;
 	private String name;
+	private String board_type;
+	private String board_id;
 	
-
+	
+	
+	
 	private List<NA_BoardDTO> answers;
 	
 	
@@ -81,6 +89,18 @@ public class Q_BoardDTO {
 	}
 	public void setAnswers(List<NA_BoardDTO> answers) {
 		this.answers = answers;
+	}
+	public String getBoard_type() {
+		return board_type;
+	}
+	public void setBoard_type(String board_type) {
+		this.board_type = board_type;
+	}
+	public String getBoard_id() {
+		return board_id;
+	}
+	public void setBoard_id(String board_id) {
+		this.board_id = board_id;
 	}
 	
 	

@@ -1,0 +1,70 @@
+@charset "UTF-8";
+
+/* likes2.css - 좋아요와 답변 작성 버튼 스타일 */
+.like-container {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.like-button {
+    padding: 10px 20px;
+    background-color: #28a745; /* 초록색 */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.like-button:hover {
+    background-color: #218838; /* hover 색상 */
+}
+
+.like-count {
+    font-size: 14px;
+    color: #333;
+}
+
+.answer-btn .btn {
+    padding: 10px 20px;
+    background-color: #6c757d; /* 회색 */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.answer-btn .btn:hover {
+    background-color: #5a6268; /* hover 색상 */
+}
+
+.button-container .button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.button-container .button.green {
+    background-color: #28a745;
+    color: white;
+}
+
+.button-container .button.green:hover {
+    background-color: #218838;
+}

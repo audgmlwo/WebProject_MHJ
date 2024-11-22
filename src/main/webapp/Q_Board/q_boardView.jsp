@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style-desktop.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/board/view2.css" />
-  
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/likes2.css" />
 </head>
 <body>
 <div id="wrapper">
@@ -87,7 +87,35 @@
                                     <button onclick="location.href='${pageContext.request.contextPath}/na_board/NA_BWC?q_id=${dto.q_id}'" class="btn btn-primary">답변 작성</button>
                                 </div>
                             </div>
-
+								
+							<!-- 좋아요 버튼과 좋아요 수 -->
+                            <div class="like-container">
+                            
+						    <!-- 로그인된 사용자일 때 -->
+						    <c:if test="${not empty sessionScope.UserId}">
+						        <form action="${pageContext.request.contextPath}/likes/LIKE" method="post">
+						            <!-- 숨겨진 데이터 전달 -->
+						            <input type="hidden" name="board_type" value="${dto.board_type}" />
+						            <input type="hidden" name="post_id" value="${dto.q_id}" />
+						            
+						            <!-- 좋아요 버튼 -->
+						            <button type="submit" class="like-button">
+						                ${likeDAO.hasLiked(dto.board_type, dto.q_id, sessionScope.UserId) ? '좋아요 취소' : '좋아요'}
+						            </button>
+						        </form>
+						        
+						        <!-- 좋아요 수 표시 -->
+						        <span class="like-count">
+						            좋아요 수: ${likeCount != null ? likeCount : 0}
+						        </span>
+						    </c:if>
+						
+						    <!-- 로그인되지 않은 사용자일 때 -->
+						    <c:if test="${empty sessionScope.UserId}">
+						        <p>로그인 후 좋아요를 사용할 수 있습니다.</p>
+						    </c:if>
+						</div>	
+								
                             <!-- 수정, 삭제, 목록 버튼 -->
                             <div class="button-container">
                                 <c:if test="${not empty UserId}">

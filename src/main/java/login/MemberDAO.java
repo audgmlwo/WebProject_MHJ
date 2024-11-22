@@ -211,24 +211,86 @@ public class MemberDAO extends DBConnPool {
 	}
 
 	// 비밀번호 업데이트
-	public void updatePassword(String userId, String newPassword) {
+	public void updatePassword1(String userId, String newPassword) {
 	    String query = "UPDATE member SET pass = ? WHERE user_id = ?";
 
 	    try {
 	        psmt = conn.prepareStatement(query);
+	        
 	        psmt.setString(1, newPassword);
 	        psmt.setString(2, userId);
-	        psmt.executeUpdate();
+	        
+	        System.out.println("Executing query: " + query);
+	        int rowsAffected = psmt.executeUpdate(); 
+	        System.out.println("Rows affected2: " + rowsAffected);
+	        
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    } finally {
+	    	
 	        try {
+	        	
 	            if (psmt != null) psmt.close();
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
 	    }
 	}
+	// 비밀번호 업데이트
+		public void updatePassword(String userId, String newPassword) {
+		    String query = "UPDATE member SET pass = ? WHERE user_id = ?";
+
+		    try {
+		        psmt = conn.prepareStatement(query);
+		        
+		        psmt.setString(1, newPassword);
+		        psmt.setString(2, userId);
+		        
+		        int rowsAffected = psmt.executeUpdate(); 
+		        System.out.println("Rows affected1: " + rowsAffected);
+		        
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    } finally {
+		    	
+		        try {
+		        	
+		            if (psmt != null) psmt.close();
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		    }
+		}
 	
+	// 사용자 ID로 사용자 정보 조회
+	public MemberDTO findById(String userId) {
+	    String query = "SELECT user_id, pass, email FROM member WHERE user_id = ?";
+	    MemberDTO dto = null;
+
+	    try {
+	        psmt = conn.prepareStatement(query);
+	        psmt.setString(1, userId);
+
+	        rs = psmt.executeQuery();
+	        if (rs.next()) {
+	            dto = new MemberDTO();
+	            dto.setUser_id(rs.getString("user_id"));
+	            dto.setPass(rs.getString("pass"));
+	            dto.setEmail(rs.getString("email"));
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) rs.close();
+	            if (psmt != null) psmt.close();
+	        } catch (SQLException ex) {
+	            ex.printStackTrace();
+	        }
+	    }
+
+	    return dto; // 결과가 없으면 null 반환
+	}
+
 }
 	

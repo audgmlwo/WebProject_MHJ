@@ -9,19 +9,18 @@
 	<head>
 		<title>Citrusy by TEMPLATED</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="description" content="" />
-		<meta name="keywords" content="" />
-		<link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900' rel='stylesheet' type='text/css'>
-		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="js/skel.min.js"></script>
-		<script src="js/skel-panels.min.js"></script>
-		<script src="js/init.js"></script>
-		<noscript>
-			<link rel="stylesheet" href="css/skel-noscript.css" />
-			<link rel="stylesheet" href="css/style.css" />
-			<link rel="stylesheet" href="css/style-desktop.css" />
-		</noscript>
+	    <link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900' rel='stylesheet' type='text/css'>
+	    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	    <script src="${pageContext.request.contextPath}/js/skel.min.js"></script>
+	    <script src="${pageContext.request.contextPath}/js/skel-panels.min.js"></script>
+	    <script src="${pageContext.request.contextPath}/js/init.js"></script>
+	    
+	    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" />
+	    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/skel-noscript.css" />
+	    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
+	    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style-desktop.css" />
+	    
+	    
 	</head><body class="homepage">
 	<div id="header-wrapper">
 		<div id="header">
@@ -31,17 +30,17 @@
 					<p>by TEMPLATED</p>
 				</div>
 			</div>
-			<div class="container">
-				<nav id="nav">
-					<ul>
-						<li class="current_page_item"><a href="index.jsp">Homepage</a></li>
-						<li><a href="threecolumn.jsp">Three Column</a></li>
-						<li><a href="twocolumn1.jsp">Two Column #1</a></li>
-						<li><a href="twocolumn2.jsp">Two Column #2</a></li>
-						<li><a href="board.jsp">자유게시판</a></li>
-					</ul>
-				</nav>
-			</div>
+			 <div class="container">
+            <nav id="nav">
+                <ul>
+                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/Board/boardList.jsp">메인화면</a></li>
+                    <li><a href="threecolumn.jsp">공지사항</a></li>
+                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/Q_Board/q_boardList.jsp">QnA 게시판</a></li>
+                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/Files/filesList.jsp">자료실 게시판</a></li>
+                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/Board/boardList.jsp">자유게시판</a></li>
+                </ul>
+            </nav>
+        </div>
 		</div>
 	</div>
 	<div id="wrapper">
@@ -53,59 +52,83 @@
 			</div>
 		</div>
 		<div id="marketing">
-			<div class="container">
-				<div class="row divider">
-					<div class="3u">
-						<section>
-							<div class="mbox-style">
-								<h2 class="title">Maecenas luctus lectus</h2>
-								<div class="content">
-									<p class="subtitle">Pellentesque pede. Donec pulvinar metus. In eu odio at lectus  mollis. </p>
-									<p>Pellentesque viverra vulputate enim. Aliquam erat volutpat. Pellentesque tristique ante ut risus. Quisque dictum.</p>
-								</div>
-								<p class="button-style2"><a href="#">More Details</a></p>
-							</div>
-						</section>
-					</div>
-					<div class="3u">
-						<section>
-							<div class="mbox-style">
-								<h2 class="title">Etiam posuere augue</h2>
-								<div class="content">
-									<p class="subtitle">Pellentesque pede. Donec pulvinar metus. In eu odio at lectus  mollis. </p>
-									<p>Pellentesque viverra vulputate enim. Aliquam erat volutpat. Pellentesque tristique ante ut risus. Quisque dictum.</p>
-								</div>
-								<p class="button-style2"><a href="#">More Details</a></p>
-							</div>
-						</section>
-					</div>
-					<div class="3u">
-						<section>
-							<div class="mbox-style">
-								<h2 class="title">Fusce ultrices fringilla</h2>
-								<div class="content">
-									<p class="subtitle">Pellentesque pede. Donec pulvinar metus. In eu odio at lectus  mollis. </p>
-									<p>Pellentesque viverra vulputate enim. Aliquam erat volutpat. Pellentesque tristique ante ut risus. Quisque dictum.</p>
-								</div>
-								<p class="button-style2"><a href="#">More Details</a></p>
-							</div>
-						</section>
-					</div>
-					<div class="3u">
-						<section>
-							<div class="mbox-style">
-								<h2 class="title">Nulla luctus eleifend</h2>
-								<div class="content">
-									<p class="subtitle">Pellentesque pede. Donec pulvinar metus. In eu odio at lectus  mollis. </p>
-									<p>Pellentesque viverra vulputate enim. Aliquam erat volutpat. Pellentesque tristique ante ut risus. Quisque dictum.</p>
-								</div>
-								<p class="button-style2"><a href="#">More Details</a></p>
-							</div>
-						</section>
-					</div>
-				</div>
-			</div>
-		</div>
+    <div class="container">
+        <div class="row">
+            <!-- 로그인 박스 -->
+            <div class="3u">
+                <section>
+                    <div class="auth-box">
+    <!-- 로그인 옵션 -->
+    <div class="login-options">
+        <label>
+            <input type="checkbox" name="keep-login"> 로그인 유지
+        </label>
+        <span>|</span>
+        <span>IP보안 <strong>ON</strong></span>
+    </div>
+
+    <!-- 로그인 버튼 -->
+    <form action="login.do" method="post" class="login-form">
+        <button type="submit" class="login-button">회원 로그인</button>
+    </form>
+
+    <!-- 링크 -->
+    <div class="auth-links">
+        <a href="findId.jsp">아이디</a>
+        <span>/</span>
+        <a href="findPassword.jsp">비밀번호 찾기</a>
+        <span>|</span>
+        <a href="signup.jsp">회원가입</a>
+    </div>
+</div>
+                </section>
+            </div>
+
+            <!-- 마케팅 박스 1 -->
+            <div class="3u">
+                <section>
+                    <div class="mbox-style">
+                        <h2 class="title">Etiam posuere augue</h2>
+                        <div class="content">
+                            <p class="subtitle">Pellentesque pede. Donec pulvinar metus.</p>
+                            <p>Pellentesque viverra vulputate enim. Aliquam erat volutpat. Pellentesque tristique ante ut risus. Quisque dictum.</p>
+                        </div>
+                        <p class="button-style2"><a href="#">More Details</a></p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 마케팅 박스 2 -->
+            <div class="3u">
+                <section>
+                    <div class="mbox-style">
+                        <h2 class="title">Fusce ultrices fringilla</h2>
+                        <div class="content">
+                            <p class="subtitle">Pellentesque pede. Donec pulvinar metus.</p>
+                            <p>Pellentesque viverra vulputate enim. Aliquam erat volutpat. Pellentesque tristique ante ut risus. Quisque dictum.</p>
+                        </div>
+                        <p class="button-style2"><a href="#">More Details</a></p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 마케팅 박스 3 -->
+            <div class="3u">
+                <section>
+                    <div class="mbox-style">
+                        <h2 class="title">Nulla luctus eleifend</h2>
+                        <div class="content">
+                            <p class="subtitle">Pellentesque pede. Donec pulvinar metus.</p>
+                            <p>Pellentesque viverra vulputate enim. Aliquam erat volutpat. Pellentesque tristique ante ut risus. Quisque dictum.</p>
+                        </div>
+                        <p class="button-style2"><a href="#">More Details</a></p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
 		<div id="page">
 			<div class="container">
 				<div class="row">

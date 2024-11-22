@@ -13,7 +13,10 @@
         <div class="login-container">
             <h2>비밀번호 찾기 결과</h2>
             <p>${message}</p>
-            <p><a href="<%= request.getContextPath() %>/Login/LoginForm.jsp">로그인 화면으로</a></p>
+            <p>임시 비밀번호로 로그인하셨습니다. 새 비밀번호를 설정해주세요.</p>
+			<form action="<%= request.getContextPath() %>/Login/ChangePwdFind.jsp" method="get">
+			    <button type="submit">비밀번호 변경</button>
+			</form>
         </div>
     </div>
 </body>

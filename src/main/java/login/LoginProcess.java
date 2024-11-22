@@ -21,12 +21,12 @@ public class LoginProcess extends HttpServlet {
     	
     	
         // 클라이언트로부터 전달받은 파라미터
-        String userId = request.getParameter("user_id");
-        String userPw = request.getParameter("user_pw");
+        String UserId = request.getParameter("user_id");
+        String UserPw = request.getParameter("user_pw");
 
         // DAO를 사용하여 사용자 인증
         MemberDAO dao = new MemberDAO();
-        MemberDTO memberDTO = dao.getMemberDTO(userId, userPw);
+        MemberDTO memberDTO = dao.getMemberDTO(UserId, UserPw);
         dao.close();
 
         // 로그인 결과 처리
@@ -35,6 +35,8 @@ public class LoginProcess extends HttpServlet {
             HttpSession session = request.getSession();
             
             session.setAttribute("UserId", memberDTO.getUser_id());
+            System.out.println("LoginProcess - Session ID: " + session.getId());
+            System.out.println("LoginProcess - UserId: " + session.getAttribute("UserId")); // 디버깅용 로그
             session.setAttribute("UserName", memberDTO.getName());
             
             

@@ -1,0 +1,66 @@
+.auth-box {
+    background-color: #f9f9f9; /* 밝은 배경 */
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    max-width: 400px;
+    margin: auto;
+}
+
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 13px;
+    color: #666;
+}
+
+.login-options strong {
+    color: #4CAF50; /* 초록색 ON 텍스트 */
+}
+
+.login-form {
+    margin-bottom: 10px;
+}
+
+.login-button {
+    width: 90%; /* 버튼이 입력칸 크기를 차지 */
+    padding: 20px; /* 버튼 높이 조정 */
+    background-color: #4CAF50; /* 초록색 버튼 */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background-color: #45a049; /* 호버 효과 */
+}
+
+.auth-links {
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+    margin-top: 10px;
+}
+
+.auth-links a {
+    color: #007BFF; /* 파란색 링크 */
+    text-decoration: none;
+    padding-right: 0px;
+    margin-right: 0px;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+.auth-links span {
+    margin: 02px;
+    color: #aaa;
+    margin-right: 0px;
+}

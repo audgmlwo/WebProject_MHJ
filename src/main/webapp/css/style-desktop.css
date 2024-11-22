@@ -207,8 +207,6 @@
 	overflow: hidden;
 }
 
-#footer-content #box3 {
-}
 
 #footer-content a img {
 	display: block;
@@ -284,4 +282,10 @@
 #featured-area .box-style a img {
 	display: block;
 	width: 40%;
+}
+
+@media screen and (min-width: 1000px) {
+    #content {
+        margin-top: 0; /* Removed excessive margin */
+    }
 }

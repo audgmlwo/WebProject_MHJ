@@ -20,13 +20,16 @@ public class MailUtil {
                 props.load(input);
             }
 
-            // 신뢰 저장소 경로 설정
+            // TrustStore 경로를 상대 경로로 설정
             String trustStorePath = Objects.requireNonNull(
                 MailUtil.class.getClassLoader().getResource("smtp_truststore.jks")
             ).getPath();
 
             System.setProperty("javax.net.ssl.trustStore", trustStorePath);
             System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
+
+            System.out.println("TrustStore Path: " + System.getProperty("javax.net.ssl.trustStore"));
+            System.out.println("TrustStore Password: " + System.getProperty("javax.net.ssl.trustStorePassword"));
 
         } catch (Exception e) {
             e.printStackTrace();

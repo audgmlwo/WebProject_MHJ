@@ -3,7 +3,7 @@ package board;
 import java.sql.*;
 import java.util.*;
 import common.DBConnPool;
-import board.BoardDTO;
+
 
 
 public class BoardDAO extends DBConnPool {

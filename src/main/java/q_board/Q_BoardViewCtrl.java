@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import likes.LikeDAO;
 import na_board.NA_BoardDAO;
 import na_board.NA_BoardDTO;
 import utils.CookieManager;
@@ -25,6 +26,7 @@ public class Q_BoardViewCtrl extends HttpServlet {
 
         Q_BoardDAO questionDao = new Q_BoardDAO();
         NA_BoardDAO answerDao = new NA_BoardDAO();
+        LikeDAO likeDAO = new LikeDAO(); // 좋아요 DAO 추가
         
         // 조회수 1 증가
 		// 조회수 증가 여부 확인
@@ -38,7 +40,14 @@ public class Q_BoardViewCtrl extends HttpServlet {
         
         Q_BoardDTO question = questionDao.selectView(q_id);
         List<NA_BoardDTO> answers = answerDao.getAnswersByQuestionId(q_id);
-
+        
+        String board_type = "question";
+        
+        
+        // 좋아요 수 조회
+        int likeCount = likeDAO.getLikeCount(board_type, Integer.parseInt(q_id));
+        req.setAttribute("likeCount", likeCount);
+        
         questionDao.close();
         answerDao.close();
 

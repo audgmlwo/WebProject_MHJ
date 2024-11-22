@@ -31,7 +31,6 @@ public class SignUpProcess extends HttpServlet {
         MemberDAO dao = new MemberDAO();
         
    
-        
 
         // 데이터베이스 중복 확인
         int checkUserResult = dao.UserCheck(userId);

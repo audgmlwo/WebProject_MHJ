@@ -399,3 +399,8 @@ ul.style5 a img {
 	width: 100%;
 }
 
+@media screen and (max-width: 768px) {
+    .row {
+        padding: 5px; /* Reduced padding for mobile view */
+    }
+}
