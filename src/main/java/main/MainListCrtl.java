@@ -34,19 +34,19 @@ public class MainListCrtl extends HttpServlet {
             // 자유게시판 데이터 가져오기
             List<BoardDTO> freList = freDao.selectListPageBoard(Map.of(
                 "start", "1",
-                "end", "5"
+                "end", "10"
             ));
 
             // QnA 데이터 가져오기
             List<Q_BoardDTO> qnaList = qnaDao.selectListPageBoard(Map.of(
                 "start", "1",
-                "end", "5"
+                "end", "10"
             ));
 
             // 자료실 데이터 가져오기
             List<BoardDTO> filesList = filesDao.selectListPageFiles(Map.of(
                 "start", "1",
-                "end", "5"
+                "end", "10"
             ));
 
             // JSP로 데이터 전달

@@ -156,7 +156,7 @@
 										        for (Q_BoardDTO qnaItem : qnaList) { 
 										%>
 										        <li>
-										            <a href="<%= request.getContextPath() %>/q_board/Q_BVC?q_id=<%= qnaItem.getBoard_id() %>&board_type=fre">
+										            <a href="<%= request.getContextPath() %>/q_board/Q_BVC?q_id=<%= qnaItem.getQ_id() %>&board_type=question">
 										                <%= qnaItem.getTitle().replace("\n", "<br>") %>
 										            </a>
 										        </li>
@@ -170,7 +170,7 @@
 										%>
                                     </ul>
                                 </div>
-                                <p class="button-style2"><a href="/q_board/main">QnA 게시판으로 이동</a></p>
+                                <p class="button-style2"><a href="../Q_Board/q_boardList.jsp">QnA 게시판으로 이동</a></p>
                             </div>
                         </section>
                     </div>
@@ -183,20 +183,26 @@
                                 <div class="content">
                                     <ul>
                                         <% 
-                                        List<BoardDTO> filesList = (List<BoardDTO>) request.getAttribute("filesList");
-                                        if (filesList != null && !filesList.isEmpty()) {
-                                            for (BoardDTO filesItem : filesList) { 
-                                        %>
-                                                <li><a href="/files/BLPC?id=<%= filesItem.getBoard_id() %>"><%= filesItem.getTitle() %></a></li>
-                                        <% 
-                                            }
-                                        } else { 
-                                        %>
-                                            <li>게시물이 없습니다.</li>
-                                        <% } %>
+										    List<BoardDTO> filesList = (List<BoardDTO>) request.getAttribute("filesList");
+										    if (freList != null && !freList.isEmpty()) {
+										        for (BoardDTO filesItem : filesList) { 
+										%>
+										        <li>
+										            <a href="<%= request.getContextPath() %>/files/BVC?board_id=<%= filesItem.getBoard_id() %>&board_type=files">
+										                <%= filesItem.getTitle().replace("\n", "<br>") %>
+										            </a>
+										        </li>
+										<% 
+										        }
+										    } else { 
+										%>
+										    <li>게시물이 없습니다.</li>
+										<% 
+										    } 
+										%>
                                     </ul>
                                 </div>
-                                <p class="button-style2"><a href="/files/main">자료실로 이동</a></p>
+                                <p class="button-style2"><a href="../Files/filesList.jsp">자료실로 이동</a></p>
                             </div>
                         </section>
                     </div>

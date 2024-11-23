@@ -25,7 +25,7 @@
                 <div class="mobileUI-main-content" id="content">
                     <section>
                         <div class="post">
-                            <h2 class="custom-heading">게시물 상세보기</h2>
+                            <h2 class="custom-heading">질문게시판</h2>
 
                             <table class="board-detail" border="1">
                                 <colgroup>
@@ -53,11 +53,12 @@
                                     <td colspan="3">${dto.title}</td>
                                 </tr>                              
                                 <tr>
-                                    <td class="label">내용</td>
-                                    <td colspan="3" class="content-box">
-                                        ${dto.content}                                  
-                                    </td>
-                                </tr>
+									<td class="label">내용</td>
+									<td colspan="3" class="content-box"><textarea
+											id="content" name="content" rows="20"
+											style="width: 100%; height: 400px; resize: none;"readonly>${dto.content}</textarea>
+									</td>
+								</tr>
                                 </tbody>
                             </table>
 
