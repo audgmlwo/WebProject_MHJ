@@ -2,7 +2,9 @@ package board;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import fileupload.FileUtil;
 import jakarta.servlet.ServletException;
@@ -15,7 +17,7 @@ import jakarta.servlet.http.HttpSession;
 import utils.JSFunction;
 
 
-@WebServlet("/board/BoardWriteCtrl")
+@WebServlet("/board/BWC")
 @MultipartConfig(
     maxFileSize = 1024 * 1024 * 50,  // 최대 파일 크기: 50MB
     maxRequestSize = 1024 * 1024 * 100  // 최대 요청 크기: 100MB
@@ -67,13 +69,10 @@ public class BoardWriteCtrl extends HttpServlet {
             return;
         }
 
-        // board_type 처리 및 검증
+        // 게시판 유형 처리
         String boardType = req.getParameter("board_type");
-        List<String> validBoardTypes = Arrays.asList("fre");
-
-        // 잘못된 게시판 타입 처리
-        if (boardType == null || !validBoardTypes.contains(boardType)) {
-            JSFunction.alertBack(resp, "유효하지 않은 게시판입니다."); // 클라이언트에 알림
+        if (boardType == null || boardType.isEmpty()) {
+            JSFunction.alertBack(resp, "게시판 유형을 선택해주세요.");
             return;
         }
 
@@ -103,9 +102,23 @@ public class BoardWriteCtrl extends HttpServlet {
         try {
             dao = new BoardDAO();
             int result = dao.insertWrite(dto);
-
+                       
             if (result == 1) {
-                resp.sendRedirect("../board/BLPC?board_type=" + boardType); // 성공 시 해당 게시판 목록으로 이동
+                String contextPath = req.getContextPath(); // 동적 경로 가져오기
+
+                // boardType에 따라 폴더 경로 매핑
+                Map<String, String> folderMap = new HashMap<>();
+                
+                folderMap.put("fre", "board"); // 자유게시판
+                folderMap.put("files", "files"); // 자료실
+                folderMap.put("qna", "q_board"); // 질문게시판
+                // 필요한 다른 boardType도 추가
+
+                // 기본 폴더 설정 (boardType이 매핑되지 않을 경우)
+                String folder = folderMap.getOrDefault(boardType, "board");
+
+                // 리다이렉트 경로 생성
+                resp.sendRedirect(contextPath + "/" + folder + "/BLPC?board_type=" + boardType);
             } else {
                 JSFunction.alertLocation(resp, "글쓰기에 실패했습니다.", "../board/boardWrite.jsp");
             }

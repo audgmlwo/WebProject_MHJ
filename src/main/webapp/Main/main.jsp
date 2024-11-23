@@ -58,17 +58,11 @@
 			<div class="container">
 				<nav id="nav">
 					<ul>
-						<li class="current_page_item"><a
-							href="${pageContext.request.contextPath}/Board/boardList.jsp">메인화면</a></li>
-						<li><a href="threecolumn.jsp">공지사항</a></li>
-						<li class="current_page_item"><a
-							href="${pageContext.request.contextPath}/Q_Board/q_boardList.jsp">QnA
-								게시판</a></li>
-						<li class="current_page_item"><a
-							href="${pageContext.request.contextPath}/Files/filesList.jsp">자료실
-								게시판</a></li>
-						<li class="current_page_item"><a
-							href="${pageContext.request.contextPath}/Board/boardList.jsp">자유게시판</a></li>
+					<li class="current_page_item"><a href="${pageContext.request.contextPath}/Main/main.jsp">메인화면</a></li>
+                    <li><a href="threecolumn.jsp">공지사항</a></li>
+                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/Q_Board/q_boardList.jsp">QnA 게시판</a></li>
+                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/Files/filesList.jsp">자료실 게시판</a></li>
+                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/Board/boardList.jsp">자유게시판</a></li>  
 					</ul>
 				</nav>
 			</div>
@@ -154,20 +148,26 @@
                         <section>
                             <div class="mbox-style">
                                 <h2 class="title">QnA 게시판</h2>
-                                <div class="content">
+                                 <div class="content">
                                     <ul>
                                         <% 
-                                        List<Q_BoardDTO> qnaList = (List<Q_BoardDTO>) request.getAttribute("qnaList");
-                                        if (qnaList != null && !qnaList.isEmpty()) {
-                                            for (Q_BoardDTO qnaItem : qnaList) { 
-                                        %>
-                                                <li><a href="/q_board/Q_BLPC?id=<%= qnaItem.getQ_id() %>"><%= qnaItem.getTitle() %></a></li>
-                                        <% 
-                                            }
-                                        } else { 
-                                        %>
-                                            <li>게시물이 없습니다.</li>
-                                        <% } %>
+										    List<Q_BoardDTO> qnaList = (List<Q_BoardDTO>) request.getAttribute("qnaList");
+										    if (qnaList != null && !qnaList.isEmpty()) {
+										        for (Q_BoardDTO qnaItem : qnaList) { 
+										%>
+										        <li>
+										            <a href="<%= request.getContextPath() %>/q_board/Q_BVC?q_id=<%= qnaItem.getBoard_id() %>&board_type=fre">
+										                <%= qnaItem.getTitle().replace("\n", "<br>") %>
+										            </a>
+										        </li>
+										<% 
+										        }
+										    } else { 
+										%>
+										    <li>게시물이 없습니다.</li>
+										<% 
+										    } 
+										%>
                                     </ul>
                                 </div>
                                 <p class="button-style2"><a href="/q_board/main">QnA 게시판으로 이동</a></p>

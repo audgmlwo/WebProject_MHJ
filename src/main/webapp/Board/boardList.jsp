@@ -35,7 +35,7 @@
         <div class="container">
             <nav id="nav">
                 <ul>
-                    <li><a href="index.jsp">메인화면</a></li>
+                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/Main/main.jsp">메인화면</a></li>
                     <li><a href="threecolumn.jsp">공지사항</a></li>
                     <li class="current_page_item"><a href="${pageContext.request.contextPath}/Q_Board/q_boardList.jsp">QnA 게시판</a></li>
                     <li class="current_page_item"><a href="${pageContext.request.contextPath}/Files/filesList.jsp">자료실 게시판</a></li>
@@ -124,7 +124,7 @@
 								        </tr>
 								   </table>
 								   <div class="button-container">
-									  <button type="button" onclick="location.href='../board/BoardWriteCtrl';">글쓰기</button>
+									  <button type="button" onclick="location.href='../board/BWC';">글쓰기</button>
 								   </div>
                                 <!-- 자유게시판 목록 코드 끝 -->
                             </div>

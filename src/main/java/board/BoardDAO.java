@@ -14,7 +14,7 @@ public class BoardDAO extends DBConnPool {
         String query = "SELECT COUNT(*) FROM board WHERE board_type = 'fre'";
         
         if (map.get("searchWord") != null) {
-            query += " WHERE " + map.get("searchField") + " LIKE ?";
+            query += " AND " + map.get("searchField") + " LIKE ?";
         }
 
         try (PreparedStatement psmt = conn.prepareStatement(query)) {
@@ -100,8 +100,7 @@ public class BoardDAO extends DBConnPool {
                + "    SELECT * FROM board WHERE board_type = 'fre'  ";
         
         if (map.get("searchWord") != null) {
-            query +=" WHERE " + map.get("searchField")
-                  + " LIKE '%" + map.get("searchWord") + "%'";
+            query += " AND " + map.get("searchField") + " LIKE ? ";
         }
         query += "     ORDER BY BOARD_ID DESC "
                + "   ) Tb "
@@ -112,11 +111,11 @@ public class BoardDAO extends DBConnPool {
             psmt = conn.prepareStatement(query);
             
             int paramIndex = 1;
-            if (map.get("searchWord") != null && !map.get("searchWord").toString().isEmpty()) {
+            if (map.get("searchWord") != null) {
                 psmt.setString(paramIndex++, "%" + map.get("searchWord") + "%");
             }
-            psmt.setString(1, map.get("start").toString());
-            psmt.setString(2, map.get("end").toString());
+            psmt.setInt(paramIndex++, Integer.parseInt(map.get("start").toString()));
+            psmt.setInt(paramIndex, Integer.parseInt(map.get("end").toString()));
             rs = psmt.executeQuery();
 
             while (rs.next()) {

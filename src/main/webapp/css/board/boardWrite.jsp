@@ -10,7 +10,7 @@
 <body>
     <div class="overlay"></div>
     <div class="form-container">
-        <form action="../board/BWC" method="post" enctype="multipart/form-data">
+        <form action="../board/BoardWriteCtrl" method="post" enctype="multipart/form-data">
 		    <div class="form-group">
 		        <label for="board_type">게시판을 선택해주세요:</label>
 		        <select id="board_type" name="board_type" required>

@@ -35,7 +35,7 @@
         <div class="container">
             <nav id="nav">
                 <ul>
-                    <li><a href="index.jsp">메인화면</a></li>
+                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/Main/main.jsp">메인화면</a></li>
                     <li><a href="threecolumn.jsp">공지사항</a></li>
                     <li class="current_page_item"><a href="${pageContext.request.contextPath}/Q_Board/q_boardList.jsp">QnA 게시판</a></li>
                     <li class="current_page_item"><a href="${pageContext.request.contextPath}/Files/filesList.jsp">자료실 게시판</a></li>
@@ -96,7 +96,7 @@
 							            <tr align="center">
 							                <td>${row.board_id}</td>
 							                <td align="left">
-							                    <a href="../board/BVC?board_id=${row.board_id}&board_type=${row.board_type}">
+							                    <a href="../files/BVC?board_id=${row.board_id}&board_type=${row.board_type}">
 							                        ${row.title}
 							                    </a>
 							                </td>
@@ -105,7 +105,7 @@
 							                <td>${row.created_date}</td>
 							                <td>
 							                    <c:if test="${not empty row.o_file}">
-							                        <a href="../board/BDC?o_file=${row.o_file}&s_file=${row.s_file}">[Down]</a>
+							                        <a href="../files/BDC?o_file=${row.o_file}&s_file=${row.s_file}">[Down]</a>
 							                    </c:if>
 							                </td>
 							            </tr>
@@ -126,7 +126,7 @@
 								   <div class="button-container">
 									  <button type="button" onclick="location.href='../files/FilesWriteCtrl';">글쓰기</button>
 								   </div>
-                                <!-- 자유게시판 목록 코드 끝 -->
+                                <!-- 자료실 목록 코드 끝 -->
                             </div>
                         </section>
                     </div>

@@ -17,7 +17,7 @@
     String contextPath = request.getContextPath(); 
     if (request.getAttribute("boardLists") == null) {
         // 데이터가 없을 경우 Controller로 리다이렉트
-        response.sendRedirect(contextPath + "/q_board/Q_BLPC");
+        response.sendRedirect(contextPath + "/board/BLPC");
         return;
     }
 %>  
@@ -35,11 +35,11 @@
         <div class="container">
             <nav id="nav">
                 <ul>
-                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/Main/main.jsp">메인화면</a></li>
+                    <li><a href="index.jsp">메인화면</a></li>
                     <li><a href="threecolumn.jsp">공지사항</a></li>
                     <li class="current_page_item"><a href="${pageContext.request.contextPath}/Q_Board/q_boardList.jsp">QnA 게시판</a></li>
                     <li class="current_page_item"><a href="${pageContext.request.contextPath}/Files/filesList.jsp">자료실 게시판</a></li>
-                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/Board/boardList.jsp">자유게시판</a></li> 
+                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/Board/boardList.jsp">자유게시판</a></li>
                 </ul>
             </nav>
         </div>
@@ -54,7 +54,7 @@
                     <div class="mobileUI-main-content" id="content">
                         <section>
                             <div class="post">
-                                <h2 class="custom-heading">QnA 게시판</h2>
+                                <h2 class="custom-heading">자유게시판</h2>
                                 
                                  <form method="get">  
 							     <table border="1" width="90%">
@@ -94,16 +94,20 @@
 							    <c:otherwise>
 							        <c:forEach items="${boardLists}" var="row">
 							            <tr align="center">
-							                <td>${row.q_id}</td>
+							                <td>${row.board_id}</td>
 							                <td align="left">
-							                    <a href="../q_board/Q_BVC?q_id=${row.q_id}">
+							                    <a href="../board/BVC?board_id=${row.board_id}&board_type=${row.board_type}">
 							                        ${row.title}
 							                    </a>
 							                </td>
 							                <td>${row.user_id}</td>
 							                <td>${row.visit_count}</td>
 							                <td>${row.created_date}</td>
-							                
+							                <td>
+							                    <c:if test="${not empty row.o_file}">
+							                        <a href="../board/BDC?o_file=${row.o_file}&s_file=${row.s_file}">[Down]</a>
+							                    </c:if>
+							                </td>
 							            </tr>
 							        </c:forEach>
 							    </c:otherwise>
@@ -120,9 +124,9 @@
 								        </tr>
 								   </table>
 								   <div class="button-container">
-									  <button type="button" onclick="location.href='../q_board/Q_BWC';">글쓰기</button>
+									  <button type="button" onclick="location.href='../board/BoardWriteCtrl';">글쓰기</button>
 								   </div>
-                                <!-- 게시판 목록 코드 끝 -->
+                                <!-- 자유게시판 목록 코드 끝 -->
                             </div>
                         </section>
                     </div>

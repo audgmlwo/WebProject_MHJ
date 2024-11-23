@@ -18,7 +18,49 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/likes.css" />
   
   
+<style>
 
+/* 좋아요 컨테이너 */
+.like-container {
+    display: flex;
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    align-items: center;
+    margin-top: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 좋아요 버튼 */
+.like-button {
+    padding: 10px 20px;
+    background-color: #28a745; /* 초록색 */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.like-button:hover {
+    background-color: #218838; /* hover 색상 */
+}
+
+/* 좋아요 수 */
+.like-count {
+    font-size: 14px;
+    color: #333;
+    margin-left: 10px;
+}
+
+</style>  
+  
+  
+  
    
 </head>
 <body>
@@ -88,17 +130,6 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                             </div>
-                                        </c:if>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="label">첨부파일</td>
-                                    <td colspan="3">
-                                        <c:if test="${not empty dto.o_file}">
-                                        	<c:if test="${not empty UserId}">
-                                            <a href="../files/BDC?o_file=${dto.o_file}&s_file=${dto.s_file}
-                                            &board_id=${dto.board_id}&board_type=${dto.board_type}"onclick="this.style.pointerEvents='none';">[다운로드]</a>
-                                            </c:if>                                      
                                         </c:if>
                                     </td>
                                 </tr>
