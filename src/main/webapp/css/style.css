@@ -144,4 +144,21 @@ strong {
     font-size: 16px;
 }
 
-.mbox-style .content ul li a:ho
+.mbox-style .content ul li a:hover {
+    color: #FFF8DC; /* 텍스트 색상을 밝게 변경 */
+    text-decoration: underline;
+}
+
+/* 게시판 제목 공통 스타일 */
+.custom-heading {
+    color: #4CAF50 !important; /* 녹색 계열로 템플릿과 일관성 유지 */
+    font-size: 30px !important; /* 제목 크기 설정 */
+    font-weight: 700 !important; /* 제목 텍스트 두껍게 */
+    text-align: left !important; /* 텍스트 정렬 */
+    margin-bottom: 16px !important; /* 제목 하단 여백 추가 */
+    letter-spacing: normal !important; /* 자간을 기본으로 설정 */
+}
+
+.user-info {
+    color: white !important; /* 텍스트 색상을 흰색으로 설정 */
+}
