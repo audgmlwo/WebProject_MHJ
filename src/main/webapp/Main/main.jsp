@@ -104,7 +104,9 @@
 		                        <div class="user-info">
 		                            <p>안녕하세요, <strong><%= name %></strong>님!</p>
 		                            <p class="email-info">이메일: <strong><%= email %></strong></p>
+		                            <a href="<%= request.getContextPath() %>/Login/UpdateAccount.jsp" class="logout-button">[정보수정]</a>
 		                            <a href="<%= request.getContextPath() %>/Login/Logout.jsp" class="logout-button">[로그아웃]</a>
+		                            
 		                        </div>
 		                        <% } else { %>
 		                        <!-- 비로그인 상태 -->
