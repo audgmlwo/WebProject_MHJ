@@ -277,6 +277,13 @@ public class MemberDAO extends DBConnPool {
 	            dto.setUser_id(rs.getString("user_id"));
 	            dto.setPass(rs.getString("pass"));
 	            dto.setEmail(rs.getString("email"));
+	            
+	         // 디버깅 코드
+	            System.out.println("디버깅 - 데이터베이스 조회 결과:");
+	            System.out.println("UserId: " + dto.getUser_id());
+	            System.out.println("Name: " + dto.getName());
+	            System.out.println("Email: " + dto.getEmail());
+	            
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();

@@ -26,18 +26,21 @@ public class FilesListPageCtrl extends HttpServlet {
             throws ServletException, IOException {
     	HttpSession session = req.getSession();
     	
+    	String boardType = req.getParameter("board_type");
+        if (boardType == null || boardType.isEmpty()) {
+            boardType = "files"; // 기본값: 자료실
+        }
+        
     	String userId = (String) session.getAttribute("UserId");
     	if (userId == null) {
     	    System.out.println("비로그인 사용자 접근 허용: 게시판 목록만 출력합니다.");
     	    // 로그인하지 않아도 목록 출력 가능
     	}
-
-        // DAO 생성
-    	BoardDAO dao = new BoardDAO();
-
+        
         // 뷰에 전달할 매개변수 저장용 맵 생성
         Map<String, Object> map = new HashMap<>();
-
+        map.put("board_type", boardType);
+        
         String searchField = req.getParameter("searchField");
         String searchWord = req.getParameter("searchWord");
         
@@ -45,6 +48,9 @@ public class FilesListPageCtrl extends HttpServlet {
             map.put("searchField", searchField);
             map.put("searchWord", searchWord);
         }
+        
+        // DAO 생성
+    	BoardDAO dao = new BoardDAO();
         int totalCount = dao.selectCountFiles(map);
 
         /* 페이지 처리 start */
@@ -68,11 +74,21 @@ public class FilesListPageCtrl extends HttpServlet {
         dao.close();
 
         // 뷰에 전달할 매개변수 추가
-        String pagingImg = BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "../files/BLPC");
+        String baseUrl = "../files/BLPC?board_type=" + boardType +"&";
+        
+        String pagingImg = BoardPage.pagingStr(totalCount,
+        		pageSize, blockPage, pageNum, baseUrl);
+        
+        // 최종적으로 ?& 제거
+        pagingImg = pagingImg
+        		.replace("href='../files/BLPC?board_type=" 
+        			+ boardType + "&?", "href='../files/BLPC?board_type=" + boardType + "&");
+        
         map.put("pagingImg", pagingImg);
         map.put("totalCount", totalCount);
         map.put("pageSize", pageSize);
         map.put("pageNum", pageNum);
+        map.put("board_type", boardType);
 
         // 전달할 데이터를 request 영역에 저장 후 List.jsp로 포워드
         req.setAttribute("boardLists", boardLists);

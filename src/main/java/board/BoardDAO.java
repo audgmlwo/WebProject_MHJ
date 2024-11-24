@@ -10,6 +10,7 @@ public class BoardDAO extends DBConnPool {
 
     // 게시물 총 갯수 조회 (board)
     public int selectCountBoard(Map<String, Object> map) {
+    	
         int totalCount = 0;
         String query = "SELECT COUNT(*) FROM board WHERE board_type = 'fre'";
         
@@ -17,15 +18,16 @@ public class BoardDAO extends DBConnPool {
             query += " AND " + map.get("searchField") + " LIKE ?";
         }
 
-        try (PreparedStatement psmt = conn.prepareStatement(query)) {
+        try {
+            psmt = conn.prepareStatement(query);
+            
             if (map.get("searchWord") != null) {
                 psmt.setString(1, "%" + map.get("searchWord") + "%");
             }
 
-            try (ResultSet rs = psmt.executeQuery()) {
-                if (rs.next()) {
-                    totalCount = rs.getInt(1);
-                }
+            rs = psmt.executeQuery();
+            if (rs.next()) {
+                totalCount = rs.getInt(1);
             }
         } catch (Exception e) {
             System.out.println("게시물 카운트 중 예외 발생");
@@ -40,18 +42,19 @@ public class BoardDAO extends DBConnPool {
         String query = "SELECT COUNT(*) FROM board WHERE board_type = 'files'";
         
         if (map.get("searchWord") != null) {
-            query += " WHERE " + map.get("searchField") + " LIKE ?";
+            query += " AND " + map.get("searchField") + " LIKE ?";
         }
 
-        try (PreparedStatement psmt = conn.prepareStatement(query)) {
+        try {
+            psmt = conn.prepareStatement(query);
+            
             if (map.get("searchWord") != null) {
                 psmt.setString(1, "%" + map.get("searchWord") + "%");
             }
 
-            try (ResultSet rs = psmt.executeQuery()) {
-                if (rs.next()) {
-                    totalCount = rs.getInt(1);
-                }
+            rs = psmt.executeQuery();
+            if (rs.next()) {
+                totalCount = rs.getInt(1);
             }
         } catch (Exception e) {
             System.out.println("게시물 카운트 중 예외 발생");
@@ -59,34 +62,7 @@ public class BoardDAO extends DBConnPool {
         }
         return totalCount;
     }
-    
-	/*
-	 * public List<BoardDTO> selectList(Map<String,Object> map) { List<BoardDTO>
-	 * board = new Vector<BoardDTO>(); String query = "SELECT * FROM board ";
-	 * 
-	 * if (map.get("searchWord") != null) { query += " WHERE " +
-	 * map.get("searchField") + " LIKE '%" + map.get("searchWord") + "%' "; } query
-	 * += " ORDER BY board_id DESC ";
-	 * 
-	 * try { psmt = conn.prepareStatement(query); rs = psmt.executeQuery(); while
-	 * (rs.next()) {
-	 * 
-	 * BoardDTO dto = new BoardDTO();
-	 * 
-	 * dto.setBoard_id(rs.getInt("board_id"));
-	 * dto.setBoard_type(rs.getString("board_type"));
-	 * dto.setUser_id(rs.getString("user_id")); dto.setTitle(rs.getString("title"));
-	 * dto.setContent(rs.getString("content"));
-	 * dto.setCreated_date(rs.getDate("created_date"));
-	 * dto.setUpdated_date(rs.getDate("updated_date"));
-	 * dto.setO_file(rs.getString("o_file")); dto.setS_file(rs.getString("s_file"));
-	 * dto.setDown_count(rs.getInt("down_count"));
-	 * dto.setVisit_count(rs.getInt("visit_count"));
-	 * 
-	 * board.add(dto); } } catch (Exception e) {
-	 * System.out.println("게시물 조회 중 예외 발생"); e.printStackTrace(); } return board; }
-	 */
-
+ 
     
     // 게시물 목록 조회 (board)
     public List<BoardDTO> selectListPageBoard(
@@ -97,7 +73,7 @@ public class BoardDAO extends DBConnPool {
         String query = 
                  " SELECT * FROM ( "
                + "  SELECT Tb.*, ROWNUM rNum FROM ( "
-               + "    SELECT * FROM board WHERE board_type = 'fre'  ";
+               + "    SELECT * FROM board WHERE board_type = 'fre' ";
         
         if (map.get("searchWord") != null) {
             query += " AND " + map.get("searchField") + " LIKE ? ";
@@ -162,11 +138,10 @@ public class BoardDAO extends DBConnPool {
         String query = 
                  " SELECT * FROM ( "
                + "  SELECT Tb.*, ROWNUM rNum FROM ( "
-               + "    SELECT * FROM board WHERE board_type = 'files'  ";
+               + "    SELECT * FROM board WHERE board_type = 'files' ";
         
         if (map.get("searchWord") != null) {
-            query +=" WHERE " + map.get("searchField")
-                  + " LIKE '%" + map.get("searchWord") + "%'";
+            query += " AND " + map.get("searchField") + " LIKE ? ";
         }
         query += "     ORDER BY BOARD_ID DESC "
                + "   ) Tb "
@@ -177,11 +152,11 @@ public class BoardDAO extends DBConnPool {
             psmt = conn.prepareStatement(query);
             
             int paramIndex = 1;
-            if (map.get("searchWord") != null && !map.get("searchWord").toString().isEmpty()) {
+            if (map.get("searchWord") != null) {
                 psmt.setString(paramIndex++, "%" + map.get("searchWord") + "%");
             }
-            psmt.setString(1, map.get("start").toString());
-            psmt.setString(2, map.get("end").toString());
+            psmt.setInt(paramIndex++, Integer.parseInt(map.get("start").toString()));
+            psmt.setInt(paramIndex, Integer.parseInt(map.get("end").toString()));
             rs = psmt.executeQuery();
 
             while (rs.next()) {

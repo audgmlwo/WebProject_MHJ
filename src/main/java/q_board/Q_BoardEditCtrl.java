@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import utils.JSFunction;
 
-@WebServlet("/q_board/Q_BEC")
+@WebServlet("/q_board/BEC")
 
 @MultipartConfig(
 		maxFileSize = 1024*1024*50,
@@ -116,13 +116,13 @@ public class Q_BoardEditCtrl extends HttpServlet{
 		if (result==1) { //수정성공
 			
 			//수정에 성공하면 '열람'페이지로 이동해서 수정된 내용을 확인한다.
-			resp.sendRedirect("../q_board/Q_BVC?q_id=" + q_id );
+			resp.sendRedirect("../q_board/BVC?q_id=" + q_id );
 		}
 		else { //수정실패
 			
 			//수정에 실패하면 경고창을 띄운다.
 			JSFunction.alertLocation(resp, "수정에 실패했습니다. 다시 시도해주세요.", 
-					"../q_board/Q_BVC?q_id=" + q_id);
+					"../q_board/BVC?q_id=" + q_id);
 		}
 	}
 }

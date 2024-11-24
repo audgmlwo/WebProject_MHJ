@@ -20,17 +20,26 @@
 <script src="${pageContext.request.contextPath}/js/skel.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/skel-panels.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/init.js"></script>
+<script src="${pageContext.request.contextPath}/js/typingLimit.js"></script>
 
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/main.css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/skel-noscript.css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/style.css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/style-desktop.css" />
+
+
+<link rel="stylesheet"href="${pageContext.request.contextPath}/css/main.css" />
+<link rel="stylesheet"href="${pageContext.request.contextPath}/css/style.css" />
+<link rel="stylesheet"href="${pageContext.request.contextPath}/css/style-desktop1.css" />
 
 <%
+    // 세션에서 사용자 정보 가져오기
+    String userId = (String) session.getAttribute("UserId");
+    String name = (String) session.getAttribute("Name");
+    String email = (String) session.getAttribute("Email");
+    
+    // 디버깅 코드
+    System.out.println("디버깅 - JSP에서 세션 값 확인:");
+    System.out.println("UserId: " + userId);
+    System.out.println("Name: " + name);
+    System.out.println("Email: " + email);
+
     // 컨텍스트 경로 가져오기
     String contextPath = request.getContextPath();
 
@@ -42,6 +51,7 @@
         return;
     }
 %>
+
 </head>
 <body class="homepage">
 	<div id="header-wrapper">
@@ -68,48 +78,52 @@
 			</div>
 		</div>
 	</div>
+	
 	<div id="wrapper">
     <div class="container">
         <!-- 배너 -->
         <div class="row">
             <div id="banner" class="12u">
                 <div class="container">
-                    <a href="#"><img src="<%= request.getContextPath() %>/images/pics01.jpg" alt="배너 이미지"></a>
+                    <a href="#"><img src="<%= request.getContextPath() %>/images/pics09.jpg" alt="배너 이미지"></a>
                 </div>
             </div>
         </div>
 
         <!-- 마케팅 박스 -->
-        <div id="marketing">
-            <div class="container">
-                <div class="row divider">
-                    <!-- 인증 섹션 (기존 유지) -->
-                    <div class="3u">
-                        <section>
-                            <div class="auth-box">
-                                <!-- 로그인 옵션 -->
-                                <div class="login-options">
-                                    <label> <input type="checkbox" name="keep-login"> 로그인 유지 </label>
-                                    <span>|</span>
-                                    <span>IP보안 <strong>ON</strong></span>
-                                </div>
-
-                                <!-- 로그인 버튼 -->
-								<form action="<%= request.getContextPath() %>/Login/LoginForm.jsp" method="get" class="login-form">
-								    <button type="submit" class="login-button">회원 로그인</button>
-								</form>
-
-                                <!-- 링크 -->
-                                <div class="auth-links">
-                                    <a href="../Board/boardList.jsp">아이디</a>
-                                    <span>/</span>
-                                    <a href="../Login/PwdFind.jsp">비밀번호 찾기</a>
-                                    <span>|</span>
-                                    <a href="../Login/SignUp.jsp">회원가입</a>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
+       <div id="marketing">
+		    <div class="container">
+		        <div class="row divider">
+		            <!-- 마케팅 박스 1번: 로그인/사용자 정보 -->
+		            <div class="3u">
+		                <section>
+		                    <div class="auth-box">
+		                        <!-- 로그인 상태에 따른 렌더링 -->
+		                        <% if (userId != null) { %>
+		                        <!-- 로그인 상태 -->
+		                        <div class="user-info">
+		                            <p>안녕하세요, <strong><%= name %></strong>님!</p>
+		                            <p class="email-info">이메일: <strong><%= email %></strong></p>
+		                            <a href="<%= request.getContextPath() %>/Login/Logout.jsp" class="logout-button">[로그아웃]</a>
+		                        </div>
+		                        <% } else { %>
+		                        <!-- 비로그인 상태 -->
+		                        <div class="login-box">
+		                           <form action="../main/MLC" method="post" class="login-form">
+									    <button type="submit" class="login-button">로그인</button>
+									</form>
+		                            <div class="auth-links">
+		                                <a href="../Board/boardList.jsp">아이디</a>
+		                                <span>/</span>
+		                                <a href="../Login/PwdFind.jsp">비밀번호 찾기</a>
+		                                <span>|</span>
+		                                <a href="../Login/SignUp.jsp">회원가입</a>
+		                            </div>
+		                        </div>
+		                        <% } %>
+		                    </div>
+		                </section>
+		            </div>
 
                     <!-- 자유게시판 미리보기 -->
                     <div class="3u">
@@ -240,8 +254,7 @@
 					<section>
 						<h2>Maecenas luctus lectus</h2>
 						<p>
-							<a href="#"><img src="images/pics02.jpg" alt=""></a>
-						</p>
+							<a href="#"><img src="<%= request.getContextPath() %>/images/pics06.jpg" alt=""></a>												</p>
 						<p>&nbsp;</p>
 						<p>Donec placerat odio vel elit. Nullam ante orci,
 							pellentesque eget, tempus quis, ultrices in, est. Curabitur sit

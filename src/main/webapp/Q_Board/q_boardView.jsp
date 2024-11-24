@@ -11,11 +11,10 @@
     <title>게시판 상세 보기</title>
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900' rel='stylesheet' type='text/css'>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/skel-noscript.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style-desktop.css" />
+   
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/board/view2.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/likes2.css" />
+	
 </head>
 <body>
 <div id="wrapper">
@@ -28,10 +27,12 @@
                             <h2 class="custom-heading">질문게시판</h2>
 
                             <table class="board-detail" border="1">
-                                <colgroup>
-                                    <col width="15%"/> <col width="35%"/>
-                                    <col width="15%"/> <col width="*"/>
-                                </colgroup>
+                               <colgroup>
+										<col width="15%" />
+										<col width="35%" />
+										<col width="15%" />
+										<col width="*" />
+								</colgroup>
                                 <tbody>
                                 <tr>
                                     <td class="label">번호</td>
@@ -120,10 +121,10 @@
                             <!-- 수정, 삭제, 목록 버튼 -->
                             <div class="button-container">
                                 <c:if test="${not empty UserId}">
-                                    <button class="button" onclick="location.href='../q_board/Q_BEC?q_id=${dto.q_id}'">수정하기</button>
+                                    <button class="button" onclick="location.href='../q_board/BEC?q_id=${dto.q_id}'">수정하기</button>
                                     <button class="button" onclick="confirmDelete('${dto.q_id}')">삭제하기</button>
                                 </c:if>
-                                <button class="button green" onclick="location.href='../q_board/Q_BLPC'">목록으로</button>
+                                <button class="button green" onclick="location.href='../q_board/BLPC'">목록으로</button>
                             </div>
                         </div>
                     </section>
@@ -137,7 +138,7 @@
 <script type="text/javascript">
 		function confirmDelete(q_id) {
 		    if (confirm('정말로 삭제하시겠습니까?')) {
-		        location.href = '../q_board/Q_BDEC?q_id=${dto.q_id}';
+		        location.href = '../q_board/BDEC?q_id=${dto.q_id}';
 		    }
 		}
 </script>

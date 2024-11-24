@@ -103,7 +103,7 @@ public class NA_BoardWriteCtrl extends HttpServlet {
 
         // 결과 처리
         if (result > 0) {
-            resp.sendRedirect(req.getContextPath() + "/q_board/Q_BVC?q_id=" + q_id);
+            resp.sendRedirect(req.getContextPath() + "/q_board/BVC?q_id=" + q_id);
         } else {
             JSFunction.alertBack(resp, "답변 저장에 실패했습니다.");
         }

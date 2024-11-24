@@ -27,8 +27,9 @@ public class BoardWriteCtrl extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, 
-    		HttpServletResponse resp) throws ServletException, 
-    IOException {
+    		HttpServletResponse resp) 
+    				throws ServletException, IOException {
+    	
         HttpSession session = req.getSession();
         
         // 로그인 확인
@@ -47,6 +48,7 @@ public class BoardWriteCtrl extends HttpServlet {
     protected void doPost(HttpServletRequest req, 
             HttpServletResponse resp) 
             throws ServletException, IOException {
+    	
         HttpSession session = req.getSession();
 
         // 로그인 확인
@@ -59,6 +61,7 @@ public class BoardWriteCtrl extends HttpServlet {
         // 파일 업로드 처리
         String saveDirectory = req.getServletContext().getRealPath("/Uploads");
         String originalFileName = "";
+        
         try {
             if (req.getContentType() != null && req.getContentType().startsWith("multipart/form-data")) {
                 originalFileName = FileUtil.uploadFile(req, saveDirectory);
@@ -111,7 +114,7 @@ public class BoardWriteCtrl extends HttpServlet {
                 
                 folderMap.put("fre", "board"); // 자유게시판
                 folderMap.put("files", "files"); // 자료실
-                folderMap.put("qna", "q_board"); // 질문게시판
+                folderMap.put("question", "q_board"); // 질문게시판
                 // 필요한 다른 boardType도 추가
 
                 // 기본 폴더 설정 (boardType이 매핑되지 않을 경우)

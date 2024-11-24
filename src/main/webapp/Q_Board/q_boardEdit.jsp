@@ -13,7 +13,7 @@
 
 <div id="wrapper">
    
-    <form name="writeFrm" method="post" enctype="multipart/form-data" action="../q_board/Q_BEC">
+    <form name="writeFrm" method="post" enctype="multipart/form-data" action="../q_board/BEC">
         <!-- 숨겨진 필드 -->  
 	<div class="field-table-container">
     <!-- 파란색 박스 -->
@@ -54,7 +54,7 @@
         <div class="button-container">
             <button type="submit" class="button green">작성 완료</button>
             <button type="reset" class="button gray">RESET</button>
-            <button type="button" class="button red" onclick="location.href='../q_board/Q_BLPC';">목록으로</button>
+            <button type="button" class="button red" onclick="location.href='../q_board/BLPC';">목록으로</button>
         </div>
     </form>
 </div>

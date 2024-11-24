@@ -15,13 +15,8 @@
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/board/view.css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/likes.css" />
-
-
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/board/view.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/likes.css" />
 
 </head>
 <body>
@@ -78,47 +73,53 @@
 											</td>
 										</tr>
 
-										<!-- 첨부파일 출력 -->
 										<tr>
-										    <td class="label">첨부파일</td>
-										    <td colspan="3">
-										        <!-- 첨부파일이 있을 경우 -->
-										        <c:if test="${not empty dto.o_file}">
-										            <c:choose>		
-										            								              
-										                <c:when test="${fn:endsWith(dto.o_file, 'png') || fn:endsWith(dto.o_file, 'jpg') || fn:endsWith(dto.o_file, 'gif')}">
-										                    <img src="../Uploads/${dto.s_file}" alt="첨부 이미지" style="max-width: 200px; height: auto;" />
-										                </c:when>
-																			    
-										                <c:when test="${fn:endsWith(dto.o_file, 'mp3') || fn:endsWith(dto.o_file, 'wav')}">
-										                    <audio src="../Uploads/${dto.s_file}" controls></audio>
-										                </c:when>
-										
-										                <c:when test="${fn:endsWith(dto.o_file, 'mp4') || fn:endsWith(dto.o_file, 'avi') || fn:endsWith(dto.o_file, 'wmv')}">
-										                    <video src="../Uploads/${dto.s_file}" controls style="max-width: 300px; height: auto;"></video>
-										                </c:when>
-										
-										                <c:otherwise>
-										                    <!-- 로그인된 사용자일 경우 -->
-										                    <c:if test="${not empty UserId}">
-										                        <a href="../board/BDC?o_file=${dto.o_file}&s_file=${dto.s_file}&board_id=${dto.board_id}&board_type=${dto.board_type}" onclick="this.style.pointerEvents='none';">
-										                            ${dto.o_file} [다운로드]
-										                        </a>
-										                    </c:if>
-										                    <!-- 로그인되지 않은 사용자일 경우 -->
-										                    <c:if test="${empty UserId}">
-										                        <span style="color: #ff0000;">로그인 후 다운로드 가능합니다.</span>
-										                    </c:if>
-										                </c:otherwise>
-										            </c:choose>
-										        </c:if>
-										
-										        <!-- 첨부파일이 없는 경우 -->
-										        <c:if test="${empty dto.o_file}">
-										            <span style="color: #999;">첨부파일이 없습니다.</span>
-										        </c:if>
-										    </td>
-										</tr>
+									    <td class="label">첨부파일</td>
+									    <td colspan="3">
+									        <!-- 첨부파일이 있을 경우 -->
+									        <c:if test="${not empty dto.o_file}">
+									            <c:choose>
+									                
+									                <c:when test="${fn:endsWith(dto.o_file, 'png') || fn:endsWith(dto.o_file, 'jpg') || fn:endsWith(dto.o_file, 'gif')}">
+									                <!-- 이미지 파일 -->
+									                    <img src="../Uploads/${dto.s_file}" alt="첨부 이미지" style="max-width: 200px; height: auto;" />								                    
+									                    <a href="../board/BDC?o_file=${dto.o_file}&s_file=${dto.s_file}" onclick="this.style.pointerEvents='none';">
+									                        [다운로드]
+									                    </a>
+									                </c:when>
+																	                
+									                <c:when test="${fn:endsWith(dto.o_file, 'mp3') || fn:endsWith(dto.o_file, 'wav')}">
+									                <!-- 오디오 파일 -->		                 
+									                    <audio src="../Uploads/${dto.s_file}" controls></audio>
+									                    <a href="../board/BDC?o_file=${dto.o_file}&s_file=${dto.s_file}" onclick="this.style.pointerEvents='none';">
+									                        [다운로드]
+									                    </a>
+									                </c:when>
+																	                
+									                <c:when test="${fn:endsWith(dto.o_file, 'mp4') || fn:endsWith(dto.o_file, 'avi') || fn:endsWith(dto.o_file, 'wmv')}">
+									                <!-- 비디오 파일 -->
+									                    <video src="../Uploads/${dto.s_file}" controls style="max-width: 300px; height: auto;"></video>
+									                    <a href="../board/BDC?o_file=${dto.o_file}&s_file=${dto.s_file}" onclick="this.style.pointerEvents='none';">
+									                        [다운로드]
+									                    </a>
+									                </c:when>
+																		                
+									                <c:otherwise>
+									                <!-- 기타 파일 -->
+									                    <span>${dto.o_file}</span>
+									                    <a href="../board/BDC?o_file=${dto.o_file}&s_file=${dto.s_file}" onclick="this.style.pointerEvents='none';">
+									                        [다운로드]
+									                    </a>
+									                </c:otherwise>
+									            </c:choose>
+									        </c:if>
+									
+									        <!-- 첨부파일이 없는 경우 -->
+									        <c:if test="${empty dto.o_file}">
+									            <span style="color: #999;">첨부파일이 없습니다.</span>
+									        </c:if>
+									    </td>
+									</tr>
 									</tbody>
 								</table>
 

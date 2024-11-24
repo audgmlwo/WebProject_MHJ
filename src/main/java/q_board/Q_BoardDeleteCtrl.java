@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import utils.JSFunction;
 
 //게시물 삭제 처리
-@WebServlet("/q_board/Q_BDEC")
+@WebServlet("/q_board/BDEC")
 public class Q_BoardDeleteCtrl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	

@@ -16,10 +16,15 @@ import board.BoardDTO;
 @WebServlet("/board/BVC")
 public class BoardViewCtrl extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
+    
+    /*
+	 서블릿의 수명주기 메서드 중 요청을 받아 get/post 방식을 판단하는 service() 메서드를
+	 통해 모든방식의 요청을 처리할 수 있다.*/
+    
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    protected void service(HttpServletRequest req,
+    		HttpServletResponse resp)
+    				throws ServletException, IOException {
 
         // 게시물 불러오기
         BoardDAO boardDAO = new BoardDAO();
@@ -46,12 +51,15 @@ public class BoardViewCtrl extends HttpServlet {
         req.setAttribute("likeCount", likeCount);
 
         // 줄바꿈 처리
-        dto.setContent(dto.getContent().replaceAll("\r\n", "<br/>"));
+        dto.setContent(dto.getContent()
+        		.replaceAll("\r\n", "<br/>"));
+        
         setFileExtension(dto, req);
 
         // 게시물(dto) 저장 후 뷰로 포워드
         req.setAttribute("dto", dto);
-        req.getRequestDispatcher("/Board/boardView.jsp").forward(req, resp);
+        req.getRequestDispatcher("/Board/boardView.jsp")
+        .forward(req, resp);
 
         // MIME 타입 처리
         String ext = null, fileName = dto.getS_file(), mimeType = null;

@@ -1,7 +1,7 @@
 .auth-box {
-    background-color: #f9f9f9; /* 밝은 배경 */
+    background-color: rgba(128, 128, 128, 0.5); /* 밝은 배경 */
     padding: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid rgb(150, 150, 150);
     border-radius: 8px;
     text-align: center;
     font-size: 14px;
@@ -27,7 +27,7 @@
 }
 
 .login-button {
-    width: 90%; /* 버튼이 입력칸 크기를 차지 */
+    width: 80%; /* 버튼이 입력칸 크기를 차지 */
     padding: 20px; /* 버튼 높이 조정 */
     background-color: #4CAF50; /* 초록색 버튼 */
     color: white;
@@ -63,4 +63,28 @@
     margin: 02px;
     color: #aaa;
     margin-right: 0px;
+}
+
+.logout-button {
+    background-color: #FF4500; /* 기본 빨간색 */
+    color: white;
+    border: none;
+    padding: 1px 2px; /* 버튼 크기 수정 */
+    border-radius: 4px; /* 둥글기 수정 */
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: 20px !important; /* 공백 추가 */
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #FF6347; /* 더 밝은 빨간색으로 변경 */
+}
+
+.email-info {
+    margin-bottom: 10px; /* 아래 공백 추가 */
+}
+
+.user-info{
+	color: white;
 }

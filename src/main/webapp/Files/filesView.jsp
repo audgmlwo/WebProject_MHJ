@@ -75,31 +75,38 @@
 									    <td colspan="3">
 									        <!-- 첨부파일이 있을 경우 -->
 									        <c:if test="${not empty dto.o_file}">
-									            <c:choose>		
-									            								              
+									            <c:choose>
+									                
 									                <c:when test="${fn:endsWith(dto.o_file, 'png') || fn:endsWith(dto.o_file, 'jpg') || fn:endsWith(dto.o_file, 'gif')}">
-									                    <img src="../Uploads/${dto.s_file}" alt="첨부 이미지" style="max-width: 200px; height: auto;" />
+									                <!-- 이미지 파일 -->
+									                    <img src="../Uploads/${dto.s_file}" alt="첨부 이미지" style="max-width: 200px; height: auto;" />								                    
+									                    <a href="../board/BDC?o_file=${dto.o_file}&s_file=${dto.s_file}" onclick="this.style.pointerEvents='none';">
+									                        [다운로드]
+									                    </a>
 									                </c:when>
-																		    
+																	                
 									                <c:when test="${fn:endsWith(dto.o_file, 'mp3') || fn:endsWith(dto.o_file, 'wav')}">
+									                <!-- 오디오 파일 -->		                 
 									                    <audio src="../Uploads/${dto.s_file}" controls></audio>
+									                    <a href="../board/BDC?o_file=${dto.o_file}&s_file=${dto.s_file}" onclick="this.style.pointerEvents='none';">
+									                        [다운로드]
+									                    </a>
 									                </c:when>
-									
+																	                
 									                <c:when test="${fn:endsWith(dto.o_file, 'mp4') || fn:endsWith(dto.o_file, 'avi') || fn:endsWith(dto.o_file, 'wmv')}">
+									                <!-- 비디오 파일 -->
 									                    <video src="../Uploads/${dto.s_file}" controls style="max-width: 300px; height: auto;"></video>
+									                    <a href="../board/BDC?o_file=${dto.o_file}&s_file=${dto.s_file}" onclick="this.style.pointerEvents='none';">
+									                        [다운로드]
+									                    </a>
 									                </c:when>
-									
+																		                
 									                <c:otherwise>
-									                    <!-- 로그인된 사용자일 경우 -->
-									                    <c:if test="${not empty UserId}">
-									                        <a href="../files/BDC?o_file=${dto.o_file}&s_file=${dto.s_file}&board_id=${dto.board_id}&board_type=${dto.board_type}" onclick="this.style.pointerEvents='none';">
-									                            ${dto.o_file} [다운로드]
-									                        </a>
-									                    </c:if>
-									                    <!-- 로그인되지 않은 사용자일 경우 -->
-									                    <c:if test="${empty UserId}">
-									                        <span style="color: #ff0000;">로그인 후 다운로드 가능합니다.</span>
-									                    </c:if>
+									                <!-- 기타 파일 -->
+									                    <span>${dto.o_file}</span>
+									                    <a href="../board/BDC?o_file=${dto.o_file}&s_file=${dto.s_file}" onclick="this.style.pointerEvents='none';">
+									                        [다운로드]
+									                    </a>
 									                </c:otherwise>
 									            </c:choose>
 									        </c:if>
@@ -112,7 +119,34 @@
 									</tr>
                                 </tbody>
                             </table>
+							
+							<div class="like-container">
+								<!-- 로그인된 사용자일 때 -->
+								<c:if test="${not empty sessionScope.UserId}">
+									<form action="${pageContext.request.contextPath}/likes/LIKE"
+										method="post">
+										<!-- 숨겨진 데이터 전달 -->
+										<input type="hidden" name="board_type"
+											value="${dto.board_type}" /> <input type="hidden"
+											name="post_id" value="${dto.board_id}" />
 
+										<!-- 좋아요 버튼 -->
+										<button type="submit" class="like-button">
+											${likeDAO.hasLiked(dto.board_type, dto.q_id, sessionScope.UserId) ? '좋아요 취소' : '좋아요'}
+										</button>
+									</form>
+
+									<!-- 좋아요 수 표시 -->
+									<span class="like-count"> 좋아요 수: ${likeCount != null ? likeCount : 0}
+									</span>
+								</c:if>
+
+								<!-- 로그인되지 않은 사용자일 때 -->
+								<c:if test="${empty sessionScope.UserId}">
+									<p>로그인 후 좋아요를 사용할 수 있습니다.</p>
+								</c:if>
+							</div>
+							
                             <div class="button-container">
                                 <c:if test="${not empty UserId}">
                                     <button class="button" onclick="location.href='../files/BEC?board_id=${dto.board_id}&board_type=${dto.board_type}'">수정하기</button>

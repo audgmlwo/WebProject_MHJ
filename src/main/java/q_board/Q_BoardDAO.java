@@ -12,8 +12,7 @@ public class Q_BoardDAO extends DBConnPool {
     public int selectCountBoard(Map<String, Object> map) {
     	
         int totalCount = 0;
-        
-        String query = "SELECT COUNT(*) FROM q_board";
+        String query = "SELECT COUNT(*) FROM q_board ";
         
         if (map.get("searchWord") != null) {
             query += " WHERE " + map.get("searchField") + " LIKE ?";
@@ -40,7 +39,8 @@ public class Q_BoardDAO extends DBConnPool {
     
 	
     // 게시물 목록 조회
-    public List<Q_BoardDTO> selectListPageBoard(Map<String,Object> map) {
+    public List<Q_BoardDTO> selectListPageBoard(
+    		Map<String,Object> map) {
     	
         List<Q_BoardDTO> q_board = new Vector<Q_BoardDTO>();
         
@@ -50,8 +50,7 @@ public class Q_BoardDAO extends DBConnPool {
                + "    SELECT * FROM q_board ";
         
         if (map.get("searchWord") != null) {
-            query +=" WHERE " + map.get("searchField")
-                  + " LIKE '%" + map.get("searchWord") + "%'";
+            query += " WHERE " + map.get("searchField") + " LIKE ? ";
         }
         query += "     ORDER BY Q_ID DESC "
                + "   ) Tb "
@@ -62,11 +61,11 @@ public class Q_BoardDAO extends DBConnPool {
             psmt = conn.prepareStatement(query);
             
             int paramIndex = 1;
-            if (map.get("searchWord") != null && !map.get("searchWord").toString().isEmpty()) {
+            if (map.get("searchWord") != null) {
                 psmt.setString(paramIndex++, "%" + map.get("searchWord") + "%");
             }
-            psmt.setString(1, map.get("start").toString());
-            psmt.setString(2, map.get("end").toString());
+            psmt.setInt(paramIndex++, Integer.parseInt(map.get("start").toString()));
+            psmt.setInt(paramIndex, Integer.parseInt(map.get("end").toString()));
             rs = psmt.executeQuery();
 
             while (rs.next()) {
@@ -81,7 +80,9 @@ public class Q_BoardDAO extends DBConnPool {
                 dto.setUpdated_date(rs.getDate("updated_date"));             
                 dto.setIs_accepted(rs.getInt("is_accepted"));
                 dto.setVisit_count(rs.getInt("visit_count"));
-             
+                
+                dto.setBoard_type("question");
+                
                 q_board.add(dto);
             }
         

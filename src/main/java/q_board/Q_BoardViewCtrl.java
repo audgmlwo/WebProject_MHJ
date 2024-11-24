@@ -14,13 +14,14 @@ import na_board.NA_BoardDTO;
 import utils.CookieManager;
 
 
-@WebServlet("/q_board/Q_BVC")
+@WebServlet("/q_board/BVC")
 public class Q_BoardViewCtrl extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) 
-            throws ServletException, IOException {
+    protected void service(HttpServletRequest req,
+    		HttpServletResponse resp) 
+    				throws ServletException, IOException {
     	
         String q_id = req.getParameter("q_id");
 

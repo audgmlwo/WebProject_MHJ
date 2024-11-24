@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import utils.JSFunction;
 
 
-@WebServlet("/q_board/Q_BWC")
+@WebServlet("/q_board/BWC")
 @MultipartConfig(
     maxFileSize = 1024 * 1024 * 50,  // 최대 파일 크기: 50MB
     maxRequestSize = 1024 * 1024 * 100  // 최대 요청 크기: 100MB
@@ -68,7 +68,7 @@ public class Q_BoardWriteCtrl extends HttpServlet {
             int result = dao.insertWrite(dto);
 
             if (result == 1) {
-                resp.sendRedirect("../q_board/Q_BLPC"); // 성공 시 해당 게시판 목록으로 이동
+                resp.sendRedirect("../q_board/BLPC"); // 성공 시 해당 게시판 목록으로 이동
             } else {
                 JSFunction.alertLocation(resp, "글쓰기에 실패했습니다.", "../Q_Board/q_boardWrite.jsp");
             }

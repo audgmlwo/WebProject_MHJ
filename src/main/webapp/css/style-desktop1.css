@@ -1,0 +1,268 @@
+/*
+    Citrusy by TEMPLATED
+    templated.co @templatedco
+    Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+*/
+
+/* Header */
+
+#header {
+    overflow: hidden;
+}
+
+/* Logo */
+
+#logo {
+    overflow: hidden;
+    height: 10em;
+    text-shadow: 1px 1px 0px #FFFFFF;
+    text-align: center;
+}
+
+#logo h1 a {
+    display: block;
+    padding: 1em 0em 0em 0em;
+    text-decoration: none;
+    text-transform: none;
+    font-size: 3.2em;
+    font-weight: bold;
+    color: #474747;
+    outline: 0;
+}
+
+#logo p {
+    padding: 0em 0em 0em 0em;
+    text-transform: none;
+    font-size: 1.1em;
+    color: #7B7B7B;
+}
+
+/* Menu */
+
+#menu {
+    overflow: hidden;
+    height: 4.5em;
+    background: #181818;
+    border-radius: 5px 5px 0px 0px;
+}
+
+#nav {
+    background: rgba(0, 0, 0, 0.5); /* 검은색 배경에 50% 투명도 */
+    border-radius: 5px 5px 0px 0px;
+}
+
+#nav ul {
+    text-align: center;
+}
+
+#nav li {
+    display: inline-block;
+    padding: 0em 1.5em;
+}
+
+#nav a {
+    display: block;
+    float: left;
+    margin-right: 0.12em;
+    padding: 0em 1em;
+    line-height: 4em;
+    text-decoration: none;
+    text-transform: none;
+    font-size: 1.25em;
+    color: #AAAAAA;
+    outline: 0;
+}
+
+#nav .current_page_item {
+    color: #FFFFFF;
+}
+
+/* Page Wrapper */
+
+#page-wrapper {
+    overflow: hidden;
+}
+
+#page {
+    padding: 6em 0em 0em 0em;
+}
+
+.homepage #page {
+    padding: 0em 0em 0em 0em;
+}
+
+/* Banner */
+
+#banner {
+    overflow: hidden;
+    margin-bottom: 3em;
+}
+
+#banner img {
+    border-radius: 0px 0px 5px 5px;
+}
+
+#banner a img {
+    display: block;
+    width: 100%;
+}
+
+/* Content */
+
+#content h2 {
+    margin-bottom: 1em;
+    text-transform: none;
+    font-size: 2.2em;
+    color: #2A2A2A;
+}
+
+#content .subtitle {
+    padding: 0em 0em 1.25em 0em;
+    text-transform: none;
+    font-size: 1.31em;
+    font-weight: 300;
+    color: #FF3002;
+}
+
+#content img {
+    padding: 0em 0em 1.25em 0em;
+}
+
+#content a img {
+    display: block;
+    width: 100%;
+}
+
+#content .post {
+    padding: 0em 0em 2.5em 0em;
+}
+
+/* Sidebar1 */
+
+#sidebar1 h2 {
+    padding: 0em 0em 1em 0em;
+    text-transform: none;
+    font-size: 1.8em;
+    color: #2A2A2A;
+}
+
+/* Sidebar2 */
+
+#sidebar2 h2 {
+    padding: 0em 0em 1em 0em;
+    text-transform: none;
+    font-size: 1.8em;
+    color: #2A2A2A;
+}
+
+#sidebar2 .sbox1 {
+    margin-bottom: 3.12em;
+}
+
+#sidebar2 .sbox2 {
+    margin-bottom: 3.12em;
+}
+
+/* Footer Column Content */
+
+#footer-content {
+    overflow: hidden;
+    padding: 4em 0em 4em 0em;
+    text-shadow: 1px 1px 0px #FFFFFF;
+    color: #777777;
+}
+
+#footer-content h2 {
+    padding: 0em 0em 1.5em 0em;
+    text-shadow: 1px 1px 0px #FFFFFF;
+    text-transform: none;
+    font-size: 1.5em;
+    color: #3F3F3F;
+}
+
+#footer-content #box2 {
+    overflow: hidden;
+}
+
+#footer-content a img {
+    display: block;
+    width: 100%;
+}
+
+/* Marketing */
+
+#marketing {
+    overflow: hidden;
+    color: #6F6F6F;
+}
+
+#marketing .divider {
+    margin-bottom: 3em;
+    padding-bottom: 3em;
+    border-bottom: 0.063em solid #D4D6D8;
+}
+
+#marketing .title {
+    padding: 1.2em;
+    background: #181818;
+    border-radius: 5px 5px 0px 0px;
+    text-transform: none;
+    font-size: 1.35em;
+    color: #FFFFFF;
+}
+
+#marketing .subtitle {
+    padding-bottom: 1em;
+    font-weight: bold;
+    color: #838383;
+}
+
+#marketing .mbox-style {
+    background-color: rgba(50, 50, 50, 0.65); /* 짙은 회색 배경 */
+    border-radius: 5px;
+    border: 1px solid rgba(230, 230, 230, 0.5) !important; /* 우선순위를 강제로 높임 */
+}
+
+#marketing .mbox-style .content {
+    padding: 2em 1.5em 1em 1.5em;
+    text-shadow: 1px 1px 1px #212121;
+}
+
+/* Featured */
+#featured-area {
+    overflow: hidden;
+    padding-bottom: 3em;
+}
+
+#featured-area .divider {
+    margin-bottom: 3em;
+    padding-bottom: 3em;
+    border-bottom: 0.063em solid #D4D6D8;
+}
+
+#featured-area .box-style {
+    overflow: hidden;
+    padding: 2em;
+}
+
+#featured-area .box-style h3 {
+    padding-bottom: 1em;
+    font-size: 1.2em;
+    color: #171717;
+}
+
+#featured-area .box-style img {
+    float: left;
+    margin-right: 1.56em;
+}
+
+#featured-area .box-style a img {
+    display: block;
+    width: 40%;
+}
+
+@media screen and (min-width: 1000px) {
+    #content {
+        margin-top: 0; /* Removed excessive margin */
+    }
+}

@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import utils.BoardPage;
 
-@WebServlet("/q_board/Q_BLPC")
+@WebServlet("/q_board/BLPC")
 public class Q_BoardListPageCtrl extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -23,19 +23,25 @@ public class Q_BoardListPageCtrl extends HttpServlet {
             throws ServletException, IOException {
     	HttpSession session = req.getSession();
     	
-    	
+    	String boardType = req.getParameter("board_type");
+        if (boardType == null || boardType.isEmpty()) {
+            boardType = "question"; // 기본값: 질문게시판
+        }
+        
+        // 디버깅용 로그 출력
+        System.out.println("받은 게시판 유형(board_type): " + boardType);
+        
+        // 로그인하지 않아도 목록 출력 가능	
     	String userId = (String) session.getAttribute("UserId");
     	if (userId == null) {
     	    System.out.println("비로그인 사용자 접근 허용: 게시판 목록만 출력합니다.");
-    	    // 로그인하지 않아도 목록 출력 가능
+    	    
     	}
-
-        // DAO 생성
-        Q_BoardDAO dao = new Q_BoardDAO();
 
         // 뷰에 전달할 매개변수 저장용 맵 생성
         Map<String, Object> map = new HashMap<>();
-
+        map.put("board_type", boardType);
+        
         String searchField = req.getParameter("searchField");
         String searchWord = req.getParameter("searchWord");
         
@@ -43,8 +49,11 @@ public class Q_BoardListPageCtrl extends HttpServlet {
             map.put("searchField", searchField);
             map.put("searchWord", searchWord);
         }
+        
+        // DAO 생성
+        Q_BoardDAO dao = new Q_BoardDAO();
         int totalCount = dao.selectCountBoard(map);
-
+        
         /* 페이지 처리 start */
         ServletContext application = getServletContext();
         int pageSize = Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
@@ -65,19 +74,29 @@ public class Q_BoardListPageCtrl extends HttpServlet {
 
         List<Q_BoardDTO> boardLists = dao.selectListPageBoard(map);
         dao.close();
-
+           
         // 뷰에 전달할 매개변수 추가
-        String pagingImg = BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "../q_board/Q_BLPC");
+        String baseUrl = "../q_board/BLPC?board_type=" + boardType +"&";              
+        
+        String pagingImg = BoardPage.pagingStr(totalCount,
+        		pageSize, blockPage, pageNum, baseUrl);
+        
+        // 최종적으로 ?& 제거
+        pagingImg = pagingImg
+        		.replace("href='../q_board/BLPC?board_type=" 
+        			+ boardType + "&?", "href='../q_board/BLPC?board_type=" + boardType + "&");
+        
         
         map.put("pagingImg", pagingImg);
         map.put("totalCount", totalCount);
         map.put("pageSize", pageSize);
         map.put("pageNum", pageNum);
+        map.put("board_type", boardType);
 
         // 전달할 데이터를 request 영역에 저장 후 List.jsp로 포워드
         req.setAttribute("boardLists", boardLists);
         req.setAttribute("map", map);
-
+        
         req.getRequestDispatcher("/Q_Board/q_boardList.jsp").forward(req, resp);
     }
 }

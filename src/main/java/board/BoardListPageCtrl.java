@@ -14,7 +14,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import utils.BoardPage;
 
-
 @WebServlet("/board/BLPC")
 public class BoardListPageCtrl extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -29,22 +28,20 @@ public class BoardListPageCtrl extends HttpServlet {
             boardType = "fre"; // 기본값: 자유게시판
         }
     	
-
     	// 로그인하지 않아도 목록 출력 가능
     	String userId = (String) session.getAttribute("UserId");
     	if (userId == null) {
     	    System.out.println("비로그인 사용자 접근 허용: 게시판 목록만 출력합니다.");
     	    
     	}
-
-       
+  
         // 뷰에 전달할 매개변수 저장용 맵 생성
         Map<String, Object> map = new HashMap<>();
         map.put("board_type", boardType);
         
-
         String searchField = req.getParameter("searchField");
         String searchWord = req.getParameter("searchWord");
+        
         if (searchWord != null) {
             map.put("searchField", searchField);
             map.put("searchWord", searchWord);
@@ -77,10 +74,13 @@ public class BoardListPageCtrl extends HttpServlet {
         // 뷰에 전달할 매개변수 추가
         String baseUrl = "../board/BLPC?board_type=" + boardType +"&";              
         
-        String pagingImg = BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, baseUrl);
+        String pagingImg = BoardPage.pagingStr(totalCount,
+        		pageSize, blockPage, pageNum, baseUrl);
         
         // 최종적으로 ?& 제거
-        pagingImg = pagingImg.replace("href='../board/BLPC?board_type=" + boardType + "&?", "href='../board/BLPC?board_type=" + boardType + "&");
+        pagingImg = pagingImg
+        		.replace("href='../board/BLPC?board_type=" 
+        			+ boardType + "&?", "href='../board/BLPC?board_type=" + boardType + "&");
         
         map.put("pagingImg", pagingImg);
         map.put("totalCount", totalCount);

@@ -2,7 +2,9 @@ package files;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import board.BoardDAO;
 import board.BoardDTO;
@@ -28,9 +30,9 @@ public class FilesWriteCtrl extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, 
-    		HttpServletResponse resp) throws ServletException, 
-    
+    		HttpServletResponse resp) throws ServletException,   
     IOException {
+    	
         HttpSession session = req.getSession();
         
         // 로그인 확인
@@ -49,6 +51,7 @@ public class FilesWriteCtrl extends HttpServlet {
     protected void doPost(HttpServletRequest req, 
             HttpServletResponse resp) 
             throws ServletException, IOException {
+    	
         HttpSession session = req.getSession();
 
         // 로그인 확인
@@ -72,13 +75,10 @@ public class FilesWriteCtrl extends HttpServlet {
             return;
         }
 
-        // board_type 처리 및 검증
+        // 게시판 유형 처리
         String boardType = req.getParameter("board_type");
-        List<String> validBoardTypes = Arrays.asList("files");
-
-        // 잘못된 게시판 타입 처리
-        if (boardType == null || !validBoardTypes.contains(boardType)) {
-            JSFunction.alertBack(resp, "유효하지 않은 게시판입니다."); // 클라이언트에 알림
+        if (boardType == null || boardType.isEmpty()) {
+            JSFunction.alertBack(resp, "게시판 유형을 선택해주세요.");
             return;
         }
 
@@ -107,15 +107,29 @@ public class FilesWriteCtrl extends HttpServlet {
         try {
             dao = new BoardDAO();
             int result = dao.insertWrite(dto);
-
+                       
             if (result == 1) {
-                resp.sendRedirect("../files/BLPC"); // 성공 시 해당 게시판 목록으로 이동
+                String contextPath = req.getContextPath(); // 동적 경로 가져오기
+
+                // boardType에 따라 폴더 경로 매핑
+                Map<String, String> folderMap = new HashMap<>();
+                
+                folderMap.put("fre", "board"); // 자유게시판
+                folderMap.put("files", "files"); // 자료실
+                folderMap.put("question", "q_board"); // 질문게시판
+                // 필요한 다른 boardType도 추가
+
+                // 기본 폴더 설정 (boardType이 매핑되지 않을 경우)
+                String folder = folderMap.getOrDefault(boardType, "board");
+
+                // 리다이렉트 경로 생성
+                resp.sendRedirect(contextPath + "/" + folder + "/BLPC?board_type=" + boardType);
             } else {
-                JSFunction.alertLocation(resp, "글쓰기에 실패했습니다.", "../Files/filesWrite.jsp");
+                JSFunction.alertLocation(resp, "글쓰기에 실패했습니다.", "../board/boardWrite.jsp");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            JSFunction.alertLocation(resp, "서버 오류로 글쓰기에 실패했습니다.", "../Files/filesWrite.jsp");
+            JSFunction.alertLocation(resp, "서버 오류로 글쓰기에 실패했습니다.", "../board/boardWrite.jsp");
         } finally {
             if (dao != null) {
                 try {
@@ -128,4 +142,3 @@ public class FilesWriteCtrl extends HttpServlet {
     }
     
 }
-

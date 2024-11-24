@@ -37,8 +37,8 @@ public class LoginProcess extends HttpServlet {
             session.setAttribute("UserId", memberDTO.getUser_id());
             System.out.println("LoginProcess - Session ID: " + session.getId());
             System.out.println("LoginProcess - UserId: " + session.getAttribute("UserId")); // 디버깅용 로그
-            session.setAttribute("UserName", memberDTO.getName());
-            
+            session.setAttribute("Name", memberDTO.getName());
+            session.setAttribute("Email", memberDTO.getEmail());
             
             CookieManager.makeCookie(response, "UserId", memberDTO.getUser_id(), 60 * 60 * 1); // 7일 동안 유지
             
