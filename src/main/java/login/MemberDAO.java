@@ -298,6 +298,34 @@ public class MemberDAO extends DBConnPool {
 
 	    return dto; // 결과가 없으면 null 반환
 	}
+		
+	// 이메일로 사용자 ID 조회
+	public MemberDTO findUserIdByEmail(String email) {
+	    String query = "SELECT user_id, name, email FROM member WHERE email = ?";
+	    MemberDTO member = null;
 
+	    try {
+	        psmt = conn.prepareStatement(query);
+	        psmt.setString(1, email);
+	        rs = psmt.executeQuery();
+
+	        if (rs.next()) {
+	            member = new MemberDTO();
+	            member.setUser_id(rs.getString("user_id"));
+	            member.setName(rs.getString("name"));
+	            member.setEmail(rs.getString("email"));
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) rs.close();
+	            if (psmt != null) psmt.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return member;
+	}
 }
-	

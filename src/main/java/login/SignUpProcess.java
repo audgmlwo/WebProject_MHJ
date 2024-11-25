@@ -83,7 +83,7 @@ public class SignUpProcess extends HttpServlet {
 
         dao.insertMember(newMember);
 
-        // 성공 페이지로 리다이렉트
+        // 성공시 로그인페이지로 리다이렉트
         resp.sendRedirect(req.getContextPath() + "/Login/LoginForm.jsp");
         
     }

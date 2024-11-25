@@ -84,9 +84,7 @@
         <!-- 배너 -->
         <div class="row">
             <div id="banner" class="12u">
-                <div class="container">
-                    <a href="#"><img src="<%= request.getContextPath() %>/images/pics09.jpg" alt="배너 이미지"></a>
-                </div>
+               
             </div>
         </div>
 
@@ -115,7 +113,7 @@
 									    <button type="submit" class="login-button">로그인</button>
 									</form>
 		                            <div class="auth-links">
-		                                <a href="../Board/boardList.jsp">아이디</a>
+		                                <a href="../Login/UserIdFind.jsp">아이디</a>
 		                                <span>/</span>
 		                                <a href="../Login/PwdFind.jsp">비밀번호 찾기</a>
 		                                <span>|</span>
@@ -172,7 +170,7 @@
 										        for (Q_BoardDTO qnaItem : qnaList) { 
 										%>
 										        <li>
-										            <a href="<%= request.getContextPath() %>/q_board/Q_BVC?q_id=<%= qnaItem.getQ_id() %>&board_type=question">
+										            <a href="<%= request.getContextPath() %>/q_board/BVC?q_id=<%= qnaItem.getQ_id() %>&board_type=question">
 										                <%= qnaItem.getTitle().replace("\n", "<br>") %>
 										            </a>
 										        </li>

@@ -17,9 +17,8 @@ CookieManager.deleteCookie(response, "UserId");
 */
 session.invalidate();
 
-response.sendRedirect("LoginForm.jsp");
-
-
+String contextPath = request.getContextPath();
+response.sendRedirect(contextPath + "/Main/main.jsp");
 
 
 

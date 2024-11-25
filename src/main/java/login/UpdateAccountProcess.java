@@ -91,7 +91,7 @@ public class UpdateAccountProcess extends HttpServlet {
 
             // 성공 메시지와 함께 업데이트 페이지로 리다이렉트
             String encodedMessage = URLEncoder.encode("회원 정보가 성공적으로 수정되었습니다.", StandardCharsets.UTF_8.toString());
-            resp.sendRedirect("/WebProject_MHJ/Login/LoginForm.jsp?successMessage=" + encodedMessage);
+            resp.sendRedirect("/WebProject_MHJ/Main/main.jsp?successMessage=" + encodedMessage);
             
 
         } catch (Exception e) {

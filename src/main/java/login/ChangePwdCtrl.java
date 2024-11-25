@@ -86,7 +86,7 @@ public class ChangePwdCtrl extends HttpServlet {
         try {
             String message = "비밀번호가 성공적으로 변경되었습니다.";
             String encodedMessage = URLEncoder.encode(message, StandardCharsets.UTF_8.toString());
-            resp.sendRedirect(req.getContextPath() + "/Login/LoginForm.jsp?message=" + encodedMessage);
+            resp.sendRedirect(req.getContextPath() + "/Main/main.jsp?message=" + encodedMessage);
         } catch (Exception e) {
             e.printStackTrace();
             resp.sendRedirect(req.getContextPath() + "/Login/LoginForm.jsp");
