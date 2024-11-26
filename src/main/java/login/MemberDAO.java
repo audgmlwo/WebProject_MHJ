@@ -180,13 +180,14 @@ public class MemberDAO extends DBConnPool {
 	}
 	
 	// 이메일로 사용자 찾기
-	public MemberDTO findByEmail(String email) {
-	    String query = "SELECT * FROM member WHERE email = ?";
+	public MemberDTO findByEandI(String email, String user_id) {
+	    String query = "SELECT * FROM member WHERE email = ? and user_id = ?";
 	    MemberDTO member = null;
 
 	    try {
 	        psmt = conn.prepareStatement(query);
 	        psmt.setString(1, email);
+	        psmt.setString(2, user_id);
 	        rs = psmt.executeQuery();
 
 	        if (rs.next()) {

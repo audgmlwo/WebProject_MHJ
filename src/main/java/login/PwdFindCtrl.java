@@ -56,10 +56,11 @@ public class PwdFindCtrl extends HttpServlet {
     	
         HttpSession session = req.getSession();
         String email = req.getParameter("email");
+        String UserId = req.getParameter("user_id");
 
         // DAO 호출하여 사용자 확인
         MemberDAO dao = new MemberDAO();
-        MemberDTO dto = dao.findByEmail(email);
+        MemberDTO dto = dao.findByEandI(email,UserId);
 
         if (dto != null) {
             // 임시 비밀번호 생성

@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import utils.CookieManager;
+import utils.JSFunction;
 
 @WebServlet("/login/CPC")
 public class ChangePwdCtrl extends HttpServlet {
@@ -83,10 +84,8 @@ public class ChangePwdCtrl extends HttpServlet {
      // 세션 무효화 및 리다이렉트
         session.invalidate();
 
-        try {
-            String message = "비밀번호가 성공적으로 변경되었습니다.";
-            String encodedMessage = URLEncoder.encode(message, StandardCharsets.UTF_8.toString());
-            resp.sendRedirect(req.getContextPath() + "/Main/main.jsp?message=" + encodedMessage);
+        try {                   
+            JSFunction.alertLocation(resp, "비밀번호가 성공적으로 변경되었습니다.", req.getContextPath() + "/Main/main.jsp");
         } catch (Exception e) {
             e.printStackTrace();
             resp.sendRedirect(req.getContextPath() + "/Login/LoginForm.jsp");

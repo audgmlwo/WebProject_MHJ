@@ -16,6 +16,8 @@
             <form action="../login/PFC" method="post">
                 <label for="email">등록된 이메일:</label>
                 <input type="text" id="email" name="email" placeholder="이메일을 입력하세요" required>
+                <label for="user_id">등록된 아이디:</label>
+                <input type="text" id="user_id" name="user_id" placeholder="아이디를 입력하세요" required>
                 <input type="submit" value="비밀번호 찾기">
             </form>
             <p><a href="<%= request.getContextPath() %>/Login/LoginForm.jsp">로그인 화면으로</a></p>
