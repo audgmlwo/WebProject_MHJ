@@ -31,16 +31,15 @@ public class UserIdFindCtrl extends HttpServlet {
             String userId = dto.getUser_id(); // 사용자 ID 가져오기
             try {
                 MailUtil.sendEmail(email, "아이디 확인", "아이디: " + userId);
-                req.setAttribute("message", "아이디가 이메일로 발송되었습니다.");
+                
             } catch (Exception e) {
                 req.setAttribute("message", "아이디를 발송하는 중 오류가 발생했습니다.");
                 e.printStackTrace();
             }
         } else {
-            req.setAttribute("message", "등록된 이메일이 없습니다.");
+        	JSFunction.alertLocation(resp, "등록된 이메일이 없습니다.", req.getContextPath() + "/Login/UserIdFind.jsp");
         }
 
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/Main/main.jsp");
-        dispatcher.forward(req, resp);
+        JSFunction.alertLocation(resp, "아이디가 이메일로 발송되었습니다.", req.getContextPath() + "/Main/main.jsp");
     }
 }
