@@ -122,8 +122,20 @@
 		                        </div>
 		                        <% } %>
 		                    </div>
+		                    <!-- 최근 활동 표시 섹션 -->
+							<div class="recent-activity" style="margin-top: 20px; clear: both;">
+							    <h3>최근 활동</h3>
+							    <ul>
+							        <li>최근 작성 글: <strong>게시글 1</strong>, <strong>게시글 2</strong></li>
+							        <li>최근 업로드 파일: <strong>파일 1</strong>, <strong>파일 2</strong></li>
+							        <li>최근 좋아요: <strong>좋아요 게시글 1</strong>, <strong>좋아요 게시글 2</strong></li>
+							    </ul>
+							</div>
+									                    
 		                </section>
 		            </div>
+		            
+		            
 
                     <!-- 자유게시판 미리보기 -->
                     <div class="3u">
