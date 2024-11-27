@@ -11,6 +11,11 @@ import jakarta.servlet.ServletContext;
 import login.MemberDTO;*/
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import common.DBConnPool;
 
 public class MemberDAO extends DBConnPool {
@@ -329,4 +334,42 @@ public class MemberDAO extends DBConnPool {
 
 	    return member;
 	}
+	
+	// 최근 활동 가져오기
+    public List<Map<String, String>> getRecentActivities(String userId) {
+        List<Map<String, String>> recentActivities = new ArrayList<>();
+        String sql = 
+            "SELECT '자유게시판' AS CATEGORY, TITLE, CREATED_DATE " +
+            "FROM BOARD WHERE USER_ID = ? AND BOARD_TYPE = 'fre' " +
+            "UNION ALL " +
+            "SELECT '자료실' AS CATEGORY, TITLE, CREATED_DATE " +
+            "FROM BOARD WHERE USER_ID = ? AND BOARD_TYPE = 'files' " +
+            "UNION ALL " +
+            "SELECT '질문게시판' AS CATEGORY, TITLE, CREATED_DATE " +
+            "FROM Q_BOARD WHERE USER_ID = ? " +
+            "ORDER BY CREATED_DATE DESC FETCH FIRST 10 ROWS ONLY";
+
+        try {
+            psmt = conn.prepareStatement(sql);
+            psmt.setString(1, userId);
+            psmt.setString(2, userId);
+            psmt.setString(3, userId);
+            rs = psmt.executeQuery();
+
+            while (rs.next()) {
+                Map<String, String> activity = new HashMap<>();
+                activity.put("CATEGORY", rs.getString("CATEGORY"));
+                activity.put("TITLE", rs.getString("TITLE"));
+                activity.put("CREATED_DATE", rs.getString("CREATED_DATE"));
+                recentActivities.add(activity);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return recentActivities;
+    }
+
 }

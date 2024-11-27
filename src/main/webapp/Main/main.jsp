@@ -1,3 +1,5 @@
+<%@page import="login.MemberDAO"%>
+<%@page import="java.util.Map"%>
 <%@page import="q_board.Q_BoardDTO"%>
 <%@page import="board.BoardDTO"%>
 <%@page import="java.util.List"%>
@@ -24,32 +26,39 @@
 
 
 
-<link rel="stylesheet"href="${pageContext.request.contextPath}/css/main.css" />
-<link rel="stylesheet"href="${pageContext.request.contextPath}/css/style.css" />
-<link rel="stylesheet"href="${pageContext.request.contextPath}/css/style-desktop1.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/main.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/style.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/style-desktop1.css" />
 
 <%
-    // 세션에서 사용자 정보 가져오기
-    String userId = (String) session.getAttribute("UserId");
-    String name = (String) session.getAttribute("Name");
-    String email = (String) session.getAttribute("Email");
-    
-    // 디버깅 코드
-    System.out.println("디버깅 - JSP에서 세션 값 확인:");
-    System.out.println("UserId: " + userId);
-    System.out.println("Name: " + name);
-    System.out.println("Email: " + email);
+// 세션에서 사용자 정보 가져오기
+String userId = (String) session.getAttribute("UserId");
+String name = (String) session.getAttribute("Name");
+String email = (String) session.getAttribute("Email");
 
-    // 컨텍스트 경로 가져오기
-    String contextPath = request.getContextPath();
+// 디버깅 코드
+System.out.println("디버깅 - JSP에서 세션 값 확인:");
+System.out.println("UserId: " + userId);
+System.out.println("Name: " + name);
+System.out.println("Email: " + email);
 
-    // 필수 데이터가 없는 경우 메인 컨트롤러로 리다이렉트
-    if (request.getAttribute("freList") == null || 
-        request.getAttribute("qnaList") == null || 
-        request.getAttribute("filesList") == null) {
-        response.sendRedirect(contextPath + "/main/MLC");
-        return;
-    }
+// 컨텍스트 경로 가져오기
+String contextPath = request.getContextPath();
+
+// 필수 데이터가 없는 경우 메인 컨트롤러로 리다이렉트
+if (request.getAttribute("freList") == null || request.getAttribute("qnaList") == null
+		|| request.getAttribute("filesList") == null) {
+	response.sendRedirect(contextPath + "/main/MLC");
+	return;
+}
+%>
+
+<%
+MemberDAO dao = new MemberDAO();
+List<Map<String, String>> recentActivities = dao.getRecentActivities(userId);
 %>
 
 </head>
@@ -68,196 +77,229 @@
 			<div class="container">
 				<nav id="nav">
 					<ul>
-					<li class="current_page_item"><a href="${pageContext.request.contextPath}/Main/main.jsp">메인화면</a></li>
-                    <li><a href="threecolumn.jsp">공지사항</a></li>
-                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/Q_Board/q_boardList.jsp">QnA 게시판</a></li>
-                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/Files/filesList.jsp">자료실 게시판</a></li>
-                    <li class="current_page_item"><a href="${pageContext.request.contextPath}/Board/boardList.jsp">자유게시판</a></li>  
+						<li class="current_page_item"><a
+							href="${pageContext.request.contextPath}/Main/main.jsp">메인화면</a></li>
+						<li><a href="threecolumn.jsp">공지사항</a></li>
+						<li class="current_page_item"><a
+							href="${pageContext.request.contextPath}/Q_Board/q_boardList.jsp">QnA
+								게시판</a></li>
+						<li class="current_page_item"><a
+							href="${pageContext.request.contextPath}/Files/filesList.jsp">자료실
+								게시판</a></li>
+						<li class="current_page_item"><a
+							href="${pageContext.request.contextPath}/Board/boardList.jsp">자유게시판</a></li>
 					</ul>
 				</nav>
 			</div>
 		</div>
 	</div>
-	
+
 	<div id="wrapper">
-    <div class="container">
-        <!-- 배너 -->
-        <div class="row">
-            <div id="banner" class="12u">
-               
-            </div>
-        </div>
+		<div class="container">
+			<!-- 배너 -->
+			<div class="row">
+				<div id="banner" class="12u"></div>
+			</div>
 
-        <!-- 마케팅 박스 -->
-       <div id="marketing">
-		    <div class="container">
-		        <div class="row divider">
-		            <!-- 마케팅 박스 1번: 로그인/사용자 정보 -->
-		            <div class="3u">
-		                <section>
-		                    <div class="auth-box">
-		                        <!-- 로그인 상태에 따른 렌더링 -->
-		                        <% if (userId != null) { %>
-		                        <!-- 로그인 상태 -->
-		                        <div class="user-info">
-		                            <p>안녕하세요, <strong><%= name %></strong>님!</p>
-		                            <p class="email-info">이메일: <strong><%= email %></strong></p>
-		                            <a href="<%= request.getContextPath() %>/Login/UpdateAccount.jsp" class="logout-button">[정보수정]</a>
-		                            <a href="<%= request.getContextPath() %>/Login/Logout.jsp" class="logout-button">[로그아웃]</a>
-		                            
-		                        </div>
-		                        <% } else { %>
-		                        <!-- 비로그인 상태 -->
-		                        <div class="login-box">
-		                           <form action="../main/MLC" method="post" class="login-form">
-									    <button type="submit" class="login-button">로그인</button>
-									</form>
-		                            <div class="auth-links">
-		                                <a href="../Login/UserIdFind.jsp">아이디</a>
-		                                <span>/</span>
-		                                <a href="../Login/PwdFind.jsp">비밀번호 찾기</a>
-		                                <span>|</span>
-		                                <a href="../Login/SignUp.jsp">회원가입</a>
-		                            </div>
-		                        </div>
-		                        <% } %>
-		                    </div>
-		                    <!-- 최근 활동 표시 섹션 -->
-							<div class="recent-activity" style="margin-top: 20px; clear: both;">
-							    <h3>최근 활동</h3>
-							    <ul>
-							        <li>최근 작성 글: <strong>게시글 1</strong>, <strong>게시글 2</strong></li>
-							        <li>최근 업로드 파일: <strong>파일 1</strong>, <strong>파일 2</strong></li>
-							        <li>최근 좋아요: <strong>좋아요 게시글 1</strong>, <strong>좋아요 게시글 2</strong></li>
-							    </ul>
+			<!-- 마케팅 박스 -->
+			<div id="marketing">
+				<div class="container">
+					<div class="row divider">
+						<!-- 마케팅 박스 1번: 로그인/사용자 정보 -->
+						<div class="3u">
+							<section>
+								<div class="auth-box">
+									<!-- 로그인 상태에 따른 렌더링 -->
+									<%
+									if (userId != null) {
+									%>
+									<!-- 로그인 상태 -->
+									<div class="user-info">
+										<p>
+											안녕하세요, <strong><%=name%></strong>님!
+										</p>
+										<p class="email-info">
+											이메일: <strong><%=email%></strong>
+										</p>
+										<a
+											href="<%=request.getContextPath()%>/Login/UpdateAccount.jsp"
+											class="logout-button">[정보수정]</a> <a
+											href="<%=request.getContextPath()%>/Login/Logout.jsp"
+											class="logout-button">[로그아웃]</a>
+
+									</div>
+									<%
+									} else {
+									%>
+									<!-- 비로그인 상태 -->
+									<div class="login-box">
+										<form action="../main/MLC" method="post" class="login-form">
+											<button type="submit" class="login-button">로그인</button>
+										</form>
+										<div class="auth-links">
+											<a href="../Login/UserIdFind.jsp">아이디</a> <span>/</span> <a
+												href="../Login/PwdFind.jsp">비밀번호 찾기</a> <span>|</span> <a
+												href="../Login/SignUp.jsp">회원가입</a>
+										</div>
+									</div>
+									<%
+									}
+									%>
+								</div>
+								<!-- 최근 활동 표시 섹션 -->
+								<div class="recent-activity">
+									<h3>최근 활동</h3>
+									<ul>
+										<%
+										if (recentActivities.isEmpty()) {
+										%>
+										<li>활동 내역이 없습니다.</li>
+										<%
+										} else {
+										%>
+										<%
+										for (Map<String, String> activity : recentActivities) {
+										%>
+										<li><strong>[<%=activity.get("CATEGORY")%>]
+										</strong> <%=activity.get("TITLE")%> (<%=activity.get("CREATED_DATE")%>)
+										</li>
+										<%
+										}
+										%>
+										<%
+										}
+										%>
+									</ul>
+								</div>
+							</section>
+						</div>
+
+
+
+						<!-- 자유게시판 미리보기 -->
+						<div class="3u">
+							<section>
+								<div class="mbox-style">
+									<h2 class="title">자유게시판</h2>
+									<div class="content">
+										<ul>
+											<%
+											List<BoardDTO> freList = (List<BoardDTO>) request.getAttribute("freList");
+											if (freList != null && !freList.isEmpty()) {
+												for (BoardDTO freItem : freList) {
+											%>
+											<li><a
+												href="<%=request.getContextPath()%>/board/BVC?board_id=<%=freItem.getBoard_id()%>&board_type=fre">
+													<%=freItem.getTitle().replace("\n", "<br>")%>
+											</a></li>
+											<%
+											}
+											} else {
+											%>
+											<li>게시물이 없습니다.</li>
+											<%
+											}
+											%>
+										</ul>
+									</div>
+									<p class="button-style2">
+										<a href="../Board/boardList.jsp">자유게시판으로 이동</a>
+									</p>
+								</div>
+							</section>
+						</div>
+
+						<!-- QnA 게시판 미리보기 -->
+						<div class="3u">
+							<section>
+								<div class="mbox-style">
+									<h2 class="title">QnA 게시판</h2>
+									<div class="content">
+										<ul>
+											<%
+											List<Q_BoardDTO> qnaList = (List<Q_BoardDTO>) request.getAttribute("qnaList");
+											if (qnaList != null && !qnaList.isEmpty()) {
+												for (Q_BoardDTO qnaItem : qnaList) {
+											%>
+											<li><a
+												href="<%=request.getContextPath()%>/q_board/BVC?q_id=<%=qnaItem.getQ_id()%>&board_type=question">
+													<%=qnaItem.getTitle().replace("\n", "<br>")%>
+											</a></li>
+											<%
+											}
+											} else {
+											%>
+											<li>게시물이 없습니다.</li>
+											<%
+											}
+											%>
+										</ul>
+									</div>
+									<p class="button-style2">
+										<a href="../Q_Board/q_boardList.jsp">QnA 게시판으로 이동</a>
+									</p>
+								</div>
+							</section>
+						</div>
+
+						<!-- 자료실 미리보기 -->
+						<div class="3u">
+							<section>
+								<div class="mbox-style">
+									<h2 class="title">자료실</h2>
+									<div class="content">
+										<ul>
+											<%
+											List<BoardDTO> filesList = (List<BoardDTO>) request.getAttribute("filesList");
+											if (freList != null && !freList.isEmpty()) {
+												for (BoardDTO filesItem : filesList) {
+											%>
+											<li><a
+												href="<%=request.getContextPath()%>/files/BVC?board_id=<%=filesItem.getBoard_id()%>&board_type=files">
+													<%=filesItem.getTitle().replace("\n", "<br>")%>
+											</a></li>
+											<%
+											}
+											} else {
+											%>
+											<li>게시물이 없습니다.</li>
+											<%
+											}
+											%>
+										</ul>
+									</div>
+									<p class="button-style2">
+										<a href="../Files/filesList.jsp">자료실로 이동</a>
+									</p>
+								</div>
+							</section>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 페이지 섹션 (기존 유지) -->
+			<div id="page">
+				<div class="container">
+					<div class="row">
+						<div class="3u">
+							<div id="sidebar2">
+								<!-- Sidebar 2 내용 유지 -->
 							</div>
-									                    
-		                </section>
-		            </div>
-		            
-		            
-
-                    <!-- 자유게시판 미리보기 -->
-                    <div class="3u">
-                        <section>
-                            <div class="mbox-style">
-                                <h2 class="title">자유게시판</h2>
-                                <div class="content">
-                                    <ul>
-                                        <% 
-										    List<BoardDTO> freList = (List<BoardDTO>) request.getAttribute("freList");
-										    if (freList != null && !freList.isEmpty()) {
-										        for (BoardDTO freItem : freList) { 
-										%>
-										        <li>
-										            <a href="<%= request.getContextPath() %>/board/BVC?board_id=<%= freItem.getBoard_id() %>&board_type=fre">
-										                <%= freItem.getTitle().replace("\n", "<br>") %>
-										            </a>
-										        </li>
-										<% 
-										        }
-										    } else { 
-										%>
-										    <li>게시물이 없습니다.</li>
-										<% 
-										    } 
-										%>
-                                    </ul>
-                                </div>
-                                <p class="button-style2"><a href="../Board/boardList.jsp">자유게시판으로 이동</a></p>
-                            </div>
-                        </section>
-                    </div>
-
-                    <!-- QnA 게시판 미리보기 -->
-                    <div class="3u">
-                        <section>
-                            <div class="mbox-style">
-                                <h2 class="title">QnA 게시판</h2>
-                                 <div class="content">
-                                    <ul>
-                                        <% 
-										    List<Q_BoardDTO> qnaList = (List<Q_BoardDTO>) request.getAttribute("qnaList");
-										    if (qnaList != null && !qnaList.isEmpty()) {
-										        for (Q_BoardDTO qnaItem : qnaList) { 
-										%>
-										        <li>
-										            <a href="<%= request.getContextPath() %>/q_board/BVC?q_id=<%= qnaItem.getQ_id() %>&board_type=question">
-										                <%= qnaItem.getTitle().replace("\n", "<br>") %>
-										            </a>
-										        </li>
-										<% 
-										        }
-										    } else { 
-										%>
-										    <li>게시물이 없습니다.</li>
-										<% 
-										    } 
-										%>
-                                    </ul>
-                                </div>
-                                <p class="button-style2"><a href="../Q_Board/q_boardList.jsp">QnA 게시판으로 이동</a></p>
-                            </div>
-                        </section>
-                    </div>
-
-                    <!-- 자료실 미리보기 -->
-                    <div class="3u">
-                        <section>
-                            <div class="mbox-style">
-                                <h2 class="title">자료실</h2>
-                                <div class="content">
-                                    <ul>
-                                        <% 
-										    List<BoardDTO> filesList = (List<BoardDTO>) request.getAttribute("filesList");
-										    if (freList != null && !freList.isEmpty()) {
-										        for (BoardDTO filesItem : filesList) { 
-										%>
-										        <li>
-										            <a href="<%= request.getContextPath() %>/files/BVC?board_id=<%= filesItem.getBoard_id() %>&board_type=files">
-										                <%= filesItem.getTitle().replace("\n", "<br>") %>
-										            </a>
-										        </li>
-										<% 
-										        }
-										    } else { 
-										%>
-										    <li>게시물이 없습니다.</li>
-										<% 
-										    } 
-										%>
-                                    </ul>
-                                </div>
-                                <p class="button-style2"><a href="../Files/filesList.jsp">자료실로 이동</a></p>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 페이지 섹션 (기존 유지) -->
-        <div id="page">
-            <div class="container">
-                <div class="row">
-                    <div class="3u">
-                        <div id="sidebar2">
-                            <!-- Sidebar 2 내용 유지 -->
-                        </div>
-                    </div>
-                    <div class="6u">
-                        <div class="skel-cell-important" id="content">
-                            <!-- 메인 콘텐츠 내용 유지 -->
-                        </div>
-                    </div>
-                    <div class="3u" id="sidebar1">
-                        <!-- Sidebar 1 내용 유지 -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+						</div>
+						<div class="6u">
+							<div class="skel-cell-important" id="content">
+								<!-- 메인 콘텐츠 내용 유지 -->
+							</div>
+						</div>
+						<div class="3u" id="sidebar1">
+							<!-- Sidebar 1 내용 유지 -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div id="footer-wrapper">
 		<div class="container">
@@ -266,7 +308,9 @@
 					<section>
 						<h2>Maecenas luctus lectus</h2>
 						<p>
-							<a href="#"><img src="<%= request.getContextPath() %>/images/pics06.jpg" alt=""></a>												</p>
+							<a href="#"><img
+								src="<%=request.getContextPath()%>/images/pics06.jpg" alt=""></a>
+						</p>
 						<p>&nbsp;</p>
 						<p>Donec placerat odio vel elit. Nullam ante orci,
 							pellentesque eget, tempus quis, ultrices in, est. Curabitur sit
